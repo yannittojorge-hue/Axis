@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AXIS Vercel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#F4EFE9; --dark:#274E55; --accent:#FF7F66; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:#333; margin:0; padding:20px; }
+    .hidden { display:none !important; }
+    main { max-width:600px; margin:0 auto; background:#fff; padding:30px; border-radius:20px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.05); }
+    h1, h2 { font-family:'Poppins',sans-serif; color:var(--dark); }
+    .btn { background:var(--accent); color:#fff; border:none; padding:15px 30px; border-radius:50px; font-weight:700; width:100%; margin-top:15px; cursor:pointer; }
+    input { width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:8px; }
+    .option { background:#fff; border:1px solid #ddd; padding:15px; margin-bottom:10px; border-radius:10px; cursor:pointer; }
+    .blur { filter:blur(5px); pointer-events:none; }
+    #paywall { margin-top:-100px; position:relative; z-index:10; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 80%); padding-top:100px; }
+    .loader { border:4px solid #f3f3f3; border-top:4px solid var(--accent); border-radius:50%; width:40px; height:40px; animation:spin 1s linear infinite; margin:20px auto; }
+    @keyframes spin { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+  </style>
+</head>
+<body>
+<main>
+  <div id="v-home">
+    <h1>Tu Mapa AXIS</h1>
+    <button class="btn" onclick="nav('v-form')">COMENZAR</button>
+  </div>
+
+  <div id="v-form" class="hidden">
+    <h2>Tus Datos</h2>
+    <input type="text" id="name" placeholder="Nombre">
+    <input type="date" id="date">
+    <input type="time" id="time">
+    <input type="text" id="city" placeholder="Ciudad">
+    <button class="btn" onclick="startQuiz()">CONTINUAR</button>
+  </div>
+
+  <div id="v-quiz" class="hidden">
+    <h3 id="q-text">...</h3>
+    <div id="opts"></div>
+  </div>
+
+  <div id="v-load" class="hidden">
+    <div class="loader"></div>
+    <h3>Analizando...</h3>
+  </div>
+
+  <div id="v-res" class="hidden">
+    <h2>Resultado</h2>
+    <p>Eneatipo: <strong id="r-type"></strong> | Sol: <strong id="r-sun"></strong></p>
+    <div id="ai-box">
+      <div id="ai-txt" class="blur">...</div>
+      <div id="paywall"><button class="btn" onclick="unlock()">DESBLOQUEAR ($5.000)</button></div>
+    </div>
+    <p id="err" style="color:red; font-size:0.8rem; margin-top:10px;"></p>
+  </div>
+</main>
+
+<script>
+let s={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0}, q=0, u={};
+const qs=[
+  {t:1,q:"Busco perfección."}, {t:6,q:"Busco seguridad."}, {t:3,q:"Busco éxito."},
+  {t:2,q:"Ayudo a otros."}, {t:9,q:"Evito conflictos."}, {t:8,q:"Tengo el control."},
+  {t:4,q:"Soy diferente."}, {t:7,q:"Quiero divertirme."}, {t:5,q:"Observo y pienso."}
+];
+function nav(id){ document.querySelectorAll('div[id^="v-"]').forEach(d=>d.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
+function startQuiz(){ u.name=document.getElementById('name').value; u.date=document.getElementById('date').value; u.time=document.getElementById('time').value; nav('v-quiz'); render(); }
+function render(){ 
+  if(q>=qs.length){finish();return;} 
+  document.getElementById('q-text').innerText=qs[q].q;
+  document.getElementById('opts').innerHTML=[1,2,3,4,5].map(v=>`<div class="option" onclick="vote(${v})">${v}</div>`).join('');
+}
+function vote(v){ s[qs[q].t]+=v; q++; render(); }
+
+async function finish(){
+  nav('v-load');
+  let max=0, t=1; for(let k in s){if(s[k]>max){max=s[k];t=k;}}
+  let d=new Date(u.date), sun=getSun(d.getDate()+1, d.getMonth()+1);
+  document.getElementById('r-type').innerText="Tipo "+t;
+  document.getElementById('r-sun').innerText=sun;
+  
+  try {
+    // LLAMADA A VERCEL (Ruta simple)
+    const res = await fetch('/api/reporte', {
+      method:'POST',
+      headers: {'Content-Type': 'application/json'},
+      body:JSON.stringify({nombre:u.name, eneatipo:t, ala:0, sol:sun, luna:"IA", ascendente:"IA"})
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
+    document.getElementById('ai-txt').innerHTML=data.reporte;
+  } catch(e){
+    document.getElementById('err').innerText="Error: "+e.message;
+    document.getElementById('ai-txt').innerHTML="<p>Error cargando reporte.</p>";
+  }
+  nav('v-res');
+}
+
+function getSun(d,m){ if((m==1&&d<=19)||(m==12&&d>=22))return "Capricornio"; if((m==1&&d>=20)||(m==2&&d<=18))return "Acuario"; return "Solar"; } // (Resumido para demo)
+function unlock(){ if(confirm("Pago OK?")){ document.getElementById('paywall').style.display='none'; document.getElementById('ai-txt').classList.remove('blur'); } }
+</script>
+</body>
+</html>
