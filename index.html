@@ -6,7 +6,7 @@
   <title>AXIS | Eneagrama Profesional</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ESTILOS (Iguales a los que te gustaron) */
+    /* ESTILOS GLOBALES */
     :root { --bg-main:#F4EFE9; --bg-alt:#FAF8F3; --green:#2E5941; --blue:#274E55; --coral:#FF7F66; --text:#3A3A3A; --white:#FFFFFF; --shadow: 0 10px 30px rgba(39, 78, 85, 0.08); }
     * { box-sizing:border-box; margin:0; padding:0; }
     body { font-family:'Inter', sans-serif; background:var(--bg-main); color:var(--text); line-height:1.6; overflow-x:hidden; }
@@ -27,8 +27,7 @@
 
     header { padding:30px 0; } 
     .logo { display:flex; align-items:center; gap:10px; font-weight:700; color:var(--green); font-size:1.5rem; cursor:pointer; }
-    .logo-icon { width:35px; height:35px; border:2px solid var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; }
-
+    
     .hero { padding:80px 0; min-height:70vh; display:flex; align-items:center; text-align:center; justify-content:center; }
     
     .form-box { background:var(--white); padding:50px; border-radius:20px; box-shadow:var(--shadow); max-width:500px; margin:40px auto; text-align:center; }
@@ -36,14 +35,19 @@
     label { font-weight:600; font-size:0.9rem; color:var(--blue); display:block; margin-bottom:8px; }
     input { width:100%; padding:15px; border:1px solid #ddd; border-radius:10px; font-size:1.1rem; background:var(--bg-alt); text-align:center; }
 
+    /* QUIZ */
     .quiz-container { max-width:800px; margin:0 auto; text-align:center; padding:60px 0; }
-    .progress-header { display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.8rem; color:#888; font-weight:700; text-transform:uppercase; }
+    .progress-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; }
     .progress-bar { height:8px; background:#e0e0e0; border-radius:10px; margin-bottom:40px; overflow:hidden; }
     .progress-fill { height:100%; background:var(--green); width:0%; transition:width 0.3s ease; }
     
+    #btn-back { cursor:pointer; font-size:0.8rem; color:#999; font-weight:700; visibility:hidden; transition:0.3s; }
+    #btn-back:hover { color:var(--coral); text-decoration:underline; }
+
     .question-card { background:var(--white); padding:50px 30px; border-radius:20px; box-shadow:0 15px 40px rgba(0,0,0,0.04); min-height:300px; display:flex; flex-direction:column; justify-content:center; }
     .q-text { font-size:1.6rem; font-weight:500; color:var(--blue); margin-bottom:40px; font-family:'Poppins', sans-serif; }
     
+    /* ESCALA */
     .scale-container { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-top:20px; width:100%; }
     .scale-option { flex:1; display:flex; flex-direction:column; align-items:center; cursor:pointer; transition:all 0.3s ease; opacity:0.9; }
     .scale-option:hover { opacity:1; transform:translateY(-5px); }
@@ -56,11 +60,36 @@
     .scale-option:nth-child(4):hover .scale-circle { background:#87B38D; border-color:#87B38D; color:white; } .scale-option:nth-child(4):hover .scale-label { color:#87B38D; }
     .scale-option:nth-child(5):hover .scale-circle { background:var(--green); border-color:var(--green); color:white; } .scale-option:nth-child(5):hover .scale-label { color:var(--green); }
 
+    /* RESULTADO (CORREGIDO PARA PALABRAS LARGAS) */
     .result-header { text-align:center; margin-bottom:40px; }
     .result-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; margin-bottom:40px; }
-    .result-card { background:var(--white); padding:30px; border-radius:15px; text-align:center; border:1px solid rgba(0,0,0,0.05); box-shadow:0 5px 20px rgba(0,0,0,0.03); }
+    
+    .result-card { 
+      background:var(--white); 
+      padding:20px 10px; /* Menos padding lateral para dar espacio al texto */
+      border-radius:15px; 
+      text-align:center; 
+      border:1px solid rgba(0,0,0,0.05); 
+      box-shadow:0 5px 20px rgba(0,0,0,0.03);
+      
+      /* Flexbox para centrado perfecto vertical y horizontal */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 140px; 
+    }
+    
     .card-label { font-size:0.8rem; color:#888; font-weight:700; text-transform:uppercase; display:block; margin-bottom:10px; letter-spacing:1px; }
-    .card-val { font-size:1.8rem; font-weight:700; color:var(--blue); }
+    
+    /* Fuente elástica: se achica si la palabra es larga (Autoconservación) */
+    .card-val { 
+      font-size: clamp(1.2rem, 3vw, 1.8rem); 
+      font-weight:700; 
+      color:var(--blue); 
+      line-height: 1.2;
+      word-break: break-word; /* Evita desbordamiento extremo */
+    }
     
     .report-box { position:relative; background:var(--white); padding:60px; border-radius:20px; box-shadow:var(--shadow); text-align:left; }
     .ai-text { color:#444; line-height:1.9; font-size:1.1rem; }
@@ -74,9 +103,6 @@
     .paywall { position:absolute; top:150px; left:0; width:100%; height:calc(100% - 150px); background:linear-gradient(to bottom, rgba(255,255,255,0.4), #fff 90%); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding-top:50px; z-index:10; }
     .loader { border:4px solid #f3f3f3; border-top:4px solid var(--coral); border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite; margin:0 auto 20px; }
     @keyframes spin { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
-
-    /* Estilo para el botón volver */
-     #btn-back:hover { color: var(--coral) !important; text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -85,9 +111,7 @@
 
 <div class="container">
   <header>
-    <div class="logo" onclick="location.reload()">
-      <div class="logo-icon">X</div> AXIS
-    </div>
+    <div class="logo" onclick="location.reload()">AXIS</div>
   </header>
 
   <div id="view-home" class="fade-in">
@@ -117,19 +141,15 @@
   <div id="view-quiz" class="hidden fade-in">
     <div class="quiz-container">
       
-      <div class="progress-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <span id="btn-back" onclick="goBack()" style="cursor:pointer; font-size:0.8rem; color:#999; font-weight:700; visibility:hidden;">
-          ← VOLVER
-        </span>
-        
-        <span style="font-size:0.8rem; color:#999; font-weight:700;">PROGRESO <span id="progress-text">0%</span></span>
+      <div class="progress-header">
+        <span id="btn-back" onclick="goBack()">← VOLVER</span>
+        <span>PROGRESO <span id="progress-text">0%</span></span>
       </div>
 
       <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
       
       <div class="question-card">
         <div class="q-text" id="q-text">Cargando...</div>
-        
         <div class="scale-container">
           <div class="scale-option" onclick="vote(1)"><div class="scale-circle">1</div><div class="scale-label">Nunca</div></div>
           <div class="scale-option" onclick="vote(2)"><div class="scale-circle">2</div><div class="scale-label">Rara vez</div></div>
@@ -149,318 +169,4 @@
 
   <div id="view-result" class="hidden fade-in">
     <div class="result-header">
-      <span class="badge" style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">✓ ANÁLISIS COMPLETADO</span>
-      <h2 style="margin-top:15px;">Tu Mapa AXIS</h2>
-      <p>Hola <strong id="r-name"></strong>, aquí está tu diseño único.</p>
-    </div>
-
-    <div class="result-grid">
-      <div class="result-card" style="background:var(--blue);">
-        <span class="card-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span>
-        <div class="card-val" style="color:white;" id="r-type">...</div>
-      </div>
-      <div class="result-card">
-        <span class="card-label">ALA DOMINANTE</span>
-        <div class="card-val" id="r-wing">...</div>
-      </div>
-      <div class="result-card">
-        <span class="card-label">INSTINTO</span>
-        <div class="card-val" id="r-instinct">...</div>
-      </div>
-    </div>
-
-    <div class="report-box">
-      <div id="ai-content" class="ai-text blur">
-        <h3>Tu Arquitectura</h3><p>Generando análisis profundo...</p>
-      </div>
-      <div id="paywall" class="paywall">
-        <h3 style="color:var(--blue); margin-bottom:10px;">Desbloquear Reporte Completo</h3>
-        <ul style="text-align:left; margin-bottom:20px; color:#555; list-style:none;">
-          <li>🔒 Análisis de <strong>Herida y Deseo</strong></li>
-          <li>🔒 Explicación de tu <strong>Mecanismo de Defensa</strong></li>
-          <li>🔒 Ruta detallada de <strong>Integración</strong></li>
-          <li>🔒 Prácticas de <strong>Alineación</strong></li>
-        </ul>
-        <div style="background:var(--green); color:white; padding:8px 20px; border-radius:50px; font-weight:700; margin-bottom:20px;">$5.000 ARS</div>
-        <button class="btn" onclick="unlock()">DESBLOQUEAR AHORA</button>
-      </div>
-    </div>
-    <div id="error-msg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
-  </div>
-</div>
-
-<script>
-  // --- 1. FUNCIONES UI ---
-  function nav(id) {
-    document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-    window.scrollTo(0,0);
-  }
-
-  // --- 2. VARIABLES DE ESTADO ---
-  let user = { name: "" };
-  // Guardamos solo respuestas numéricas
-  let userResponses = { 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}, 9:{} };
-  let qIdx = 0;
-
-  // --- 3. LAS 99 PREGUNTAS (Riso-Hudson) ---
-  const questions = [
-    { t:1, q:"Busco hacer las cosas correctamente porque siento una presión interna por cumplir con lo que considero correcto." },
-    { t:1, q:"Me cuesta relajarme porque siempre percibo que algo podría hacerse mejor." },
-    { t:1, q:"Me critico con dureza porque siento que no debería cometer errores." },
-    { t:1, q:"Mantengo estándares altos porque temo actuar de una manera incorrecta o reprochable." },
-    { t:1, q:"Siento incomodidad o culpa porque no logro cumplir con mis propios ideales." },
-    { t:1, q:"Contengo mi enojo porque creo que expresarlo sería inapropiado o injusto." },
-    { t:1, q:"Me resulta difícil disfrutar porque siento que primero debo cumplir con mis responsabilidades." },
-    { t:1, q:"Me irrita la falta de compromiso porque creo que las personas deberían esforzarse más." },
-    { t:1, q:"Evito el conflicto porque prefiero mantener la armonía y el autocontrol." },
-    { t:1, q:"Corrijo o ayudo a otros porque siento responsabilidad por que las cosas se hagan bien." },
-    { t:1, q:"Me esfuerzo por ser responsable y correcto porque así siento que soy una buena persona." },
-    { t:2, q:"Estoy atento a las necesidades de los demás porque temo no ser querido si no soy necesario." },
-    { t:2, q:"Me involucro emocionalmente con otros porque necesito sentirme importante en sus vidas." },
-    { t:2, q:"Me cuesta reconocer mis propias necesidades porque priorizo el bienestar de los demás." },
-    { t:2, q:"Ofrezco ayuda incluso sin que me la pidan porque temo ser dejado de lado." },
-    { t:2, q:"Busco cercanía afectiva porque necesito sentir que soy valioso para otros." },
-    { t:2, q:"Me adapto a lo que otros esperan porque así aseguro el vínculo." },
-    { t:2, q:"Evito pedir ayuda porque siento que debo dar más de lo que recibo." },
-    { t:2, q:"Me esfuerzo por agradar porque temo perder el afecto de las personas importantes." },
-    { t:2, q:"Me contengo emocionalmente porque prefiero mantener la calma y no generar tensión." },
-    { t:2, q:"Me esfuerzo por destacar y ser útil porque así siento que merezco amor." },
-    { t:2, q:"Me involucro intensamente en las relaciones porque necesito sentirme indispensable." },
-    { t:3, q:"Me esfuerzo por lograr objetivos porque necesito sentir que valgo por lo que hago." },
-    { t:3, q:"Busco ser eficiente porque temo fracasar y perder reconocimiento." },
-    { t:3, q:"Me adapto a distintos contextos porque quiero asegurar el éxito." },
-    { t:3, q:"Evito mostrar debilidades porque temo parecer incompetente." },
-    { t:3, q:"Me enfoco en resultados porque siento que el valor personal depende del rendimiento." },
-    { t:3, q:"Me mantengo ocupado porque detenerme me conecta con la sensación de vacío." },
-    { t:3, q:"Muestro una imagen segura porque temo que otros vean mis inseguridades." },
-    { t:3, q:"Compito conmigo mismo porque necesito superarme constantemente." },
-    { t:3, q:"Busco agradar y ayudar porque quiero ser valorado por los demás." },
-    { t:3, q:"Busco diferenciarme porque necesito sentirme especial además de exitoso." },
-    { t:3, q:"Me esfuerzo por mantener una imagen exitosa porque así siento que tengo identidad." },
-    { t:4, q:"Me siento diferente a los demás porque percibo que me falta algo esencial." },
-    { t:4, q:"Busco profundidad emocional porque temo vivir una vida vacía o superficial." },
-    { t:4, q:"Me conecto con emociones intensas porque así siento que soy auténtico." },
-    { t:4, q:"Me comparo con otros porque siento que ellos tienen algo que yo no tengo." },
-    { t:4, q:"Busco una identidad propia porque temo no tener un lugar claro." },
-    { t:4, q:"Me refugio en mis emociones porque me ayudan a entender quién soy." },
-    { t:4, q:"Me cuesta sostener la estabilidad porque siento que perdería intensidad." },
-    { t:4, q:"Idealizo lo que no tengo porque me conecta con el anhelo." },
-    { t:4, q:"Me esfuerzo por lograr cosas porque quiero sentir que valgo tanto como otros." },
-    { t:4, q:"Me retraigo y observo porque necesito proteger mi mundo interno." },
-    { t:4, q:"Busco vínculos intensos porque necesito sentirme profundamente conectado." },
-    { t:5, q:"Me distancio emocionalmente porque temo quedarme sin recursos internos." },
-    { t:5, q:"Busco comprender antes de actuar porque necesito sentirme preparado." },
-    { t:5, q:"Protejo mi tiempo y energía porque temo sentirme invadido." },
-    { t:5, q:"Me retiro del contacto social porque necesito conservar mi autonomía." },
-    { t:5, q:"Acumulo conocimiento porque siento que así puedo manejar el mundo." },
-    { t:5, q:"Analizo situaciones porque me ayuda a no sentirme desbordado." },
-    { t:5, q:"Evito depender de otros porque temo perder control." },
-    { t:5, q:"Me mantengo reservado porque necesito cuidar mi espacio interno." },
-    { t:5, q:"Me conecto con lo emocional porque busco profundidad personal." },
-    { t:5, q:"Busco seguridad en reglas o personas confiables porque necesito certeza." },
-    { t:5, q:"Prioritizo la autosuficiencia porque necesito sentir que puedo sostenerme solo." },
-    { t:6, q:"Busco seguridad porque temo que algo salga mal." },
-    { t:6, q:"Me mantengo alerta porque necesito anticipar riesgos." },
-    { t:6, q:"Dudo de mis decisiones porque temo equivocarme." },
-    { t:6, q:"Busco apoyo externo porque necesito sentir respaldo." },
-    { t:6, q:"Desconfío inicialmente porque temo ser traicionado." },
-    { t:6, q:"Me preparo para distintos escenarios porque necesito sentirme seguro." },
-    { t:6, q:"Cuestiono la autoridad porque temo confiar ciegamente." },
-    { t:6, q:"Me comprometo con personas o grupos porque necesito pertenecer." },
-    { t:6, q:"Me retraigo para observar porque necesito claridad antes de actuar." },
-    { t:6, q:"Actúo con firmeza porque necesito demostrar fortaleza." },
-    { t:6, q:"Busco lealtad y estructura porque así siento estabilidad." },
-    { t:7, q:"Busco nuevas experiencias porque temo sentirme limitado o atrapado." },
-    { t:7, q:"Evito el dolor porque quiero mantenerme bien." },
-    { t:7, q:"Me entusiasmo rápidamente porque necesito sentirme vivo." },
-    { t:7, q:"Cambio de intereses porque temo aburrirme o perder opciones." },
-    { t:7, q:"Mantengo una actitud positiva porque temo enfrentar el sufrimiento." },
-    { t:7, q:"Planeo múltiples alternativas porque quiero asegurar libertad." },
-    { t:7, q:"Me distraigo fácilmente porque evito quedarme en lo incómodo." },
-    { t:7, q:"Minimizo los problemas porque quiero seguir adelante." },
-    { t:7, q:"Me enfoco en ayudar porque quiero sentir conexión emocional." },
-    { t:7, q:"Me afirmo con firmeza porque necesito sentir control." },
-    { t:7, q:"Busco satisfacción constante porque necesito evitar el vacío." },
-    { t:8, q:"Me muestro fuerte porque temo ser controlado o dañado." },
-    { t:8, q:"Tomo el control porque necesito protegerme." },
-    { t:8, q:"Actúo de forma directa porque no quiero mostrar vulnerabilidad." },
-    { t:8, q:"Desconfío de la debilidad porque temo perder poder." },
-    { t:8, q:"Me enfrento a los conflictos porque necesito sentirme en control." },
-    { t:8, q:"Protejo a los míos porque siento responsabilidad por ellos." },
-    { t:8, q:"Reacciono con intensidad porque no tolero sentirme limitado." },
-    { t:8, q:"Me afirmo con fuerza porque temo que otros me dominen." },
-    { t:8, q:"Me conecto emocionalmente porque confío profundamente." },
-    { t:8, q:"Me vuelvo estratégico porque necesito anticiparme." },
-    { t:8, q:"Busco autonomía total porque necesito sentir que nadie me controla." },
-    { t:9, q:"Evito el conflicto porque temo perder la conexión con los demás." },
-    { t:9, q:"Me adapto a otros porque quiero mantener la armonía." },
-    { t:9, q:"Minimizo mis propias necesidades porque temo generar tensión." },
-    { t:9, q:"Busco tranquilidad porque no quiero sentirme alterado." },
-    { t:9, q:"Me cuesta priorizarme porque temo crear conflicto." },
-    { t:9, q:"Postergó decisiones porque quiero evitar el malestar." },
-    { t:9, q:"Me desconecto internamente porque así mantengo la calma." },
-    { t:9, q:"Acepto situaciones porque prefiero no confrontar." },
-    { t:9, q:"Me esfuerzo por hacer lo correcto porque quiero sentir coherencia." },
-    { t:9, q:"Busco agradar porque quiero sentir pertenencia." },
-    { t:9, q:"Busco estabilidad y paz porque necesito sentirme en equilibrio." }
-  ];
-
-  // --- 4. MOTOR DEL QUIZ ---
-  function startQuiz() {
-    user.name = document.getElementById('name').value;
-    if(!user.name) { alert("Por favor ingresa tu nombre"); return; }
-    nav('view-quiz');
-    renderQ();
-  }
-
-  // --- HISTORIAL DE RESPUESTAS (Para poder volver atrás) ---
-  let historyStack = []; // Guardará: { qIdx: 0, type: 1, pts: 5 }
-
-  function renderQ() {
-    if (qIdx >= questions.length) { finish(); return; }
-    
-    // Texto Pregunta
-    document.getElementById('q-text').innerText = questions[qIdx].q;
-    
-    // Barra de Progreso
-    let pct = Math.round((qIdx / questions.length) * 100);
-    document.getElementById('progress-fill').style.width = pct + "%";
-    document.getElementById('progress-text').innerText = pct + "%";
-
-    // Mostrar u ocultar botón Volver
-    const btnBack = document.getElementById('btn-back');
-    if (qIdx > 0) {
-      btnBack.style.visibility = 'visible';
-    } else {
-      btnBack.style.visibility = 'hidden';
-    }
-  }
-
-  function vote(pts) { 
-    const currentType = questions[qIdx].t;
-    const itemIdx = (qIdx % 11) + 1; // 1 a 11
-    
-    // 1. Guardar en el objeto principal
-    if (!userResponses[currentType]) userResponses[currentType] = {};
-    userResponses[currentType][itemIdx] = pts;
-
-    // 2. Guardar en el historial para poder deshacer
-    historyStack.push({ qIdx: qIdx, type: currentType, item: itemIdx });
-
-    // 3. Avanzar
-    qIdx++; 
-    renderQ(); 
-  }
-
-  // --- NUEVA FUNCIÓN: VOLVER ATRÁS ---
-  function goBack() {
-    if (historyStack.length === 0) return; // No hay nada atrás
-
-    // 1. Recuperar el último paso
-    let lastStep = historyStack.pop();
-
-    // 2. Borrar la respuesta de la memoria (opcional, pero limpio)
-    if (userResponses[lastStep.type]) {
-      delete userResponses[lastStep.type][lastStep.item];
-    }
-
-    // 3. Retroceder índice
-    qIdx--;
-    renderQ();
-  }
-
-  // --- 5. ALGORITMO PONDERADO ---
-  function calcularResultadoEneagrama(responses) {
-    const W = { CORE:1.5, STRAT:1, WING:0.75, INST:0.5 };
-    const INSTINCT_MAP = { 1:"Autoconservación",2:"Sexual",3:"Social", 4:"Sexual",5:"Autoconservación",6:"Social", 7:"Autoconservación",8:"Sexual",9:"Social" };
-
-    function scoreType(items){
-      let s=0;
-      for(let i=1;i<=5;i++) if(items[i]) s+=items[i]*W.CORE;
-      for(let i=6;i<=8;i++) if(items[i]) s+=items[i]*W.STRAT;
-      for(let i=9;i<=10;i++) if(items[i]) s+=items[i]*W.WING;
-      if(items[11]) s+=items[11]*W.INST;
-      return s;
-    }
-
-    function detectWing(items){
-      const a=items[9]||0, b=items[10]||0;
-      if(a<3 && b<3) return "Ala poco marcada";
-      if(Math.abs(a-b)>=0.75) return a>b?"Ala A":"Ala B";
-      return "Balanceada"; 
-    }
-
-    let scoresObj={};
-    for(let t=1;t<=9;t++) scoresObj[t]=scoreType(responses[t]);
-
-    let sorted=Object.entries(scoresObj).sort((a,b)=>b[1]-a[1]);
-    let top=sorted[0];
-
-    return { 
-      eneatipo:Number(top[0]), 
-      ala:detectWing(responses[top[0]]), 
-      instinto: (responses[top[0]][11]>=4) ? INSTINCT_MAP[top[0]] : "No definido" 
-    };
-  }
-
-  // --- 6. FINALIZAR (SIN ASTROS) ---
-  async function finish() {
-    nav('view-loading');
-    
-    try {
-        const resultado = calcularResultadoEneagrama(userResponses);
-        let type = resultado.eneatipo;
-        
-        let tInt = parseInt(type);
-        let prev = tInt===1?9:tInt-1;
-        let next = tInt===9?1:tInt+1;
-        let alaText = "";
-
-        if (resultado.ala === "Ala A") alaText = "Ala " + prev;
-        else if (resultado.ala === "Ala B") alaText = "Ala " + next;
-        else alaText = "Balanceada";
-
-        // Render Local
-        document.getElementById('r-name').innerText = user.name;
-        document.getElementById('r-type').innerText = "Tipo " + type;
-        document.getElementById('r-wing').innerText = alaText;
-        document.getElementById('r-instinct').innerText = resultado.instinto;
-
-        // Llamada API (Solo Eneagrama)
-        const res = await fetch('/api/reporte', {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({
-              nombre: user.name, 
-              eneatipo: type, 
-              ala: alaText, 
-              instinto: resultado.instinto
-            })
-        });
-
-        const data = await res.json();
-        if(data.error) throw new Error(data.error);
-        
-        document.getElementById('ai-content').innerHTML = data.reporte;
-        nav('view-result');
-
-    } catch(e) {
-        document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
-        document.getElementById('error-msg').style.display = 'block';
-        // Fallback básico si falla la IA
-        document.getElementById('ai-content').innerHTML = "<h3>Reporte Básico</h3><p>Tu perfil ha sido calculado. Desbloquea para ver el análisis detallado.</p>";
-        nav('view-result');
-    }
-  }
-
-  function unlock() {
-    if(confirm("Ir a Mercado Pago...")) {
-      document.getElementById('paywall').style.display='none';
-      document.getElementById('ai-content').classList.remove('blur');
-    }
-  }
-</script>
-
-</body>
-</html>
+      <span class="badge" style="background:#E6
