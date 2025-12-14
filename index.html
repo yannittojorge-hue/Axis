@@ -74,6 +74,9 @@
     .paywall { position:absolute; top:150px; left:0; width:100%; height:calc(100% - 150px); background:linear-gradient(to bottom, rgba(255,255,255,0.4), #fff 90%); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding-top:50px; z-index:10; }
     .loader { border:4px solid #f3f3f3; border-top:4px solid var(--coral); border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite; margin:0 auto 20px; }
     @keyframes spin { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
+
+    /* Estilo para el botón volver */
+     #btn-back:hover { color: var(--coral) !important; text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -113,10 +116,20 @@
 
   <div id="view-quiz" class="hidden fade-in">
     <div class="quiz-container">
-      <div class="progress-header"><span>Progreso</span><span id="progress-text">0%</span></div>
+      
+      <div class="progress-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <span id="btn-back" onclick="goBack()" style="cursor:pointer; font-size:0.8rem; color:#999; font-weight:700; visibility:hidden;">
+          ← VOLVER
+        </span>
+        
+        <span style="font-size:0.8rem; color:#999; font-weight:700;">PROGRESO <span id="progress-text">0%</span></span>
+      </div>
+
       <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      
       <div class="question-card">
         <div class="q-text" id="q-text">Cargando...</div>
+        
         <div class="scale-container">
           <div class="scale-option" onclick="vote(1)"><div class="scale-circle">1</div><div class="scale-label">Nunca</div></div>
           <div class="scale-option" onclick="vote(2)"><div class="scale-circle">2</div><div class="scale-label">Rara vez</div></div>
@@ -301,21 +314,60 @@
     renderQ();
   }
 
+  // --- HISTORIAL DE RESPUESTAS (Para poder volver atrás) ---
+  let historyStack = []; // Guardará: { qIdx: 0, type: 1, pts: 5 }
+
   function renderQ() {
     if (qIdx >= questions.length) { finish(); return; }
+    
+    // Texto Pregunta
     document.getElementById('q-text').innerText = questions[qIdx].q;
+    
+    // Barra de Progreso
     let pct = Math.round((qIdx / questions.length) * 100);
     document.getElementById('progress-fill').style.width = pct + "%";
     document.getElementById('progress-text').innerText = pct + "%";
+
+    // Mostrar u ocultar botón Volver
+    const btnBack = document.getElementById('btn-back');
+    if (qIdx > 0) {
+      btnBack.style.visibility = 'visible';
+    } else {
+      btnBack.style.visibility = 'hidden';
+    }
   }
 
   function vote(pts) { 
     const currentType = questions[qIdx].t;
-    const itemIdx = (qIdx % 11) + 1;
+    const itemIdx = (qIdx % 11) + 1; // 1 a 11
+    
+    // 1. Guardar en el objeto principal
     if (!userResponses[currentType]) userResponses[currentType] = {};
     userResponses[currentType][itemIdx] = pts;
+
+    // 2. Guardar en el historial para poder deshacer
+    historyStack.push({ qIdx: qIdx, type: currentType, item: itemIdx });
+
+    // 3. Avanzar
     qIdx++; 
     renderQ(); 
+  }
+
+  // --- NUEVA FUNCIÓN: VOLVER ATRÁS ---
+  function goBack() {
+    if (historyStack.length === 0) return; // No hay nada atrás
+
+    // 1. Recuperar el último paso
+    let lastStep = historyStack.pop();
+
+    // 2. Borrar la respuesta de la memoria (opcional, pero limpio)
+    if (userResponses[lastStep.type]) {
+      delete userResponses[lastStep.type][lastStep.item];
+    }
+
+    // 3. Retroceder índice
+    qIdx--;
+    renderQ();
   }
 
   // --- 5. ALGORITMO PONDERADO ---
