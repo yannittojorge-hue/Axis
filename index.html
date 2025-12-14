@@ -98,14 +98,28 @@
     .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
     .q-text { font-size: 1.6rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; }
     
-    .likert-scale { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-    .likert-btn {
-      width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ddd; background: #fff; 
-      display: flex; align-items: center; justify-content: center; font-weight: 700; cursor: pointer; transition: 0.2s; color: #999;
+ /* ESTILOS DE LA ESCALA VISUAL */
+    .scale-container { display: flex; justify-content: space-between; gap: 5px; margin-top: 30px; }
+    .scale-option { 
+      flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; 
+      transition: 0.2s; opacity: 0.7; 
     }
-    .likert-btn:hover { border-color: var(--coral); color: var(--coral); transform: scale(1.1); }
-    .likert-btn.selected { background: var(--coral); color: #fff; border-color: var(--coral); }
-    .likert-labels { display: flex; justify-content: space-between; max-width: 350px; margin: 10px auto 0; font-size: 0.8rem; color: #999; font-weight: 600; }
+    .scale-option:hover { opacity: 1; transform: translateY(-3px); }
+    
+    .scale-circle {
+      width: 45px; height: 45px; border-radius: 50%; border: 2px solid #ddd; background: #fff;
+      display: flex; align-items: center; justify-content: center; 
+      font-weight: 700; font-size: 1.1rem; color: #999; margin-bottom: 8px;
+    }
+    /* Texto pequeño debajo del numero */
+    .scale-label { 
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: #999; 
+      text-align: center; line-height: 1.1; 
+    }
+    
+    /* Efecto al pasar el mouse */
+    .scale-option:hover .scale-circle { border-color: var(--coral); color: var(--coral); background: #fff5f5; }
+    .scale-option:hover .scale-label { color: var(--coral); }
 
     /* --- RESULTADO --- */
     .result-header { text-align: center; margin-bottom: 40px; }
