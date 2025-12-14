@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- VARIABLES GLOBALES --- */
+    /* --- VARIABLES & ESTILOS --- */
     :root {
       --bg-main: #F4EFE9; --bg-alt: #FAF8F3;
       --green: #2E5941; --blue: #274E55;
@@ -107,7 +107,7 @@
     .astro-label { font-size: 0.7rem; color: #888; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
     .astro-val { font-size: 1.1rem; font-weight: 700; color: var(--blue); }
     
-    /* REPORTE IA (MEJORADO) */
+    /* REPORTE IA MEJORADO */
     .report-box { position: relative; background: var(--white); padding: 50px 40px; border-radius: 20px; box-shadow: var(--shadow); text-align: left; }
     
     .ai-text { color: #444; line-height: 1.8; font-size: 1.05rem; }
@@ -281,7 +281,7 @@
 </div>
 
 <script>
-  // 1. FUNCIONES UI
+  // 1. FUNCIONES UI (Las muevo aquí arriba para que existan antes de que el botón las llame)
   function nav(id) {
     document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
@@ -321,9 +321,9 @@
   let userResponses = { 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}, 9:{} };
   let qIdx = 0;
 
-  // --- LAS 99 PREGUNTAS ---
+  // --- LAS 99 PREGUNTAS (Riso-Hudson Actualizadas) ---
   const questions = [
-    // TIPO 1
+    // TIPO 1 (11 items)
     { t:1, q:"Busco hacer las cosas correctamente porque siento una presión interna por cumplir con lo que considero correcto." },
     { t:1, q:"Me cuesta relajarme porque siempre percibo que algo podría hacerse mejor." },
     { t:1, q:"Me critico con dureza porque siento que no debería cometer errores." },
@@ -335,7 +335,7 @@
     { t:1, q:"Evito el conflicto porque prefiero mantener la armonía y el autocontrol." },
     { t:1, q:"Corrijo o ayudo a otros porque siento responsabilidad por que las cosas se hagan bien." },
     { t:1, q:"Me esfuerzo por ser responsable y correcto porque así siento que soy una buena persona." },
-    // TIPO 2
+    // TIPO 2 (11 items)
     { t:2, q:"Estoy atento a las necesidades de los demás porque temo no ser querido si no soy necesario." },
     { t:2, q:"Me involucro emocionalmente con otros porque necesito sentirme importante en sus vidas." },
     { t:2, q:"Me cuesta reconocer mis propias necesidades porque priorizo el bienestar de los demás." },
@@ -347,7 +347,7 @@
     { t:2, q:"Me contengo emocionalmente porque prefiero mantener la calma y no generar tensión." },
     { t:2, q:"Me esfuerzo por destacar y ser útil porque así siento que merezco amor." },
     { t:2, q:"Me involucro intensamente en las relaciones porque necesito sentirme indispensable." },
-    // TIPO 3
+    // TIPO 3 (11 items)
     { t:3, q:"Me esfuerzo por lograr objetivos porque necesito sentir que valgo por lo que hago." },
     { t:3, q:"Busco ser eficiente porque temo fracasar y perder reconocimiento." },
     { t:3, q:"Me adapto a distintos contextos porque quiero asegurar el éxito." },
@@ -359,7 +359,7 @@
     { t:3, q:"Busco agradar y ayudar porque quiero ser valorado por los demás." },
     { t:3, q:"Busco diferenciarme porque necesito sentirme especial además de exitoso." },
     { t:3, q:"Me esfuerzo por mantener una imagen exitosa porque así siento que tengo identidad." },
-    // TIPO 4
+    // TIPO 4 (11 items)
     { t:4, q:"Me siento diferente a los demás porque percibo que me falta algo esencial." },
     { t:4, q:"Busco profundidad emocional porque temo vivir una vida vacía o superficial." },
     { t:4, q:"Me conecto con emociones intensas porque así siento que soy auténtico." },
@@ -371,7 +371,7 @@
     { t:4, q:"Me esfuerzo por lograr cosas porque quiero sentir que valgo tanto como otros." },
     { t:4, q:"Me retraigo y observo porque necesito proteger mi mundo interno." },
     { t:4, q:"Busco vínculos intensos porque necesito sentirme profundamente conectado." },
-    // TIPO 5
+    // TIPO 5 (11 items)
     { t:5, q:"Me distancio emocionalmente porque temo quedarme sin recursos internos." },
     { t:5, q:"Busco comprender antes de actuar porque necesito sentirme preparado." },
     { t:5, q:"Protejo mi tiempo y energía porque temo sentirme invadido." },
@@ -383,7 +383,7 @@
     { t:5, q:"Me conecto con lo emocional porque busco profundidad personal." },
     { t:5, q:"Busco seguridad en reglas o personas confiables porque necesito certeza." },
     { t:5, q:"Prioritizo la autosuficiencia porque necesito sentir que puedo sostenerme solo." },
-    // TIPO 6
+    // TIPO 6 (11 items)
     { t:6, q:"Busco seguridad porque temo que algo salga mal." },
     { t:6, q:"Me mantengo alerta porque necesito anticipar riesgos." },
     { t:6, q:"Dudo de mis decisiones porque temo equivocarme." },
@@ -395,7 +395,7 @@
     { t:6, q:"Me retraigo para observar porque necesito claridad antes de actuar." },
     { t:6, q:"Actúo con firmeza porque necesito demostrar fortaleza." },
     { t:6, q:"Busco lealtad y estructura porque así siento estabilidad." },
-    // TIPO 7
+    // TIPO 7 (11 items)
     { t:7, q:"Busco nuevas experiencias porque temo sentirme limitado o atrapado." },
     { t:7, q:"Evito el dolor porque quiero mantenerme bien." },
     { t:7, q:"Me entusiasmo rápidamente porque necesito sentirme vivo." },
@@ -407,7 +407,7 @@
     { t:7, q:"Me enfoco en ayudar porque quiero sentir conexión emocional." },
     { t:7, q:"Me afirmo con firmeza porque necesito sentir control." },
     { t:7, q:"Busco satisfacción constante porque necesito evitar el vacío." },
-    // TIPO 8
+    // TIPO 8 (11 items)
     { t:8, q:"Me muestro fuerte porque temo ser controlado o dañado." },
     { t:8, q:"Tomo el control porque necesito protegerme." },
     { t:8, q:"Actúo de forma directa porque no quiero mostrar vulnerabilidad." },
@@ -419,7 +419,7 @@
     { t:8, q:"Me conecto emocionalmente porque confío profundamente." },
     { t:8, q:"Me vuelvo estratégico porque necesito anticiparme." },
     { t:8, q:"Busco autonomía total porque necesito sentir que nadie me controla." },
-    // TIPO 9
+    // TIPO 9 (11 items)
     { t:9, q:"Evito el conflicto porque temo perder la conexión con los demás." },
     { t:9, q:"Me adapto a otros porque quiero mantener la armonía." },
     { t:9, q:"Minimizo mis propias necesidades porque temo generar tensión." },
@@ -439,7 +439,7 @@
     user.date = document.getElementById('date').value;
     user.time = document.getElementById('time').value;
     
-    if(!user.name || !user.date || !user.time) { alert("Por favor completa todos los campos."); return; }
+    if(!user.name || !user.date || !user.time) { alert("Completa tus datos."); return; }
     if(!user.lat) { alert("Selecciona una ciudad de la lista."); return; }
     
     nav('view-quiz');
@@ -448,10 +448,7 @@
 
   function renderQ() {
     if (qIdx >= questions.length) { finish(); return; }
-    
-    // Texto
     document.getElementById('q-text').innerText = questions[qIdx].q;
-    // Barra
     let pct = Math.round((qIdx / questions.length) * 100);
     document.getElementById('progress-fill').style.width = pct + "%";
     document.getElementById('progress-text').innerText = pct + "%";
@@ -459,7 +456,7 @@
 
   function vote(pts) { 
     const currentType = questions[qIdx].t;
-    // itemIdx va de 1 a 11 para cada tipo
+    // itemIdx: 1 a 11
     const itemIdx = (qIdx % 11) + 1;
     
     if (!userResponses[currentType]) userResponses[currentType] = {};
@@ -491,7 +488,6 @@
 
     function detectWing(items){
       const a=items[9]||0, b=items[10]||0;
-      if(a<3 && b<3) return "Ala poco marcada";
       if(Math.abs(a-b)>=WING_DIFF) return a>b?"Ala A":"Ala B";
       return "Ala balanceada"; 
     }
@@ -544,10 +540,11 @@
     const debug = document.getElementById('loading-debug');
 
     try {
-        // 1. Ejecutar Algoritmo
+        // 1. Algoritmo
         const resultado = calcularResultadoEneagrama(userResponses);
         let type = resultado.eneatipo;
         
+        // 2. Lógica de Alas (Balanceada = String)
         let tInt = parseInt(type);
         let prev = tInt===1?9:tInt-1;
         let next = tInt===9?1:tInt+1;
@@ -558,13 +555,13 @@
         } else if (resultado.ala === "Ala B") {
             alaVal = next; 
         } else {
-            // "Balanceada", "Poco marcada" o "Indefinida"
             alaVal = "Balanceada"; 
         }
 
-        // 3. Cálculos Astrales
+        // 3. Astros
         const date = new Date(user.date + 'T' + user.time);
-        
+        if (isNaN(date.getTime())) throw new Error("Fecha inválida");
+
         const sun = calculateSign('Sun', date);
         const moon = calculateSign('Moon', date);
         const merc = calculateSign('Mercury', date);
@@ -572,7 +569,7 @@
         const mars = calculateSign('Mars', date);
         const asc = "(Hora " + user.time + ")";
 
-        // 4. Render Datos
+        // 4. Render
         document.getElementById('r-name').innerText = user.name;
         document.getElementById('r-type').innerText = "Tipo " + type;
         document.getElementById('r-sun').innerText = sun;
@@ -580,7 +577,7 @@
         document.getElementById('r-mars').innerText = mars;
         document.getElementById('r-venus').innerText = ven;
 
-        // 5. Llamada API
+        // 5. API
         const res = await fetch('/api/reporte', {
             method:'POST',
             headers:{'Content-Type':'application/json'},
@@ -603,7 +600,7 @@
         debug.innerText = "Error: " + e.message;
         document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
         document.getElementById('error-msg').style.display = 'block';
-        document.getElementById('ai-content').innerHTML = "<h3>Reporte generado internamente.</h3><p>Cálculos listos. Desbloquea para ver detalles.</p>";
+        document.getElementById('ai-content').innerHTML = "<h3>Reporte generado internamente.</h3><p>Problema de conexión con IA, pero tus cálculos astrales están listos. Desbloquea para ver el detalle.</p>";
         nav('view-result');
     }
   }
