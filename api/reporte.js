@@ -5,7 +5,7 @@ const openai = new OpenAI({
 });
 
 export default async function handler(req, res) {
-  // Configuración de cabeceras
+  // Configuración de seguridad para Vercel
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST');
 
@@ -14,58 +14,63 @@ export default async function handler(req, res) {
   }
 
   try {
-    // YA NO recibimos astros, solo datos del Eneagrama
     const { nombre, eneatipo, ala, instinto } = req.body;
 
     const prompt = `
-      Actúa como un experto mundial en Psicología del Eneagrama (Escuela Riso-Hudson).
-      Vas a analizar el perfil de: ${nombre}.
-      
-      DATOS TÉCNICOS:
-      - Eneatipo Central: ${eneatipo}
+      Actúa como un Psicoterapeuta experto en Eneagrama Transpersonal (Escuela Riso-Hudson).
+      Vas a redactar un informe de personalidad profunda para: ${nombre}.
+
+      DATOS DEL PERFIL:
+      - Eneatipo Central: Tipo ${eneatipo}
       - Ala Dominante: ${ala}
-      - Instinto Predominante: ${instinto}
+      - Instinto (Subtipo): ${instinto}
 
       OBJETIVO:
-      Crear un reporte de autoconocimiento radical, sin misticismo, basado en la estructura de la personalidad y la neurosis.
+      Crear un análisis psicológico detallado, serio y transformador. Nada de horóscopos ni generalidades.
+      Quiero que desgloses la "mecanica" de su psique.
 
-      ESTRUCTURA HTML OBLIGATORIA (Solo devuelve el contenido dentro de las etiquetas <h3>, <p>, <ul>, <li>):
+      ESTRUCTURA OBLIGATORIA DEL REPORTE (Usa estas etiquetas HTML: <h3>, <p>, <ul>, <li>, <strong>):
 
-      1. <h3>TU ARQUITECTURA PSICOLÓGICA (Tipo ${eneatipo})</h3>
-         - <p>Describe con precisión quirúrgica su herida básica y su motivación principal.</p>
-         - <p>Explica cómo el Instinto ${instinto} "colorea" o modifica específicamente a este Eneatipo (Subtipo).</p>
+      1. <h3>TU PERFIL NUCLEAR (Tipo ${eneatipo} con ${ala})</h3>
+         - <p>Explica la esencia del Tipo ${eneatipo}: su Herida Básica y su Deseo Fundamental.</p>
+         - <p><strong>El Matiz del Ala:</strong> Explica específicamente cómo el ${ala} modifica a su tipo central. ¿Lo hace más introvertido, más agresivo, más mental? (Ej: Un 9 ala 8 es muy distinto a un 9 ala 1).</p>
 
-      2. <h3>EL SUEÑO HIPNÓTICO (Tu Desintegración)</h3>
-         - <p>Describe los síntomas de estrés específicos de este perfil. No digas "vas al número X", describe la conducta tóxica y el mecanismo de defensa que se activa.</p>
+      2. <h3>TU SUBTIPO INSTINTIVO (${instinto})</h3>
+         - <p>Este es el "animal" que vive dentro de ti. Explica cómo se comporta un Tipo ${eneatipo} que tiene el instinto ${instinto} dominante.</p>
+         - <p>Describe dónde pone su atención obsesiva automáticamente (seguridad, conexión 1 a 1, o grupo).</p>
 
-      3. <h3>EL CAMINO DE INTEGRACIÓN (La Salida)</h3>
-         - <p>Explica qué significa psicológicamente avanzar hacia su punto de integración.</p>
-         - <p>Aclara que integrar no es cambiar de personalidad, sino incorporar herramientas que le faltan.</p>
-         - <p>Da un ejemplo concreto de cómo se ve este tipo cuando está sano y centrado.</p>
+      3. <h3>LA SOMBRA: TU DESINTEGRACIÓN</h3>
+         - <p>Explica la "Ley de la Desintegración" para el Tipo ${eneatipo}.</p>
+         - <p>Describe los síntomas de alarma: ¿Qué conductas tóxicas aparecen cuando estás bajo estrés prolongado? (Menciona hacia qué número se desplaza su energía negativamente).</p>
 
-      4. <h3>HERRAMIENTAS DE ALINEACIÓN</h3>
+      4. <h3>LA LUZ: TU CAMINO DE INTEGRACIÓN</h3>
+         - <p>Explica el movimiento de crecimiento psicológico.</p>
+         - <p>No le digas "sé como el número X". Dile qué cualidades específicas de ese número de integración debe incorporar conscientemente para sanar.</p>
+         - <p>Ejemplo: "Tu crecimiento implica soltar el control y abrazar la inocencia del Tipo..."</p>
+
+      5. <h3>PRÁCTICAS DE MAESTRÍA</h3>
          - <ul>
-           <li>Una práctica de auto-observación específica para el Tipo ${eneatipo}.</li>
-           <li>Un consejo para equilibrar su Ala ${ala}.</li>
-           <li>Una frase de recordatorio para desactivar su piloto automático.</li>
+           <li>Una práctica de auto-observación diaria para atrapar al ego en acción.</li>
+           <li>Un consejo específico para equilibrar su instinto ${instinto}.</li>
+           <li>Un mantra o afirmación de sanación para el Tipo ${eneatipo}.</li>
          </ul>
 
-      TONO: Profesional, directo, empático y transformador.
+      TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
     `;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4o-mini", // Modelo rápido y capaz
       messages: [
         { role: "system", content: prompt },
       ],
       temperature: 0.7,
-      max_tokens: 1200,
+      max_tokens: 1600, // Aumentamos la longitud para que no se corte
     });
 
     res.status(200).json({ reporte: completion.choices[0].message.content });
 
   } catch (error) {
     console.error("Error OpenAI:", error);
-    res.status(500).json({ error: "Error de conexión con la IA." });
+    res.status(500).json({ error: "Error generando el reporte." });
   }
 }
