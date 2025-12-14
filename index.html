@@ -46,11 +46,12 @@
     }
     .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 12px 25px rgba(255,127,102,0.35); }
 
-    /* SECCIONES */
+    /* HEADER */
     header { padding: 30px 0; }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--green); font-size: 1.5rem; cursor: pointer; }
     .logo-icon { width: 35px; height: 35px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
+    /* SECCIONES */
     .hero { padding: 80px 0; min-height: 70vh; display: flex; align-items: center; }
     .features { padding: 80px 0; background: var(--white); border-radius: 30px; margin-bottom: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.03); }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
@@ -66,10 +67,8 @@
     .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
     .suggestion-item:hover { background: var(--bg-main); color: var(--green); }
 
-    /* QUIZ CONTAINER */
+    /* QUIZ & BARRA DE PROGRESO */
     .quiz-container { max-width: 800px; margin: 0 auto; text-align: center; padding: 60px 0; }
-    
-    /* BARRA DE PROGRESO CON PORCENTAJE */
     .progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.8rem; color: #888; font-weight: 700; text-transform: uppercase; }
     .progress-bar { height: 8px; background: #e0e0e0; border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--green); width: 0%; transition: width 0.3s ease; }
@@ -77,57 +76,29 @@
     .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
     .q-text { font-size: 1.5rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; min-height: 80px; }
     
-    /* ESCALA VISUAL - COLORES EARTH TONES */
-    .scale-container { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: flex-start;
-      gap: 10px; 
-      margin-top: 20px; 
-      width: 100%;
-    }
-    .scale-option { 
-      flex: 1; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      cursor: pointer; 
-      transition: all 0.3s ease;
-      opacity: 0.9; 
-    }
+    /* ESCALA VISUAL (Earth Tones) */
+    .scale-container { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-top: 20px; width: 100%; }
+    .scale-option { flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: all 0.3s ease; opacity: 0.9; }
     .scale-option:hover { opacity: 1; transform: translateY(-5px); }
     
     .scale-circle {
-      width: 50px; height: 50px; 
-      border-radius: 50%; 
-      border: 2px solid #ddd; 
-      background: #fff;
+      width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ddd; background: #fff;
       display: flex; align-items: center; justify-content: center; 
-      font-weight: 700; font-size: 1.2rem; color: #aaa; 
-      margin-bottom: 10px;
-      transition: all 0.3s ease;
+      font-weight: 700; font-size: 1.2rem; color: #aaa; margin-bottom: 10px; transition: all 0.3s ease;
     }
-    .scale-label { 
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; 
-      color: #999; text-align: center; line-height: 1.2; transition: 0.3s;
-    }
+    .scale-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #999; text-align: center; line-height: 1.2; transition: 0.3s; }
     
-    /* COLORES GRADIENTES (Earth Tones) */
+    /* Colores por opción */
     .scale-option:nth-child(1):hover .scale-circle { background: #D66D5E; border-color: #D66D5E; color: white; }
     .scale-option:nth-child(1):hover .scale-label { color: #D66D5E; }
-
     .scale-option:nth-child(2):hover .scale-circle { background: #E89F71; border-color: #E89F71; color: white; }
     .scale-option:nth-child(2):hover .scale-label { color: #E89F71; }
-
     .scale-option:nth-child(3):hover .scale-circle { background: #D9C375; border-color: #D9C375; color: white; }
     .scale-option:nth-child(3):hover .scale-label { color: #D9C375; }
-
     .scale-option:nth-child(4):hover .scale-circle { background: #87B38D; border-color: #87B38D; color: white; }
     .scale-option:nth-child(4):hover .scale-label { color: #87B38D; }
-
     .scale-option:nth-child(5):hover .scale-circle { background: var(--green); border-color: var(--green); color: white; }
     .scale-option:nth-child(5):hover .scale-label { color: var(--green); }
-
 
     /* RESULTADO */
     .result-header { text-align: center; margin-bottom: 40px; }
@@ -151,7 +122,6 @@
 <div class="parallax-bg"></div>
 
 <div class="container">
-  
   <header>
     <div class="logo" onclick="location.reload()">
       <div class="logo-icon">X</div> AXIS
@@ -222,7 +192,6 @@
 
   <div id="view-quiz" class="hidden fade-in">
     <div class="quiz-container">
-      
       <div class="progress-header">
         <span>Progreso</span>
         <span id="progress-text">0%</span>
@@ -234,27 +203,21 @@
         
         <div class="scale-container">
           <div class="scale-option" onclick="vote(1)">
-            <div class="scale-circle">1</div>
-            <div class="scale-label">Nunca<br>me pasa</div>
+            <div class="scale-circle">1</div><div class="scale-label">Nunca<br>me pasa</div>
           </div>
           <div class="scale-option" onclick="vote(2)">
-            <div class="scale-circle">2</div>
-            <div class="scale-label">Rara<br>vez</div>
+            <div class="scale-circle">2</div><div class="scale-label">Rara<br>vez</div>
           </div>
           <div class="scale-option" onclick="vote(3)">
-            <div class="scale-circle">3</div>
-            <div class="scale-label">A<br>veces</div>
+            <div class="scale-circle">3</div><div class="scale-label">A<br>veces</div>
           </div>
           <div class="scale-option" onclick="vote(4)">
-            <div class="scale-circle">4</div>
-            <div class="scale-label">Frecuente<br>mente</div>
+            <div class="scale-circle">4</div><div class="scale-label">Frecuente<br>mente</div>
           </div>
           <div class="scale-option" onclick="vote(5)">
-            <div class="scale-circle">5</div>
-            <div class="scale-label">Totalmente<br>yo</div>
+            <div class="scale-circle">5</div><div class="scale-label">Totalmente<br>yo</div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -263,6 +226,7 @@
     <div class="loader"></div>
     <h3 style="color:var(--blue)">Analizando patrones...</h3>
     <p>Cruzando tu Eneagrama con tus posiciones planetarias.</p>
+    <p id="loading-debug" style="font-size:0.8rem; color:red; margin-top:20px;"></p>
   </div>
 
   <div id="view-result" class="hidden fade-in">
@@ -283,8 +247,8 @@
 
     <div class="report-box">
       <div id="ai-content" class="ai-text blur">
-        <h3>Tu Arquitectura</h3><p>Generando...</p>
-        <h3>Cruce Astral</h3><p>Calculando...</p>
+        <h3>Tu Arquitectura</h3><p>Generando análisis profundo...</p>
+        <h3>Cruce Astral</h3><p>Calculando influencias...</p>
       </div>
       <div id="paywall" class="paywall">
         <h3 style="color:var(--blue)">Desbloquear Reporte Completo</h3>
@@ -303,7 +267,7 @@
 </div>
 
 <script>
-  // 1. FUNCIONES UI (Navegación y Buscador)
+  // 1. FUNCIONES UI
   function nav(id) {
     document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
@@ -338,16 +302,12 @@
     },300);
   }
 
-  // --- 2. VARIABLES DE ESTADO ---
+  // --- VARIABLES DE ESTADO ---
   let user = { name: "", date: "", time: "", city: "", lat: 0, lon: 0 };
-  
-  // IMPORTANTE: Ahora guardamos respuestas detalladas por Tipo y Número de Pregunta
-  let userResponses = { 
-    1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}, 8: {}, 9: {} 
-  };
+  let userResponses = { 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}, 9:{} };
   let qIdx = 0;
 
-  // --- 3. TUS 99 PREGUNTAS (Ya cargadas) ---
+  // --- LAS 99 PREGUNTAS ---
   const questions = [
     // TIPO 1
     { t:1, q:"Busco hacer las cosas correctamente porque siento una presión interna por cumplir con lo que considero correcto." },
@@ -459,7 +419,7 @@
     { t:9, q:"Busco estabilidad y paz porque necesito sentirme en equilibrio." }
   ];
 
-  // --- 4. MOTOR DEL QUIZ ---
+  // --- QUIZ MOTOR ---
   function startQuiz() {
     user.name = document.getElementById('name').value;
     user.date = document.getElementById('date').value;
@@ -474,7 +434,6 @@
 
   function renderQ() {
     if (qIdx >= questions.length) { finish(); return; }
-    
     // Texto
     document.getElementById('q-text').innerText = questions[qIdx].q;
     // Barra
@@ -483,10 +442,8 @@
     document.getElementById('progress-text').innerText = pct + "%";
   }
 
-  // FUNCIÓN VOTE MODIFICADA: Ahora guarda los datos para tu algoritmo
   function vote(pts) { 
     const currentType = questions[qIdx].t;
-    // Calculamos qué número de ítem es (1 al 11) dentro de ese tipo
     const itemIdx = (qIdx % 11) + 1;
     
     if (!userResponses[currentType]) userResponses[currentType] = {};
@@ -496,7 +453,7 @@
     renderQ(); 
   }
 
-  // --- 5. TU ALGORITMO DE SCORING ---
+  // --- ALGORITMO PONDERADO ---
   function calcularResultadoEneagrama(responses) {
     const WEIGHTS = { CORE:1.5, STRATEGY:1, WING:0.75, INSTINCT:0.5 };
     const CORE_MIN_AVG = 3.6;
@@ -509,7 +466,6 @@
 
     function scoreType(items){
       let s=0;
-      // Validamos que existan respuestas para evitar errores
       for(let i=1;i<=5;i++) if(items[i]) s+=items[i]*WEIGHTS.CORE;
       for(let i=6;i<=8;i++) if(items[i]) s+=items[i]*WEIGHTS.STRATEGY;
       for(let i=9;i<=10;i++) if(items[i]) s+=items[i]*WEIGHTS.WING;
@@ -517,46 +473,35 @@
       return s;
     }
 
-    function coreStable(items){
-      let sum=0;
-      for(let i=1;i<=5;i++){
-        if(!items[i] || items[i]<CORE_MIN_ITEM) return false;
-        sum+=items[i];
-      }
-      return (sum/5)>=CORE_MIN_AVG;
-    }
-
     function detectWing(items){
       const a=items[9]||0, b=items[10]||0;
       if(a<3 && b<3) return "Ala poco marcada";
       if(Math.abs(a-b)>=WING_DIFF) return a>b?"Ala A":"Ala B";
-      return "Ala balanceada";
+      return "Ala balanceada"; 
     }
 
-    let scoresObj={}, stable={};
+    let scoresObj={};
     for(let t=1;t<=9;t++){
       scoresObj[t]=scoreType(responses[t]);
-      stable[t]=coreStable(responses[t]);
     }
 
     let sorted=Object.entries(scoresObj).sort((a,b)=>b[1]-a[1]);
     let top=sorted[0], second=sorted[1];
 
     if((top[1]-second[1])/top[1]<TIE_THRESHOLD){
-      // En caso de empate, tomamos el primero pero avisamos
+      // Empate técnico: devolvemos el primero pero marcamos el estado
       return {estado:"Empate", eneatipo:Number(top[0]), ala:"Indefinida"};
     }
 
     return { 
       estado:"Resultado válido", 
       eneatipo:Number(top[0]), 
-      perfilEstable:stable[top[0]], 
       ala:detectWing(responses[top[0]]), 
-      instinto:responses[top[0]][11]>=INSTINCT_MIN?INSTINCT_MAP[top[0]]:"No definido" 
+      instinto: (responses[top[0]][11]>=INSTINCT_MIN) ? INSTINCT_MAP[top[0]] : "No definido" 
     };
   }
 
-  // --- 6. CÁLCULOS ASTRONÓMICOS ---
+  // --- CÁLCULOS ASTRONÓMICOS ---
   function getZodiacFromLon(lon) {
     const signs = ["Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"];
     let deg = lon % 360; if(deg<0) deg+=360;
@@ -577,25 +522,33 @@
     return "Calculado por IA";
   }
 
-  // --- 7. FINALIZAR (Integración) ---
+  // --- FINALIZAR ---
   async function finish() {
     nav('view-loading');
-    
+    const debug = document.getElementById('loading-debug');
+
     try {
-        // Ejecutamos tu algoritmo
+        // 1. Ejecutar Algoritmo
         const resultado = calcularResultadoEneagrama(userResponses);
         let type = resultado.eneatipo;
         
-        // Convertimos Ala (A/B) a número para la API
         let tInt = parseInt(type);
         let prev = tInt===1?9:tInt-1;
         let next = tInt===9?1:tInt+1;
-        let alaNum = 0;
-        if (resultado.ala === "Ala A") alaNum = prev;
-        if (resultado.ala === "Ala B") alaNum = next;
+        let alaVal;
 
-        // Cálculos Astrales
+        if (resultado.ala === "Ala A") {
+            alaVal = prev; 
+        } else if (resultado.ala === "Ala B") {
+            alaVal = next; 
+        } else {
+            // "Balanceada", "Poco marcada" o "Indefinida"
+            alaVal = "Balanceada"; 
+        }
+
+        // 3. Cálculos Astrales
         const date = new Date(user.date + 'T' + user.time);
+        
         const sun = calculateSign('Sun', date);
         const moon = calculateSign('Moon', date);
         const merc = calculateSign('Mercury', date);
@@ -603,7 +556,7 @@
         const mars = calculateSign('Mars', date);
         const asc = "(Hora " + user.time + ")";
 
-        // Render Dashboard
+        // 4. Render Datos
         document.getElementById('r-name').innerText = user.name;
         document.getElementById('r-type').innerText = "Tipo " + type;
         document.getElementById('r-sun').innerText = sun;
@@ -611,14 +564,14 @@
         document.getElementById('r-mars').innerText = mars;
         document.getElementById('r-venus').innerText = ven;
 
-        // Llamada a la API
+        // 5. Llamada API
         const res = await fetch('/api/reporte', {
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
               nombre: user.name, 
               eneatipo: type, 
-              ala: alaNum, 
+              ala: alaVal, 
               instinto: resultado.instinto,
               astros: { sol:sun, luna:moon, asc:asc, mercurio:merc, venus:ven, marte:mars }
             })
@@ -631,9 +584,10 @@
         nav('view-result');
 
     } catch(e) {
-        document.getElementById('error-msg').innerText = "Hubo un error técnico. Recarga la página.";
+        debug.innerText = "Error: " + e.message;
+        document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
         document.getElementById('error-msg').style.display = 'block';
-        document.getElementById('ai-content').innerHTML = "<h3>Reporte generado internamente.</h3><p>Cálculos listos. Desbloquea para ver el detalle.</p>";
+        document.getElementById('ai-content').innerHTML = "<h3>Reporte generado internamente.</h3><p>Cálculos listos. Desbloquea para ver detalles.</p>";
         nav('view-result');
     }
   }
