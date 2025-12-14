@@ -40,7 +40,7 @@
         radial-gradient(circle at 80% 0%, rgba(46, 89, 65, 0.15), transparent 60%),
         radial-gradient(circle at 50% 100%, rgba(39, 78, 85, 0.15), transparent 50%),
         var(--bg-main);
-      transform: translateY(calc(var(--scroll) * -0.2px)); /* Efecto velocidad */
+      transform: translateY(calc(var(--scroll) * -0.2px));
       transition: transform 0.1s linear;
     }
 
@@ -79,7 +79,7 @@
     .feature-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--blue); }
     .feature-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
 
-    /* --- FORMULARIO (Estilo Tarjeta) --- */
+    /* --- FORMULARIO --- */
     .form-container { max-width: 600px; margin: 60px auto; background: var(--white); padding: 50px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
     .input-group { margin-bottom: 25px; text-align: left; position: relative; }
     label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--blue); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -91,20 +91,21 @@
     .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; transition: 0.2s; }
     .suggestion-item:hover { background: var(--bg-beige); color: var(--green); }
 
-    /* --- QUIZ --- */
+    /* --- QUIZ (Updated Layout) --- */
     .quiz-box { max-width: 800px; margin: 40px auto; text-align: center; padding-bottom: 100px; }
     .progress-bar { height: 8px; background: #ddd; border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--green); width: 0%; transition: width 0.4s ease; }
-    .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
-    .q-text { font-size: 1.6rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; }
     
- /* ESTILOS DE LA ESCALA (NUEVO) */
+    .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
+    .q-text { font-size: 1.5rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; min-height: 80px; }
+    
+    /* ESCALA VISUAL NUEVA (HORIZONTAL + ETIQUETAS) */
     .scale-container { 
       display: flex; 
-      justify-content: space-between; /* Los separa horizontalmente */
+      justify-content: space-between; 
       align-items: flex-start;
-      gap: 5px; 
-      margin-top: 40px; 
+      gap: 10px; 
+      margin-top: 30px; 
     }
     .scale-option { 
       flex: 1; 
@@ -112,9 +113,9 @@
       flex-direction: column; 
       align-items: center; 
       cursor: pointer; 
-      transition: 0.3s;
+      transition: 0.2s; opacity: 0.7; 
     }
-    .scale-option:hover { transform: translateY(-5px); }
+    .scale-option:hover { opacity: 1; transform: translateY(-5px); }
     
     .scale-circle {
       width: 50px; height: 50px; 
@@ -122,20 +123,17 @@
       border: 2px solid #ddd; 
       background: #fff;
       display: flex; align-items: center; justify-content: center; 
-      font-weight: 700; font-size: 1.2rem; color: #aaa; 
+      font-weight: 700; font-size: 1.2rem; color: #999; 
       margin-bottom: 10px;
-      transition: 0.3s;
+      transition: 0.2s;
     }
     .scale-label { 
-      font-size: 0.75rem; font-weight: 600; text-transform: uppercase; 
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; 
       color: #999; text-align: center; line-height: 1.2; 
     }
     
-    /* Efecto al pasar el mouse (HOVER) */
-    .scale-option:hover .scale-circle { 
-      border-color: var(--coral); background: var(--coral); color: white; 
-      box-shadow: 0 5px 15px rgba(255, 127, 102, 0.4);
-    }
+    /* Hover Effects */
+    .scale-option:hover .scale-circle { border-color: var(--coral); background: var(--coral); color: white; }
     .scale-option:hover .scale-label { color: var(--coral); }
 
     /* --- RESULTADO --- */
@@ -273,7 +271,7 @@
         <div class="scale-container">
           <div class="scale-option" onclick="vote(1)">
             <div class="scale-circle">1</div>
-            <div class="scale-label">Nunca</div>
+            <div class="scale-label">Nunca<br>me pasa</div>
           </div>
           <div class="scale-option" onclick="vote(2)">
             <div class="scale-circle">2</div>
@@ -285,26 +283,14 @@
           </div>
           <div class="scale-option" onclick="vote(4)">
             <div class="scale-circle">4</div>
-            <div class="scale-label">Frecuente</div>
+            <div class="scale-label">Frecuente<br>mente</div>
           </div>
           <div class="scale-option" onclick="vote(5)">
             <div class="scale-circle">5</div>
-            <div class="scale-label">Siempre</div>
+            <div class="scale-label">Totalmente<br>yo</div>
           </div>
         </div>
-      </div>
-        
-        <div class="likert-scale">
-          <div class="likert-btn" onclick="vote(1)">1</div>
-          <div class="likert-btn" onclick="vote(2)">2</div>
-          <div class="likert-btn" onclick="vote(3)">3</div>
-          <div class="likert-btn" onclick="vote(4)">4</div>
-          <div class="likert-btn" onclick="vote(5)">5</div>
-        </div>
-        <div class="likert-labels">
-          <span>No me representa</span>
-          <span>Totalmente</span>
-        </div>
+
       </div>
     </div>
   </div>
@@ -389,57 +375,6 @@
     document.documentElement.style.setProperty('--scroll', window.scrollY);
   });
 
-  // --- BASE DE DATOS: 100 PREGUNTAS (Riso-Hudson Style) ---
-  const questions = [
-      {t:1, q:"Siento una fuerte presión interna por corregir lo que está mal."},
-      {t:9, q:"A menudo digo 'sí' cuando quiero decir 'no' para evitar tensión."},
-      {t:3, q:"Me siento inquieto si no estoy logrando objetivos tangibles."},
-      {t:2, q:"Me esfuerzo por ser indispensable para las personas importantes."},
-      {t:5, q:"Me agota compartir mi tiempo y espacio privado con mucha gente."},
-      {t:6, q:"Suelo escanear el entorno buscando posibles peligros."},
-      {t:7, q:"Me aterra la idea de quedarme atrapado en la rutina."},
-      {t:8, q:"Tengo un radar para detectar quién tiene el poder en una sala."},
-      {t:4, q:"Siento que mis emociones son más profundas que las de la mayoría."},
-      {t:1, q:"Me irrito cuando veo a alguien rompiendo reglas."},
-      {t:3, q:"Cuando estoy estresado, apago mis emociones y trabajo más."},
-      {t:2, q:"Si me siento ignorado, puedo volverme quejoso."},
-      {t:6, q:"Ante la duda, busco la opinión de expertos."},
-      {t:5, q:"Cuando hay conflictos emocionales, me desconecto."},
-      {t:8, q:"Si alguien me presiona, presiono más fuerte de vuelta."},
-      {t:9, q:"Suelo posponer las tareas importantes que me dan ansiedad."},
-      {t:7, q:"Re-enmarco lo negativo para ver el lado positivo rápido."},
-      {t:4, q:"A veces me quedo atascado en la melancolía."},
-      {t:1, q:"Me enorgullece ser una persona íntegra y lógica."},
-      {t:2, q:"Soy esa persona a la que todos acuden con problemas."},
-      {t:3, q:"Es vital para mí causar una buena impresión."},
-      {t:4, q:"Me siento diferente, como si fuera un 'bicho raro'."},
-      {t:5, q:"Valoro el conocimiento por encima de las relaciones sociales."},
-      {t:6, q:"La lealtad es mi valor más sagrado."},
-      {t:7, q:"Soy una persona espontánea y con mucha energía mental."},
-      {t:8, q:"Me veo como un protector de los míos."},
-      {t:9, q:"Soy una persona fácil de llevar y calmada."},
-      {t:2, q:"Doy mucho más de lo que recibo en mis relaciones."},
-      {t:8, q:"Respeto a las personas directas, aunque sean rudas."},
-      {t:4, q:"Anhelo una conexión emocional intensa."},
-      {t:5, q:"Me siento invadido si me hacen muchas preguntas."},
-      {t:1, q:"Critico a los demás con la intención de mejorarlos."},
-      {t:6, q:"Me cuesta confiar plenamente en alguien nuevo."},
-      {t:3, q:"A veces mis relaciones son un medio para mis objetivos."},
-      {t:9, q:"Me adapto tanto que olvido lo que yo quiero."},
-      {t:7, q:"Me cuesta comprometerme si limita mi libertad."},
-      {t:6, q:"Mi mente da vueltas pensando en 'qué pasaría si...'."},
-      {t:1, q:"Tengo un 'juez interno' que critica todo lo que hago."},
-      {t:5, q:"Necesito entender el mundo antes de participar en él."},
-      {t:3, q:"Soy un camaleón: me adapto a lo que la situación requiere."},
-      {t:7, q:"Tengo muchas ideas brillantes pero me cuesta terminarlas."},
-      {t:2, q:"Intuyo las necesidades de los demás antes que ellos."},
-      {t:4, q:"Siento envidia de la felicidad simple de otros."},
-      {t:8, q:"Tengo poca paciencia con la incompetencia."},
-      {t:9, q:"Veo todos los puntos de vista y me cuesta tomar partido."},
-      // ... (He puesto las primeras 45, el script soporta 100)
-      // (Por brevedad en la respuesta, aquí irían las otras 55 preguntas que te pasé antes)
-  ];
-
   // --- NAVEGACIÓN ---
   function nav(id) {
     document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
@@ -458,6 +393,7 @@
       try {
         const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`);
         const data = await res.json();
+        
         box.innerHTML = '';
         if(data.length > 0) {
           box.style.display = 'block';
@@ -487,17 +423,15 @@
     user.date = document.getElementById('date').value;
     user.time = document.getElementById('time').value;
     if(!user.lat) { alert("Selecciona una ciudad de la lista."); return; }
-    
     nav('view-quiz');
     renderQ();
   }
 
- 
   function renderQ() {
     if (qIdx >= questions.length) { finish(); return; }
     document.getElementById('q-text').innerText = questions[qIdx].q;
     document.getElementById('progress-fill').style.width = ((qIdx/questions.length)*100) + "%";
-  }
+    // IMPORTANTE: Ya no re-generamos el HTML de los botones porque es estático
   }
 
   function vote(pts) {
@@ -511,8 +445,8 @@
     nav('view-loading');
 
     // 1. ENEAGRAMA
-    let max=0, type=1;
-    for(let t in scores){ if(scores[t]>max){ max=scores[t]; type=t; } }
+    let max = 0, type = 1;
+    for (let t in scores) { if (scores[t] > max) { max = scores[t]; type = t; } }
     
     // Ala
     let tInt = parseInt(type);
@@ -524,15 +458,7 @@
     const dateObj = new Date(user.date + 'T' + user.time);
     const observer = new Astronomy.Observer(user.lat, user.lon, 0);
 
-    // Función auxiliar para obtener signo tropical
-    const getSign = (body) => {
-      // Nota: Astronomy Engine da coordenadas ecuatoriales.
-      // Para simplificar sin librerías de conversión masivas, usaremos un cálculo aproximado
-      // basado en la longitud eclíptica del sol para la fecha y ajustes fijos para planetas (simulación realista)
-      // En producción real usaríamos una librería de Efemérides completa.
-      // Aquí usaremos la lógica del Sol real + IA para interpretar los detalles finos.
-      return "Calculado";
-    };
+    const getSign = (body) => { return "Calculado"; };
 
     // Sol Real (Matemático)
     let d = dateObj.getDate(), m = dateObj.getMonth()+1;
@@ -567,7 +493,6 @@
     } catch (e) {
       document.getElementById('error-msg').style.display = 'block';
       document.getElementById('error-msg').innerText = "Error: " + e.message;
-      // Fallback
       document.getElementById('ai-content').innerHTML = "<h3>Tu Mapa</h3><p>El reporte se ha generado internamente. Desbloquea para ver los detalles.</p>";
     }
 
@@ -595,6 +520,117 @@
       document.getElementById('ai-content').classList.remove('blur-content');
     }
   }
+
+  // --- BASE DE DATOS: 90 PREGUNTAS (Riso-Hudson Style - 10 por tipo) ---
+  const questions = [
+      // TIPO 1: Reforma
+      {t:1, q:"Siento una fuerte presión interna por corregir lo que está mal."},
+      {t:1, q:"Me irrito cuando veo a alguien rompiendo reglas o siendo irresponsable."},
+      {t:1, q:"Tengo un 'juez interno' que critica constantemente lo que hago."},
+      {t:1, q:"Me enorgullece ser una persona íntegra, lógica y objetiva."},
+      {t:1, q:"Critico a los demás con la intención de enseñarles a mejorar."},
+      {t:1, q:"Me cuesta relajarme si sé que hay tareas pendientes o imperfectas."},
+      {t:1, q:"El orden externo me da paz mental; el caos me altera."},
+      {t:1, q:"Siempre trato de perfeccionar todo lo que toco."},
+      {t:1, q:"Me cuesta mucho delegar porque creo que los detalles se perderán."},
+      {t:1, q:"Temo ser considerado una persona 'mala' o defectuosa."},
+
+      // TIPO 2: Ayuda
+      {t:2, q:"Me esfuerzo por ser indispensable para las personas importantes en mi vida."},
+      {t:2, q:"Intuyo las necesidades de los demás antes de que ellos las sepan."},
+      {t:2, q:"Me siento culpable si atiendo mis necesidades antes que las de otros."},
+      {t:2, q:"Soy muy afectuoso físicamente y busco cercanía."},
+      {t:2, q:"Necesito sentir que me necesitan."},
+      {t:2, q:"Me cuesta muchísimo pedir ayuda, prefiero ser quien la da."},
+      {t:2, q:"Si me siento ignorado, puedo volverme emocional o quejoso."},
+      {t:2, q:"Doy mucho más de lo que recibo en mis relaciones."},
+      {t:2, q:"En el fondo, creo que para ser amado debo ser útil."},
+      {t:2, q:"A menudo siento que nadie me cuida a mí como yo cuido a los demás."},
+
+      // TIPO 3: Logro
+      {t:3, q:"Me siento inquieto si no estoy logrando objetivos tangibles."},
+      {t:3, q:"Es vital para mí causar una buena impresión y ser admirado."},
+      {t:3, q:"Soy un camaleón: me adapto a lo que la situación requiere para tener éxito."},
+      {t:3, q:"Me identifico totalmente con mi trabajo o mis logros."},
+      {t:3, q:"Soy muy competitivo y me gusta ganar."},
+      {t:3, q:"Cuando estoy estresado, apago mis emociones y me pongo a trabajar."},
+      {t:3, q:"Me aterra la idea de fracasar y que me vean sin valor."},
+      {t:3, q:"Soy eficiente y me molesta la gente lenta."},
+      {t:3, q:"A veces siento que engaño a los demás con la imagen que proyecto."},
+      {t:3, q:"Siempre estoy fijándome nuevas metas."},
+
+      // TIPO 4: Individualista
+      {t:4, q:"Siento que mis emociones son más profundas y complejas que las de la mayoría."},
+      {t:4, q:"A menudo me siento diferente, incomprendido o como un 'bicho raro'."},
+      {t:4, q:"Anhelo una conexión emocional intensa y profunda."},
+      {t:4, q:"Siento envidia de la felicidad simple y despreocupada de otros."},
+      {t:4, q:"Expreso mi identidad de forma única y a veces dramática."},
+      {t:4, q:"A veces me quedo atascado en la melancolía o el pasado."},
+      {t:4, q:"Me repugna lo ordinario, vulgar o sin significado."},
+      {t:4, q:"Siento que me falta algo esencial que los demás parecen tener."},
+      {t:4, q:"Idealizo lo que está lejos y me desencanto de lo que tengo cerca."},
+      {t:4, q:"Soy muy sensible a la estética y el simbolismo."},
+
+      // TIPO 5: Investigador
+      {t:5, q:"Me agota compartir mi tiempo y espacio privado con mucha gente."},
+      {t:5, q:"Necesito entender el mundo teóricamente antes de participar en él."},
+      {t:5, q:"Valoro el conocimiento y la competencia por encima de las relaciones sociales."},
+      {t:5, q:"Me siento invadido si me hacen demasiadas preguntas personales."},
+      {t:5, q:"Prefiero observar desde afuera que ser el centro de atención."},
+      {t:5, q:"Soy muy reservado con mi vida y mis emociones."},
+      {t:5, q:"Acumulo información para sentirme seguro y preparado."},
+      {t:5, q:"Me desconecto de mis sentimientos en el momento para analizarlos después."},
+      {t:5, q:"Soy minimalista con mis necesidades para no depender de nadie."},
+      {t:5, q:"A veces me siento invisible y me gusta que sea así."},
+
+      // TIPO 6: Leal
+      {t:6, q:"Suelo escanear el entorno buscando posibles peligros o amenazas."},
+      {t:6, q:"Ante la duda, busco la opinión de expertos o amigos antes de decidir."},
+      {t:6, q:"Me cuesta confiar plenamente en alguien nuevo hasta que me demuestran lealtad."},
+      {t:6, q:"Mi mente da vueltas pensando en 'qué pasaría si...' (escenarios negativos)."},
+      {t:6, q:"La lealtad es mi valor más sagrado; defiendo a mi grupo."},
+      {t:6, q:"Tengo una relación de amor/odio con la autoridad."},
+      {t:6, q:"Necesito certezas, reglas claras y garantías."},
+      {t:6, q:"Soy muy responsable, pero la ansiedad me acompaña a menudo."},
+      {t:6, q:"Suelo ponerme en el peor escenario para estar preparado."},
+      {t:6, q:"Me siento más seguro siendo parte de un equipo que solo."},
+
+      // TIPO 7: Entusiasta
+      {t:7, q:"Me aburro rápido y siempre busco planes nuevos y estimulantes."},
+      {t:7, q:"Quiero divertirme y disfrutar la vida al máximo."},
+      {t:7, q:"Re-enmarco lo negativo para ver el lado positivo rápidamente."},
+      {t:7, q:"Me cuesta comprometerme si siento que eso limita mi libertad."},
+      {t:7, q:"Tengo muchas ideas brillantes y empiezo proyectos, pero me cuesta terminarlos."},
+      {t:7, q:"Soy una persona espontánea y con mucha energía mental."},
+      {t:7, q:"Me aterra la idea de quedarme atrapado en el dolor o la rutina."},
+      {t:7, q:"Siempre estoy planificando el futuro y lo que haré después."},
+      {t:7, q:"Siento que la vida es un buffet y quiero probarlo todo."},
+      {t:7, q:"Evito las conversaciones densas o emocionalmente pesadas."},
+
+      // TIPO 8: Desafiador
+      {t:8, q:"Tengo un radar para detectar quién tiene el poder en una sala."},
+      {t:8, q:"No tengo miedo de confrontar si es necesario para defender la verdad."},
+      {t:8, q:"Si alguien me presiona, mi reacción automática es presionar más fuerte de vuelta."},
+      {t:8, q:"Me veo como un protector de los míos, pero exijo lealtad."},
+      {t:8, q:"Respeto a las personas directas y fuertes, aunque sean rudas."},
+      {t:8, q:"Tengo poca paciencia con la incompetencia o la indecisión."},
+      {t:8, q:"Me cuesta mostrar vulnerabilidad porque siento que la usarán en mi contra."},
+      {t:8, q:"Soy un líder natural y me gusta tener el control."},
+      {t:8, q:"Hablo fuerte y directo, a veces intimido sin querer."},
+      {t:8, q:"Todo lo hago con intensidad: o todo o nada."},
+
+      // TIPO 9: Pacificador
+      {t:9, q:"Evito los conflictos a toda costa; prefiero ceder para tener paz."},
+      {t:9, q:"A menudo digo 'sí' cuando quiero decir 'no' para evitar tensión."},
+      {t:9, q:"Me adapto tanto a los demás que a veces olvido lo que yo quiero."},
+      {t:9, q:"Suelo posponer las tareas importantes que me generan ansiedad."},
+      {t:9, q:"Soy una persona fácil de llevar, calmada y aceptadora."},
+      {t:9, q:"Veo todos los puntos de vista y me cuesta mucho tomar partido."},
+      {t:9, q:"Cuando hay problemas, tiendo a evadirme o 'narcotizarme' (TV, comida, dormir)."},
+      {t:9, q:"Me siento incómodo si soy el centro de atención o hay discordia."},
+      {t:9, q:"Soy muy paciente y buen oyente."},
+      {t:9, q:"A veces siento que mi presencia no importa demasiado."}
+  ];
 </script>
 
 </body>
