@@ -3,109 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AXIS | Conocerte nunca fue tan fácil</title>
+  <title>AXIS | Tu Mapa Interno</title>
   
   <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- PALETA DE COLORES AXIS --- */
+    /* --- ESTILOS --- */
     :root {
-      --bg-main: #F4EFE9;       /* Beige claro */
-      --bg-alt: #FAF8F3;        /* Crema suave */
-      --green: #2E5941;         /* Verde bosque (Primario) */
-      --blue: #274E55;          /* Azul petróleo (Secundario) */
-      --coral: #FF7F66;         /* Coral suave (Acento) */
-      --coral-hover: #E06550;
-      --text: #3A3A3A;          /* Gris cálido */
-      --white: #FFFFFF;
-      --scroll: 0;              /* Variable para Parallax */
+      --bg-main: #F4EFE9; --bg-alt: #FAF8F3;
+      --green: #2E5941; --blue: #274E55;
+      --coral: #FF7F66; --coral-hover: #E06550;
+      --text: #3A3A3A; --white: #FFFFFF;
+      --shadow: 0 10px 30px rgba(39, 78, 85, 0.08);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-    /* --- PARALLAX BACKGROUND --- */
+    /* PARALLAX */
     .parallax-bg {
       position: fixed; inset: 0; z-index: -1; pointer-events: none;
-      background: 
-        radial-gradient(circle at 10% 20%, rgba(255, 127, 102, 0.15), transparent 55%),
-        radial-gradient(circle at 80% 0%, rgba(46, 89, 65, 0.15), transparent 60%),
-        radial-gradient(circle at 50% 100%, rgba(39, 78, 85, 0.15), transparent 50%),
-        var(--bg-main);
+      background: radial-gradient(circle at 10% 20%, rgba(255,127,102,0.1), transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(46,89,65,0.1), transparent 50%), var(--bg-main);
       transform: translateY(calc(var(--scroll) * -0.2px));
-      transition: transform 0.1s linear;
     }
 
-    /* --- UTILIDADES --- */
+    /* COMPONENTES */
     .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
     .hidden { display: none !important; }
-    .fade-in { animation: fadeIn 0.8s ease forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.6s ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- TIPOGRAFÍA --- */
     h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--blue); }
-    h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 600; }
-    h2 { font-size: 2.2rem; margin-bottom: 1rem; color: var(--green); }
-    p { margin-bottom: 1.5rem; font-size: 1.1rem; color: #555; }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; font-weight: 600; }
+    .highlight { color: var(--coral); display: inline-block; }
     
-    .highlight { color: var(--coral); position: relative; display: inline-block; }
-    
-    /* --- BOTONES --- */
     .btn {
-      background: var(--coral); color: var(--white); border: none; padding: 18px 40px;
-      border-radius: 50px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;
-      cursor: pointer; transition: all 0.3s ease; display: inline-block; box-shadow: 0 10px 25px rgba(255, 127, 102, 0.3);
+      background: var(--coral); color: white; border: none; padding: 18px 40px;
+      border-radius: 50px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; 
+      cursor: pointer; transition: 0.3s; box-shadow: 0 8px 20px rgba(255,127,102,0.25); text-transform: uppercase; letter-spacing: 1px;
+      display: inline-block; text-align: center;
     }
-    .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 15px 30px rgba(255, 127, 102, 0.4); }
+    .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 12px 25px rgba(255,127,102,0.35); }
 
-    /* --- HEADER --- */
-    header { padding: 30px 0; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--green); cursor: pointer; display: flex; align-items: center; gap: 10px; }
-    .logo-icon { width: 40px; height: 40px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    /* SECCIONES */
+    header { padding: 30px 0; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--green); font-size: 1.5rem; cursor: pointer; }
+    .logo-icon { width: 35px; height: 35px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-    /* --- SECCIONES LANDING --- */
-    .hero { padding: 100px 0; text-align: left; min-height: 80vh; display: flex; align-items: center; }
-    
+    .hero { padding: 80px 0; min-height: 70vh; display: flex; align-items: center; }
     .features { padding: 80px 0; background: var(--white); border-radius: 30px; margin-bottom: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.03); }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
-    .feature-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--blue); }
+    .feature-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
     .feature-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
 
-    /* --- FORMULARIO --- */
-    .form-container { max-width: 600px; margin: 60px auto; background: var(--white); padding: 50px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
-    .input-group { margin-bottom: 25px; text-align: left; position: relative; }
-    label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--blue); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
-    input { width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: var(--bg-alt); transition: 0.3s; }
-    input:focus { border-color: var(--green); outline: none; background: #fff; }
-
-    /* Buscador Ciudad */
+    /* FORMULARIO */
+    .form-box { background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); max-width: 600px; margin: 40px auto; }
+    .input-group { margin-bottom: 20px; text-align: left; position: relative; }
+    label { font-weight: 600; font-size: 0.9rem; color: var(--blue); display: block; margin-bottom: 5px; }
+    input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: var(--bg-alt); }
     .suggestions { position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ddd; border-radius: 8px; z-index: 100; max-height: 200px; overflow-y: auto; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-    .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; transition: 0.2s; }
-    .suggestion-item:hover { background: var(--bg-beige); color: var(--green); }
+    .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+    .suggestion-item:hover { background: var(--bg-main); color: var(--green); }
 
-    /* --- QUIZ (Updated Layout) --- */
-    .quiz-box { max-width: 800px; margin: 40px auto; text-align: center; padding-bottom: 100px; }
-    .progress-bar { height: 8px; background: #ddd; border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--green); width: 0%; transition: width 0.4s ease; }
+    /* QUIZ Y ESCALA HORIZONTAL */
+    .quiz-container { max-width: 800px; margin: 0 auto; text-align: center; padding: 60px 0; }
+    .progress-bar { height: 6px; background: #ddd; border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 0.3s; }
     
     .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
     .q-text { font-size: 1.5rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; min-height: 80px; }
     
-    /* ESCALA VISUAL NUEVA (HORIZONTAL + ETIQUETAS) */
+    /* LA ESCALA HORIZONTAL (Fix) */
     .scale-container { 
       display: flex; 
       justify-content: space-between; 
       align-items: flex-start;
       gap: 10px; 
-      margin-top: 30px; 
+      margin-top: 20px; 
+      width: 100%;
     }
     .scale-option { 
       flex: 1; 
@@ -113,7 +89,7 @@
       flex-direction: column; 
       align-items: center; 
       cursor: pointer; 
-      transition: 0.2s; opacity: 0.7; 
+      transition: 0.2s; opacity: 0.8; 
     }
     .scale-option:hover { opacity: 1; transform: translateY(-5px); }
     
@@ -136,33 +112,21 @@
     .scale-option:hover .scale-circle { border-color: var(--coral); background: var(--coral); color: white; }
     .scale-option:hover .scale-label { color: var(--coral); }
 
-    /* --- RESULTADO --- */
+    /* RESULTADO */
     .result-header { text-align: center; margin-bottom: 40px; }
-    .astro-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 40px; }
-    .astro-card { background: var(--white); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(0,0,0,0.05); }
-    .astro-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #999; display: block; margin-bottom: 5px; }
-    .astro-data { font-size: 1.2rem; font-weight: 700; color: var(--green); }
-    .locked { filter: blur(4px); opacity: 0.5; }
-
-    /* --- REPORTE IA & PAYWALL --- */
-    .report-wrapper { position: relative; background: var(--white); padding: 50px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); text-align: left; }
-    .ai-text h3 { color: var(--green); margin-top: 30px; border-bottom: 2px solid var(--bg-beige); padding-bottom: 10px; }
-    .ai-text p { line-height: 1.8; color: #444; }
-    .blur-content { filter: blur(8px); user-select: none; opacity: 0.6; pointer-events: none; }
-
-    .paywall-box {
-      position: absolute; top: 150px; left: 0; width: 100%; height: calc(100% - 150px);
-      background: linear-gradient(to bottom, rgba(255,255,255,0.4), #FFF 80%);
-      display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 50px; z-index: 10;
-    }
+    .astro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .astro-card { background: var(--white); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid rgba(0,0,0,0.05); }
+    .astro-label { font-size: 0.7rem; color: #888; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
+    .astro-val { font-size: 1.1rem; font-weight: 700; color: var(--blue); }
     
-    .locked-features { text-align: left; background: rgba(255,255,255,0.9); padding: 30px; border-radius: 15px; border: 1px solid #eee; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-    .locked-features li { margin-bottom: 10px; color: var(--blue); font-weight: 500; list-style: none; }
-
-    /* --- LOADING --- */
-    .loader { width: 60px; height: 60px; border: 5px solid #eee; border-top: 5px solid var(--green); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 30px; }
+    .report-box { position: relative; background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); }
+    .ai-text { color: #444; line-height: 1.8; text-align: left; }
+    .ai-text h3 { color: var(--green); margin-top: 25px; border-bottom: 2px solid var(--bg-main); padding-bottom: 5px; }
+    .blur { filter: blur(6px); opacity: 0.6; user-select: none; pointer-events: none; }
+    .paywall { position: absolute; top: 100px; left: 0; width: 100%; height: calc(100% - 100px); background: linear-gradient(to bottom, rgba(255,255,255,0.4), #fff 90%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 50px; z-index: 10; }
+    
+    .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--coral); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
   </style>
 </head>
 <body>
@@ -178,27 +142,26 @@
   </header>
 
   <div id="view-home" class="fade-in">
-    
     <section class="hero">
       <div>
-        <span class="badge">Test Eneagrama + Carta Astral</span>
+        <span class="badge" style="background:rgba(46,89,65,0.1); color:var(--green); padding:5px 15px; border-radius:20px; font-weight:700; font-size:0.8rem; text-transform:uppercase;">Test Eneagrama + Carta Astral</span>
         <h1>Conocerte nunca fue<br><span class="highlight">tan fácil.</span></h1>
-        <p style="font-size: 1.3rem; max-width: 600px;">
+        <p style="font-size:1.2rem; max-width:600px; margin-bottom:30px; opacity:0.8;">
           Un test rápido y preciso que te explica cómo funcionás y qué te mueve, cruzando la psicología del <strong>Eneagrama</strong> con la precisión de tu <strong>Carta Astral</strong>.
         </p>
         <button class="btn" onclick="nav('view-form')">HACER EL TEST</button>
-        <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.7;">Toma aprox. 10-12 minutos.</p>
+        <p style="margin-top:15px; font-size:0.9rem; opacity:0.6;">Toma aprox. 10-12 minutos.</p>
       </div>
     </section>
 
     <section class="features">
       <div class="container">
-        <h2 style="text-align: center; margin-bottom: 50px;">Cómo funciona</h2>
+        <h2 style="text-align:center; margin-bottom:50px;">Cómo funciona</h2>
         <div class="grid-3">
           <div class="feature-card">
             <span class="feature-icon">1️⃣</span>
             <h3>Respondés</h3>
-            <p>100 preguntas diseñadas para detectar tu tipo principal, alas y subtipos instintivos.</p>
+            <p>Preguntas profundas diseñadas para detectar tus motivaciones inconscientes.</p>
           </div>
           <div class="feature-card">
             <span class="feature-icon">2️⃣</span>
@@ -213,56 +176,35 @@
         </div>
       </div>
     </section>
-
-    <section style="text-align: center; padding: 80px 0;">
-      <h2 style="color: var(--blue);">Toda tu claridad en un solo test.</h2>
-      <p>Sin misticismos. Solo autoconocimiento práctico.</p>
-      <button class="btn" onclick="nav('view-form')">COMENZAR AHORA</button>
-    </section>
-
-    <footer style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(0,0,0,0.1); font-size: 0.8rem; color: #999;">
-      <p>© 2025 AXIS. Todos los derechos reservados.</p>
-      <p>Contacto | Privacidad</p>
-    </footer>
   </div>
 
   <div id="view-form" class="hidden fade-in">
-    <div class="form-container">
-      <h2 style="text-align: center; margin-bottom: 10px;">Tus Coordenadas</h2>
-      <p style="text-align: center; margin-bottom: 30px;">Necesarios para calcular tu carta astral.</p>
+    <div class="form-box">
+      <h2 style="text-align:center">Tus Coordenadas</h2>
+      <p style="text-align:center; margin-bottom:30px; opacity:0.7;">Necesarios para calcular tu carta astral.</p>
       
-      <form onsubmit="startQuiz(event)">
+      <div id="user-form-inputs">
         <div class="input-group">
           <label>Nombre</label>
           <input type="text" id="name" required placeholder="Tu nombre">
         </div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-          <div class="input-group">
-            <label>Fecha</label>
-            <input type="date" id="date" required>
-          </div>
-          <div class="input-group">
-            <label>Hora Exacta</label>
-            <input type="time" id="time" required>
-          </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+          <div class="input-group"><label>Fecha</label><input type="date" id="date" required></div>
+          <div class="input-group"><label>Hora</label><input type="time" id="time" required></div>
         </div>
-
         <div class="input-group">
           <label>Lugar de Nacimiento</label>
-          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." autocomplete="off" oninput="handleCityInput(this.value)">
-          <input type="hidden" id="lat">
-          <input type="hidden" id="lon">
+          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." oninput="handleCityInput(this.value)" autocomplete="off">
+          <input type="hidden" id="lat"><input type="hidden" id="lon">
           <div id="suggestions" class="suggestions"></div>
         </div>
-
-        <button class="btn" style="width: 100%; margin-top: 10px;">IR A LAS PREGUNTAS</button>
-      </form>
+        <button class="btn" style="width:100%; margin-top:10px;" onclick="startQuiz()">IR A LAS PREGUNTAS</button>
+      </div>
     </div>
   </div>
 
   <div id="view-quiz" class="hidden fade-in">
-    <div class="quiz-box">
+    <div class="quiz-container">
       <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
       
       <div class="question-card">
@@ -295,343 +237,44 @@
     </div>
   </div>
 
-  <div id="view-loading" class="hidden fade-in" style="text-align: center; padding: 150px 0;">
+  <div id="view-loading" class="hidden fade-in" style="text-align:center; padding:100px 0;">
     <div class="loader"></div>
-    <h3 style="color: var(--blue);">Analizando patrones...</h3>
+    <h3 style="color:var(--blue)">Analizando patrones...</h3>
     <p>Cruzando tu Eneagrama con tus posiciones planetarias.</p>
+    <p id="loading-debug" style="font-size:0.8rem; color:red; margin-top:20px;"></p>
   </div>
 
   <div id="view-result" class="hidden fade-in">
     <div class="result-header">
-      <span class="badge" style="background: #E6F4EA; color: #1E8E3E;">✓ REPORTE LISTO</span>
-      <h2 style="margin-top: 15px;">Tu Mapa AXIS</h2>
-      <p>Hola <strong id="res-name"></strong>, aquí está tu diseño único.</p>
+      <span class="badge" style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">✓ REPORTE LISTO</span>
+      <h2 style="margin-top:15px;">Tu Mapa AXIS</h2>
+      <p>Hola <strong id="r-name"></strong>, aquí está tu diseño único.</p>
     </div>
 
-    <div class="astro-dashboard">
-      <div class="astro-card" style="background: var(--blue); color: white;">
-        <span class="astro-title" style="color: rgba(255,255,255,0.7);">ENEATIPO</span>
-        <div class="astro-data" id="res-type" style="color: white;">...</div>
-      </div>
-      <div class="astro-card">
-        <span class="astro-title">SOL (ESENCIA)</span>
-        <div class="astro-data" id="res-sun">...</div>
-      </div>
-      <div class="astro-card" style="opacity: 0.6;">
-        <span class="astro-title">LUNA</span>
-        <div class="astro-data">🔒</div>
-      </div>
-      <div class="astro-card" style="opacity: 0.6;">
-        <span class="astro-title">ASCENDENTE</span>
-        <div class="astro-data">🔒</div>
-      </div>
-      <div class="astro-card" style="opacity: 0.6;">
-        <span class="astro-title">MARTE</span>
-        <div class="astro-data">🔒</div>
-      </div>
-      <div class="astro-card" style="opacity: 0.6;">
-        <span class="astro-title">VENUS</span>
-        <div class="astro-data">🔒</div>
-      </div>
+    <div class="astro-grid">
+      <div class="astro-card" style="background:var(--blue);"><span class="astro-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span><div class="astro-val" style="color:white" id="r-type">...</div></div>
+      <div class="astro-card"><span class="astro-label">SOL</span><div class="astro-val" id="r-sun">...</div></div>
+      <div class="astro-card"><span class="astro-label">LUNA</span><div class="astro-val" id="r-moon">...</div></div>
+      <div class="astro-card" style="opacity:0.6"><span class="astro-label">ASCENDENTE</span><div class="astro-val">🔒</div></div>
+      <div class="astro-card" style="opacity:0.6"><span class="astro-label">MARTE</span><div class="astro-val" id="r-mars">...</div></div>
+      <div class="astro-card" style="opacity:0.6"><span class="astro-label">VENUS</span><div class="astro-val" id="r-venus">...</div></div>
     </div>
 
-    <div class="report-wrapper">
-      <div id="ai-content" class="ai-text blur-content">
-        <h3>Tu Arquitectura Psicológica</h3>
-        <p>Generando análisis detallado...</p>
-        <h3>El Cruce Astral</h3>
-        <p>Calculando influencias planetarias...</p>
+    <div class="report-box">
+      <div id="ai-content" class="ai-text blur">
+        <h3>Tu Arquitectura</h3><p>Generando análisis profundo...</p>
+        <h3>Cruce Astral</h3><p>Calculando influencias...</p>
       </div>
-
-      <div id="paywall" class="paywall-box">
-        <h3 style="color: var(--blue); margin-bottom: 10px;">Desbloquear Lectura Completa</h3>
-        
-        <ul class="locked-features">
-          <li>🔒 Tu <strong>Ala Dominante</strong> y Subtipo</li>
-          <li>🔒 Tus <strong>6 Astros</strong> calculados (Sol, Luna, Asc, Marte, Venus, Mercurio)</li>
+      <div id="paywall" class="paywall">
+        <h3 style="color:var(--blue)">Desbloquear Reporte Completo</h3>
+        <ul style="text-align:left; margin-bottom:20px; color:#555; list-style:none;">
+          <li>🔒 <strong>Ala Dominante</strong> y Subtipo</li>
+          <li>🔒 Tus <strong>6 Astros</strong> calculados</li>
           <li>🔒 Análisis de <strong>Compatibilidad Interna</strong></li>
           <li>🔒 Consejo de <strong>Integración</strong></li>
         </ul>
-
-        <div style="background: var(--green); color: white; padding: 8px 20px; border-radius: 50px; font-weight: 700; font-size: 1.1rem; margin-bottom: 20px;">$5.000 ARS</div>
-        <button class="btn" onclick="unlockReport()">DESBLOQUEAR AHORA</button>
-        <p style="font-size: 0.8rem; color: #999; margin-top: 15px;">Pago único. Acceso inmediato.</p>
+        <div style="background:var(--green); color:white; padding:8px 20px; border-radius:50px; font-weight:700; margin-bottom:15px;">$5.000 ARS</div>
+        <button class="btn" onclick="unlock()">DESBLOQUEAR AHORA</button>
       </div>
     </div>
-    
-    <div id="error-msg" style="color: red; text-align: center; margin-top: 20px; display: none;"></div>
-  </div>
-
-</div>
-
-<script>
-  // --- ESTADO ---
-  let user = { name: "", date: "", time: "", city: "", lat: 0, lon: 0 };
-  let scores = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
-  let qIdx = 0;
-
-  // --- PARALLAX ---
-  window.addEventListener('scroll', () => {
-    document.documentElement.style.setProperty('--scroll', window.scrollY);
-  });
-
-  // --- NAVEGACIÓN ---
-  function nav(id) {
-    document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-    window.scrollTo(0,0);
-  }
-
-  // --- BUSCADOR DE CIUDAD (Nominatim API) ---
-  let debounce;
-  async function handleCityInput(query) {
-    clearTimeout(debounce);
-    const box = document.getElementById('suggestions');
-    if (query.length < 3) { box.style.display = 'none'; return; }
-
-    debounce = setTimeout(async () => {
-      try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`);
-        const data = await res.json();
-        
-        box.innerHTML = '';
-        if(data.length > 0) {
-          box.style.display = 'block';
-          data.forEach(place => {
-            const div = document.createElement('div');
-            div.className = 'suggestion-item';
-            div.innerText = place.display_name;
-            div.onclick = () => selectCity(place);
-            box.appendChild(div);
-          });
-        }
-      } catch (e) { console.error(e); }
-    }, 300);
-  }
-
-  function selectCity(place) {
-    document.getElementById('city-input').value = place.display_name;
-    user.lat = parseFloat(place.lat);
-    user.lon = parseFloat(place.lon);
-    document.getElementById('suggestions').style.display = 'none';
-  }
-
-  // --- QUIZ ---
-  function startQuiz(e) {
-    e.preventDefault();
-    user.name = document.getElementById('name').value;
-    user.date = document.getElementById('date').value;
-    user.time = document.getElementById('time').value;
-    if(!user.lat) { alert("Selecciona una ciudad de la lista."); return; }
-    nav('view-quiz');
-    renderQ();
-  }
-
-  function renderQ() {
-    if (qIdx >= questions.length) { finish(); return; }
-    document.getElementById('q-text').innerText = questions[qIdx].q;
-    document.getElementById('progress-fill').style.width = ((qIdx/questions.length)*100) + "%";
-    // IMPORTANTE: Ya no re-generamos el HTML de los botones porque es estático
-  }
-
-  function vote(pts) {
-    scores[questions[qIdx].t] += pts;
-    qIdx++;
-    renderQ();
-  }
-
-  // --- FINALIZAR ---
-  async function finish() {
-    nav('view-loading');
-
-    // 1. ENEAGRAMA
-    let max = 0, type = 1;
-    for (let t in scores) { if (scores[t] > max) { max = scores[t]; type = t; } }
-    
-    // Ala
-    let tInt = parseInt(type);
-    let prev = tInt===1?9:tInt-1;
-    let next = tInt===9?1:tInt+1;
-    let wing = scores[prev] > scores[next] ? prev : next;
-
-    // 2. ASTROLOGÍA (Calculadora Real)
-    const dateObj = new Date(user.date + 'T' + user.time);
-    const observer = new Astronomy.Observer(user.lat, user.lon, 0);
-
-    const getSign = (body) => { return "Calculado"; };
-
-    // Sol Real (Matemático)
-    let d = dateObj.getDate(), m = dateObj.getMonth()+1;
-    let sunSign = getZodiac(d, m);
-
-    // 3. DATOS PARA IA
-    const astros = {
-      sol: sunSign,
-      luna: "Calculado por IA (Hora " + user.time + ")",
-      asc: "Calculado por IA (Lat " + user.lat + ")",
-      mercurio: "Calculado por IA",
-      venus: "Calculado por IA",
-      marte: "Calculado por IA"
-    };
-
-    // Render Gratis
-    document.getElementById('res-name').innerText = user.name;
-    document.getElementById('res-type').innerText = "Tipo " + type;
-    document.getElementById('res-sun').innerText = sunSign;
-
-    // 4. LLAMADA A LA API (Vercel)
-    try {
-      const res = await fetch('/api/reporte', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre: user.name, eneatipo: type, ala: wing, astros: astros })
-      });
-      const data = await res.json();
-      if(data.error) throw new Error(data.error);
-      
-      document.getElementById('ai-content').innerHTML = data.reporte;
-    } catch (e) {
-      document.getElementById('error-msg').style.display = 'block';
-      document.getElementById('error-msg').innerText = "Error: " + e.message;
-      document.getElementById('ai-content').innerHTML = "<h3>Tu Mapa</h3><p>El reporte se ha generado internamente. Desbloquea para ver los detalles.</p>";
-    }
-
-    nav('view-result');
-  }
-
-  function getZodiac(d,m){
-    if((m==1&&d<=19)||(m==12&&d>=22))return "Capricornio";
-    if((m==1&&d>=20)||(m==2&&d<=18))return "Acuario";
-    if((m==2&&d>=19)||(m==3&&d<=20))return "Piscis";
-    if((m==3&&d>=21)||(m==4&&d<=19))return "Aries";
-    if((m==4&&d>=20)||(m==5&&d<=20))return "Tauro";
-    if((m==5&&d>=21)||(m==6&&d<=20))return "Géminis";
-    if((m==6&&d>=21)||(m==7&&d<=22))return "Cáncer";
-    if((m==7&&d>=23)||(m==8&&d<=22))return "Leo";
-    if((m==8&&d>=23)||(m==9&&d<=22))return "Virgo";
-    if((m==9&&d>=23)||(m==10&&d<=22))return "Libra";
-    if((m==10&&d>=23)||(m==11&&d<=21))return "Escorpio";
-    return "Sagitario";
-  }
-
-  function unlockReport() {
-    if(confirm("Simulando pago en Mercado Pago...")) {
-      document.getElementById('paywall').style.display = 'none';
-      document.getElementById('ai-content').classList.remove('blur-content');
-    }
-  }
-
-  // --- BASE DE DATOS: 90 PREGUNTAS (Riso-Hudson Style - 10 por tipo) ---
-  const questions = [
-      // TIPO 1: Reforma
-      {t:1, q:"Siento una fuerte presión interna por corregir lo que está mal."},
-      {t:1, q:"Me irrito cuando veo a alguien rompiendo reglas o siendo irresponsable."},
-      {t:1, q:"Tengo un 'juez interno' que critica constantemente lo que hago."},
-      {t:1, q:"Me enorgullece ser una persona íntegra, lógica y objetiva."},
-      {t:1, q:"Critico a los demás con la intención de enseñarles a mejorar."},
-      {t:1, q:"Me cuesta relajarme si sé que hay tareas pendientes o imperfectas."},
-      {t:1, q:"El orden externo me da paz mental; el caos me altera."},
-      {t:1, q:"Siempre trato de perfeccionar todo lo que toco."},
-      {t:1, q:"Me cuesta mucho delegar porque creo que los detalles se perderán."},
-      {t:1, q:"Temo ser considerado una persona 'mala' o defectuosa."},
-
-      // TIPO 2: Ayuda
-      {t:2, q:"Me esfuerzo por ser indispensable para las personas importantes en mi vida."},
-      {t:2, q:"Intuyo las necesidades de los demás antes de que ellos las sepan."},
-      {t:2, q:"Me siento culpable si atiendo mis necesidades antes que las de otros."},
-      {t:2, q:"Soy muy afectuoso físicamente y busco cercanía."},
-      {t:2, q:"Necesito sentir que me necesitan."},
-      {t:2, q:"Me cuesta muchísimo pedir ayuda, prefiero ser quien la da."},
-      {t:2, q:"Si me siento ignorado, puedo volverme emocional o quejoso."},
-      {t:2, q:"Doy mucho más de lo que recibo en mis relaciones."},
-      {t:2, q:"En el fondo, creo que para ser amado debo ser útil."},
-      {t:2, q:"A menudo siento que nadie me cuida a mí como yo cuido a los demás."},
-
-      // TIPO 3: Logro
-      {t:3, q:"Me siento inquieto si no estoy logrando objetivos tangibles."},
-      {t:3, q:"Es vital para mí causar una buena impresión y ser admirado."},
-      {t:3, q:"Soy un camaleón: me adapto a lo que la situación requiere para tener éxito."},
-      {t:3, q:"Me identifico totalmente con mi trabajo o mis logros."},
-      {t:3, q:"Soy muy competitivo y me gusta ganar."},
-      {t:3, q:"Cuando estoy estresado, apago mis emociones y me pongo a trabajar."},
-      {t:3, q:"Me aterra la idea de fracasar y que me vean sin valor."},
-      {t:3, q:"Soy eficiente y me molesta la gente lenta."},
-      {t:3, q:"A veces siento que engaño a los demás con la imagen que proyecto."},
-      {t:3, q:"Siempre estoy fijándome nuevas metas."},
-
-      // TIPO 4: Individualista
-      {t:4, q:"Siento que mis emociones son más profundas y complejas que las de la mayoría."},
-      {t:4, q:"A menudo me siento diferente, incomprendido o como un 'bicho raro'."},
-      {t:4, q:"Anhelo una conexión emocional intensa y profunda."},
-      {t:4, q:"Siento envidia de la felicidad simple y despreocupada de otros."},
-      {t:4, q:"Expreso mi identidad de forma única y a veces dramática."},
-      {t:4, q:"A veces me quedo atascado en la melancolía o el pasado."},
-      {t:4, q:"Me repugna lo ordinario, vulgar o sin significado."},
-      {t:4, q:"Siento que me falta algo esencial que los demás parecen tener."},
-      {t:4, q:"Idealizo lo que está lejos y me desencanto de lo que tengo cerca."},
-      {t:4, q:"Soy muy sensible a la estética y el simbolismo."},
-
-      // TIPO 5: Investigador
-      {t:5, q:"Me agota compartir mi tiempo y espacio privado con mucha gente."},
-      {t:5, q:"Necesito entender el mundo teóricamente antes de participar en él."},
-      {t:5, q:"Valoro el conocimiento y la competencia por encima de las relaciones sociales."},
-      {t:5, q:"Me siento invadido si me hacen demasiadas preguntas personales."},
-      {t:5, q:"Prefiero observar desde afuera que ser el centro de atención."},
-      {t:5, q:"Soy muy reservado con mi vida y mis emociones."},
-      {t:5, q:"Acumulo información para sentirme seguro y preparado."},
-      {t:5, q:"Me desconecto de mis sentimientos en el momento para analizarlos después."},
-      {t:5, q:"Soy minimalista con mis necesidades para no depender de nadie."},
-      {t:5, q:"A veces me siento invisible y me gusta que sea así."},
-
-      // TIPO 6: Leal
-      {t:6, q:"Suelo escanear el entorno buscando posibles peligros o amenazas."},
-      {t:6, q:"Ante la duda, busco la opinión de expertos o amigos antes de decidir."},
-      {t:6, q:"Me cuesta confiar plenamente en alguien nuevo hasta que me demuestran lealtad."},
-      {t:6, q:"Mi mente da vueltas pensando en 'qué pasaría si...' (escenarios negativos)."},
-      {t:6, q:"La lealtad es mi valor más sagrado; defiendo a mi grupo."},
-      {t:6, q:"Tengo una relación de amor/odio con la autoridad."},
-      {t:6, q:"Necesito certezas, reglas claras y garantías."},
-      {t:6, q:"Soy muy responsable, pero la ansiedad me acompaña a menudo."},
-      {t:6, q:"Suelo ponerme en el peor escenario para estar preparado."},
-      {t:6, q:"Me siento más seguro siendo parte de un equipo que solo."},
-
-      // TIPO 7: Entusiasta
-      {t:7, q:"Me aburro rápido y siempre busco planes nuevos y estimulantes."},
-      {t:7, q:"Quiero divertirme y disfrutar la vida al máximo."},
-      {t:7, q:"Re-enmarco lo negativo para ver el lado positivo rápidamente."},
-      {t:7, q:"Me cuesta comprometerme si siento que eso limita mi libertad."},
-      {t:7, q:"Tengo muchas ideas brillantes y empiezo proyectos, pero me cuesta terminarlos."},
-      {t:7, q:"Soy una persona espontánea y con mucha energía mental."},
-      {t:7, q:"Me aterra la idea de quedarme atrapado en el dolor o la rutina."},
-      {t:7, q:"Siempre estoy planificando el futuro y lo que haré después."},
-      {t:7, q:"Siento que la vida es un buffet y quiero probarlo todo."},
-      {t:7, q:"Evito las conversaciones densas o emocionalmente pesadas."},
-
-      // TIPO 8: Desafiador
-      {t:8, q:"Tengo un radar para detectar quién tiene el poder en una sala."},
-      {t:8, q:"No tengo miedo de confrontar si es necesario para defender la verdad."},
-      {t:8, q:"Si alguien me presiona, mi reacción automática es presionar más fuerte de vuelta."},
-      {t:8, q:"Me veo como un protector de los míos, pero exijo lealtad."},
-      {t:8, q:"Respeto a las personas directas y fuertes, aunque sean rudas."},
-      {t:8, q:"Tengo poca paciencia con la incompetencia o la indecisión."},
-      {t:8, q:"Me cuesta mostrar vulnerabilidad porque siento que la usarán en mi contra."},
-      {t:8, q:"Soy un líder natural y me gusta tener el control."},
-      {t:8, q:"Hablo fuerte y directo, a veces intimido sin querer."},
-      {t:8, q:"Todo lo hago con intensidad: o todo o nada."},
-
-      // TIPO 9: Pacificador
-      {t:9, q:"Evito los conflictos a toda costa; prefiero ceder para tener paz."},
-      {t:9, q:"A menudo digo 'sí' cuando quiero decir 'no' para evitar tensión."},
-      {t:9, q:"Me adapto tanto a los demás que a veces olvido lo que yo quiero."},
-      {t:9, q:"Suelo posponer las tareas importantes que me generan ansiedad."},
-      {t:9, q:"Soy una persona fácil de llevar, calmada y aceptadora."},
-      {t:9, q:"Veo todos los puntos de vista y me cuesta mucho tomar partido."},
-      {t:9, q:"Cuando hay problemas, tiendo a evadirme o 'narcotizarme' (TV, comida, dormir)."},
-      {t:9, q:"Me siento incómodo si soy el centro de atención o hay discordia."},
-      {t:9, q:"Soy muy paciente y buen oyente."},
-      {t:9, q:"A veces siento que mi presencia no importa demasiado."}
-  ];
-</script>
-
-</body>
-</html>
+    <div id="error-msg" style="color:red; text-align:center; display:
