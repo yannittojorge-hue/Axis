@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- VARIABLES GLOBALES --- */
+    /* --- ESTILOS --- */
     :root {
       --bg-main: #F4EFE9; --bg-alt: #FAF8F3;
       --green: #2E5941; --blue: #274E55;
@@ -25,7 +25,7 @@
       position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background: radial-gradient(circle at 10% 20%, rgba(255,127,102,0.1), transparent 50%),
                   radial-gradient(circle at 80% 80%, rgba(46,89,65,0.1), transparent 50%), var(--bg-main);
-      transform: translateY(0px); /* JS lo actualizará */
+      transform: translateY(calc(var(--scroll) * -0.2px));
     }
 
     /* COMPONENTES */
@@ -46,6 +46,7 @@
     }
     .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 12px 25px rgba(255,127,102,0.35); }
 
+    /* SECCIONES */
     header { padding: 30px 0; }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--green); font-size: 1.5rem; cursor: pointer; }
     .logo-icon { width: 35px; height: 35px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -65,7 +66,7 @@
     .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
     .suggestion-item:hover { background: var(--bg-main); color: var(--green); }
 
-    /* QUIZ */
+    /* QUIZ Y ESCALA HORIZONTAL */
     .quiz-container { max-width: 800px; margin: 0 auto; text-align: center; padding: 60px 0; }
     .progress-bar { height: 6px; background: #ddd; border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 0.3s; }
@@ -73,7 +74,7 @@
     .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
     .q-text { font-size: 1.5rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; min-height: 80px; }
     
-    /* ESCALA VISUAL - COLORES EARTH TONES */
+    /* LA ESCALA HORIZONTAL (Fix) */
     .scale-container { 
       display: flex; 
       justify-content: space-between; 
@@ -88,8 +89,7 @@
       flex-direction: column; 
       align-items: center; 
       cursor: pointer; 
-      transition: all 0.3s ease;
-      opacity: 0.9; 
+      transition: 0.2s; opacity: 0.8; 
     }
     .scale-option:hover { opacity: 1; transform: translateY(-5px); }
     
@@ -99,36 +99,18 @@
       border: 2px solid #ddd; 
       background: #fff;
       display: flex; align-items: center; justify-content: center; 
-      font-weight: 700; font-size: 1.2rem; color: #aaa; 
+      font-weight: 700; font-size: 1.2rem; color: #999; 
       margin-bottom: 10px;
-      transition: all 0.3s ease;
+      transition: 0.2s;
     }
     .scale-label { 
       font-size: 0.7rem; font-weight: 700; text-transform: uppercase; 
-      color: #999; text-align: center; line-height: 1.2; transition: 0.3s;
+      color: #999; text-align: center; line-height: 1.2; 
     }
     
-    /* --- COLORES GRADIENTES (Earth Tones) --- */
-    /* 1: NUNCA (Rojo Arcilla Suave) */
-    .scale-option:nth-child(1):hover .scale-circle { background: #D66D5E; border-color: #D66D5E; color: white; }
-    .scale-option:nth-child(1):hover .scale-label { color: #D66D5E; }
-
-    /* 2: RARA VEZ (Naranja Coral Apagado) */
-    .scale-option:nth-child(2):hover .scale-circle { background: #E89F71; border-color: #E89F71; color: white; }
-    .scale-option:nth-child(2):hover .scale-label { color: #E89F71; }
-
-    /* 3: A VECES (Dorado Arena Neutro) */
-    .scale-option:nth-child(3):hover .scale-circle { background: #D9C375; border-color: #D9C375; color: white; }
-    .scale-option:nth-child(3):hover .scale-label { color: #D9C375; }
-
-    /* 4: FRECUENTE (Verde Salvia) */
-    .scale-option:nth-child(4):hover .scale-circle { background: #87B38D; border-color: #87B38D; color: white; }
-    .scale-option:nth-child(4):hover .scale-label { color: #87B38D; }
-
-    /* 5: SIEMPRE (Verde AXIS) */
-    .scale-option:nth-child(5):hover .scale-circle { background: var(--green); border-color: var(--green); color: white; }
-    .scale-option:nth-child(5):hover .scale-label { color: var(--green); }
-
+    /* Hover Effects */
+    .scale-option:hover .scale-circle { border-color: var(--coral); background: var(--coral); color: white; }
+    .scale-option:hover .scale-label { color: var(--coral); }
 
     /* RESULTADO */
     .result-header { text-align: center; margin-bottom: 40px; }
@@ -201,7 +183,7 @@
       <h2 style="text-align:center">Tus Coordenadas</h2>
       <p style="text-align:center; margin-bottom:30px; opacity:0.7;">Necesarios para calcular tu carta astral.</p>
       
-      <div id="form-content">
+      <div id="user-form-inputs">
         <div class="input-group">
           <label>Nombre</label>
           <input type="text" id="name" required placeholder="Tu nombre">
@@ -212,7 +194,7 @@
         </div>
         <div class="input-group">
           <label>Lugar de Nacimiento</label>
-          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." autocomplete="off" oninput="handleCityInput(this.value)">
+          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." oninput="handleCityInput(this.value)" autocomplete="off">
           <input type="hidden" id="lat"><input type="hidden" id="lon">
           <div id="suggestions" class="suggestions"></div>
         </div>
@@ -259,6 +241,7 @@
     <div class="loader"></div>
     <h3 style="color:var(--blue)">Analizando patrones...</h3>
     <p>Cruzando tu Eneagrama con tus posiciones planetarias.</p>
+    <p id="loading-debug" style="font-size:0.8rem; color:red; margin-top:20px;"></p>
   </div>
 
   <div id="view-result" class="hidden fade-in">
@@ -279,8 +262,8 @@
 
     <div class="report-box">
       <div id="ai-content" class="ai-text blur">
-        <h3>Tu Arquitectura</h3><p>Generando...</p>
-        <h3>Cruce Astral</h3><p>Calculando...</p>
+        <h3>Tu Arquitectura</h3><p>Generando análisis profundo...</p>
+        <h3>Cruce Astral</h3><p>Calculando influencias...</p>
       </div>
       <div id="paywall" class="paywall">
         <h3 style="color:var(--blue)">Desbloquear Reporte Completo</h3>
@@ -299,9 +282,265 @@
 </div>
 
 <script>
+  // --- PREGUNTAS (90 Items - Riso-Hudson) ---
+  const questions = [
+    // TIPO 1
+    {t:1, q:"Siento una voz interna constante que critica lo que hago."},
+    {t:1, q:"Me irrita visiblemente cuando la gente rompe las reglas."},
+    {t:1, q:"A menudo siento que soy el único que se toma las cosas en serio."},
+    {t:1, q:"Me relajo solo cuando sé que mis tareas están perfectas."},
+    {t:1, q:"Temo ser considerado una persona 'mala' o corrupta."},
+    {t:1, q:"Suelo corregir a los demás para ayudarlos a mejorar."},
+    {t:1, q:"El orden y la estructura me dan paz mental."},
+    {t:1, q:"Me cuesta mucho delegar porque creo que los detalles se perderán."},
+    {t:1, q:"Reprimo mi enojo para mantener la compostura."},
+    {t:1, q:"Siento la obligación moral de hacer lo correcto siempre."},
+    // TIPO 2
+    {t:2, q:"A veces doy tanto que me olvido de mis necesidades."},
+    {t:2, q:"Me siento muy bien cuando soy indispensable para otros."},
+    {t:2, q:"Me cuesta muchísimo pedir ayuda, prefiero darla."},
+    {t:2, q:"Puedo volverme quejoso si siento que no valoran mis esfuerzos."},
+    {t:2, q:"Intuyo lo que los demás necesitan antes que ellos."},
+    {t:2, q:"En el fondo, creo que para ser amado debo ser útil."},
+    {t:2, q:"Me siento culpable si me tomo tiempo solo para mí."},
+    {t:2, q:"Soy muy afectuoso físicamente y busco cercanía."},
+    {t:2, q:"Siento que nadie me cuida a mí como yo a los demás."},
+    {t:2, q:"Mi orgullo es ser una buena persona que siempre está."},
+    // TIPO 3
+    {t:3, q:"Me adapto como un camaleón para tener éxito en cada situación."},
+    {t:3, q:"Me aterra la idea de fracasar y que me vean sin valor."},
+    {t:3, q:"A menudo confundo quién soy con lo que logro."},
+    {t:3, q:"Cuando estoy estresado, apago mis sentimientos y trabajo más."},
+    {t:3, q:"Es vital para mí causar una buena impresión."},
+    {t:3, q:"Soy muy competitivo y me gusta ser el mejor."},
+    {t:3, q:"Siento que el amor depende de mi rendimiento."},
+    {t:3, q:"Soy eficiente y me molesta la gente lenta."},
+    {t:3, q:"A veces adorno la verdad para mejorar mi imagen."},
+    {t:3, q:"Siempre estoy fijándome nuevas metas tangibles."},
+    // TIPO 4
+    {t:4, q:"Siento que me falta algo esencial que los demás tienen."},
+    {t:4, q:"A menudo me siento diferente, incomprendido o especial."},
+    {t:4, q:"Mis emociones son intensas y cambiantes."},
+    {t:4, q:"Me repugna lo ordinario; busco expresar mi identidad única."},
+    {t:4, q:"Anhelo una conexión emocional profunda."},
+    {t:4, q:"Tiendo a idealizar lo lejano y desencantarme de lo cercano."},
+    {t:4, q:"Me atrae lo estético, lo simbólico y lo melancólico."},
+    {t:4, q:"A veces me retiro del mundo para proteger mis sentimientos."},
+    {t:4, q:"Siento envidia de la felicidad simple de otros."},
+    {t:4, q:"Mi dolor emocional me hace sentir real."},
+    // TIPO 5
+    {t:5, q:"Siento que tengo energía limitada y la gente la agota."},
+    {t:5, q:"Prefiero observar y entender el mundo antes de participar."},
+    {t:5, q:"Me siento invadido si me hacen muchas preguntas personales."},
+    {t:5, q:"Valoro mi autonomía y privacidad por encima de todo."},
+    {t:5, q:"Acumulo conocimiento para estar preparado."},
+    {t:5, q:"Me desconecto de mis emociones y las proceso a solas."},
+    {t:5, q:"Minimizo mis necesidades para no depender de nadie."},
+    {t:5, q:"Me siento más cómodo con ideas que con personas."},
+    {t:5, q:"Me gusta ser experto en un tema específico."},
+    {t:5, q:"A veces deseo ser invisible."},
+    // TIPO 6
+    {t:6, q:"Mi mente escanea el entorno buscando posibles peligros."},
+    {t:6, q:"Dudo de mí mismo y busco opiniones antes de decidir."},
+    {t:6, q:"La lealtad es sagrada; si confío, es para siempre."},
+    {t:6, q:"Suelo imaginar el peor escenario posible."},
+    {t:6, q:"Tengo una relación compleja con la autoridad."},
+    {t:6, q:"Necesito certezas y garantías antes de comprometerme."},
+    {t:6, q:"Soy muy responsable y el deber es importante."},
+    {t:6, q:"Me siento más seguro en grupo que solo."},
+    {t:6, q:"Pongo a prueba a la gente para ver si son de fiar."},
+    {t:6, q:"La ansiedad es una compañera frecuente."},
+    // TIPO 7
+    {t:7, q:"Me aterra quedar atrapado en el dolor o el aburrimiento."},
+    {t:7, q:"Mi mente salta rápidamente de una idea a otra."},
+    {t:7, q:"Tiendo a ver el lado positivo para evitar la tristeza."},
+    {t:7, q:"Me cuesta comprometerme si eso limita mi libertad."},
+    {t:7, q:"Siento que la vida es un buffet y quiero probarlo todo."},
+    {t:7, q:"Empiezo muchos proyectos pero me cuesta terminarlos."},
+    {t:7, q:"Evito las conversaciones densas o negativas."},
+    {t:7, q:"Soy espontáneo y siempre tengo planes futuros."},
+    {t:7, q:"Tengo miedo de perderme algo mejor si elijo."},
+    {t:7, q:"Racionalizo mis problemas para no sentirlos."},
+    // TIPO 8
+    {t:8, q:"Detecto instintivamente quién tiene el poder."},
+    {t:8, q:"No soporto la debilidad ni a la gente manipulable."},
+    {t:8, q:"Si me presionan, presiono más fuerte de vuelta."},
+    {t:8, q:"Protejo a mi gente, pero exijo lealtad absoluta."},
+    {t:8, q:"Me cuesta mostrar vulnerabilidad."},
+    {t:8, q:"Soy directo y honesto, a veces intimido sin querer."},
+    {t:8, q:"Me gusta tener el control de mi destino."},
+    {t:8, q:"Tengo mucha energía y me gustan los desafíos."},
+    {t:8, q:"Defiendo a los que considero injustamente tratados."},
+    {t:8, q:"Todo lo hago con intensidad: o todo o nada."},
+    // TIPO 9
+    {t:9, q:"Digo que sí cuando quiero decir no para evitar conflictos."},
+    {t:9, q:"Me fusiono con los deseos de otros y olvido los míos."},
+    {t:9, q:"Cuando hay problemas, tiendo a evadirme o narcotizarme."},
+    {t:9, q:"Veo todos los puntos de vista y me cuesta tomar partido."},
+    {t:9, q:"Lo que más deseo es tener paz mental y armonía."},
+    {t:9, q:"Suelo postergar las tareas que me dan ansiedad."},
+    {t:9, q:"Soy una persona fácil de llevar y calmada."},
+    {t:9, q:"A veces siento que mi presencia no importa mucho."},
+    {t:9, q:"Me cuesta expresar enojo, sale como terquedad."},
+    {t:9, q:"Prefiero la rutina cómoda a los cambios bruscos."}
+  ];
+
   // --- VARIABLES DE ESTADO ---
   let user = { name: "", date: "", time: "", city: "", lat: 0, lon: 0 };
   let scores = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
   let qIdx = 0;
 
-  // --- PREGUNTAS (90 Items - Riso-Hudson)
+  // --- NAVEGACIÓN ---
+  function nav(id) {
+    document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    window.scrollTo(0,0);
+  }
+
+  // --- PARALLAX ---
+  window.addEventListener('scroll', () => { 
+    document.documentElement.style.setProperty('--scroll', window.scrollY); 
+  });
+
+  // --- BUSCADOR ---
+  let debounce;
+  async function handleCityInput(val) {
+    clearTimeout(debounce);
+    const box = document.getElementById('suggestions');
+    if(val.length<3){box.style.display='none';return;}
+    debounce = setTimeout(async()=>{
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${val}`);
+        const data = await res.json();
+        box.innerHTML='';
+        if(data.length>0){
+          box.style.display='block';
+          data.forEach(p=>{
+            const d=document.createElement('div');
+            d.className='suggestion-item';
+            d.innerText=p.display_name;
+            d.onclick=()=>{
+              document.getElementById('city-input').value=p.display_name;
+              user.lat=parseFloat(p.lat); user.lon=parseFloat(p.lon);
+              box.style.display='none';
+            };
+            box.appendChild(d);
+          });
+        }
+      } catch(e){}
+    },300);
+  }
+
+  // --- QUIZ MOTOR ---
+  function startQuiz() {
+    user.name = document.getElementById('name').value;
+    user.date = document.getElementById('date').value;
+    user.time = document.getElementById('time').value;
+    
+    if(!user.name || !user.date || !user.time) { alert("Completa tus datos."); return; }
+    if(!user.lat) { alert("Selecciona una ciudad de la lista."); return; }
+    
+    nav('view-quiz');
+    renderQ();
+  }
+
+  function renderQ() {
+    if (qIdx >= questions.length) { finish(); return; }
+    document.getElementById('q-text').innerText = questions[qIdx].q;
+    document.getElementById('progress-fill').style.width = ((qIdx/questions.length)*100)+"%";
+  }
+
+  function vote(p) { 
+    scores[questions[qIdx].t]+=p; 
+    qIdx++; 
+    renderQ(); 
+  }
+
+  // --- CÁLCULOS ASTRONÓMICOS ---
+  function getZodiacFromLon(lon) {
+    const signs = ["Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"];
+    let deg = lon % 360; if(deg<0) deg+=360;
+    return signs[Math.floor(deg/30)];
+  }
+
+  function calculateSign(bodyName, date) {
+    try {
+        if (typeof Astronomy === 'undefined') return "Calculado por IA";
+        const bodyMap = {'Sun': Astronomy.Body.Sun, 'Moon': Astronomy.Body.Moon, 'Mercury': Astronomy.Body.Mercury, 'Venus': Astronomy.Body.Venus, 'Mars': Astronomy.Body.Mars};
+        const body = bodyMap[bodyName];
+        const vector = Astronomy.GeoVector(body, date, true);
+        if (vector) {
+            const ecl = Astronomy.Ecliptic(vector);
+            return getZodiacFromLon(ecl.elon);
+        }
+    } catch(e) { console.log("Error astro:", e); }
+    return "Calculado por IA";
+  }
+
+  // --- FINALIZAR ---
+  async function finish() {
+    nav('view-loading');
+    const debug = document.getElementById('loading-debug');
+
+    try {
+        // Eneagrama
+        let max=0, type=1;
+        for(let t in scores){ if(scores[t]>max){ max=scores[t]; type=t; } }
+        let tInt = parseInt(type);
+        let prev = tInt===1?9:tInt-1;
+        let next = tInt===9?1:tInt+1;
+        let w = scores[prev] > scores[next] ? prev : next;
+
+        // Astros
+        const date = new Date(user.date + 'T' + user.time);
+        
+        const sun = calculateSign('Sun', date);
+        const moon = calculateSign('Moon', date);
+        const merc = calculateSign('Mercury', date);
+        const ven = calculateSign('Venus', date);
+        const mars = calculateSign('Mars', date);
+        const asc = "(Hora " + user.time + ")";
+
+        // Render Gratis
+        document.getElementById('r-name').innerText = user.name;
+        document.getElementById('r-type').innerText = "Tipo " + type;
+        document.getElementById('r-sun').innerText = sun;
+        document.getElementById('r-moon').innerText = moon;
+        document.getElementById('r-mars').innerText = mars;
+        document.getElementById('r-venus').innerText = ven;
+
+        // Llamada IA
+        const res = await fetch('/api/reporte', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+              nombre: user.name, eneatipo: type, ala: w,
+              astros: { sol:sun, luna:moon, asc:asc, mercurio:merc, venus:ven, marte:mars }
+            })
+        });
+
+        const data = await res.json();
+        if(data.error) throw new Error(data.error);
+        
+        document.getElementById('ai-content').innerHTML = data.reporte;
+        nav('view-result');
+
+    } catch(e) {
+        debug.innerText = "Error: " + e.message;
+        document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
+        document.getElementById('error-msg').style.display = 'block';
+        document.getElementById('ai-content').innerHTML = "<h3>Reporte generado internamente.</h3><p>Problema de conexión con IA, pero tus cálculos astrales están listos. Desbloquea para ver el detalle.</p>";
+        nav('view-result');
+    }
+  }
+
+  function unlock() {
+    if(confirm("Ir a Mercado Pago...")) {
+      document.getElementById('paywall').style.display='none';
+      document.getElementById('ai-content').classList.remove('blur');
+    }
+  }
+</script>
+
+</body>
+</html>
