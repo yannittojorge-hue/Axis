@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- VARIABLES GLOBALES --- */
+    /* --- ESTILOS --- */
     :root {
       --bg-main: #F4EFE9; --bg-alt: #FAF8F3;
       --green: #2E5941; --blue: #274E55;
@@ -25,7 +25,7 @@
       position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background: radial-gradient(circle at 10% 20%, rgba(255,127,102,0.1), transparent 50%),
                   radial-gradient(circle at 80% 80%, rgba(46,89,65,0.1), transparent 50%), var(--bg-main);
-      transform: translateY(0px);
+      transform: translateY(calc(var(--scroll) * -0.2px));
     }
 
     /* COMPONENTES */
@@ -46,12 +46,11 @@
     }
     .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 12px 25px rgba(255,127,102,0.35); }
 
-    /* HEADER */
+    /* SECCIONES */
     header { padding: 30px 0; }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--green); font-size: 1.5rem; cursor: pointer; }
     .logo-icon { width: 35px; height: 35px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-    /* SECCIONES */
     .hero { padding: 80px 0; min-height: 70vh; display: flex; align-items: center; }
     .features { padding: 80px 0; background: var(--white); border-radius: 30px; margin-bottom: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.03); }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
@@ -67,36 +66,67 @@
     .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
     .suggestion-item:hover { background: var(--bg-main); color: var(--green); }
 
-    /* QUIZ & BARRA DE PROGRESO */
+    /* QUIZ Y ESCALA HORIZONTAL */
     .quiz-container { max-width: 800px; margin: 0 auto; text-align: center; padding: 60px 0; }
-    .progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.8rem; color: #888; font-weight: 700; text-transform: uppercase; }
-    .progress-bar { height: 8px; background: #e0e0e0; border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--green); width: 0%; transition: width 0.3s ease; }
+    .progress-bar { height: 6px; background: #ddd; border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 0.3s; }
     
     .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
     .q-text { font-size: 1.5rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; min-height: 80px; }
     
-    /* ESCALA VISUAL (Earth Tones) */
-    .scale-container { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-top: 20px; width: 100%; }
-    .scale-option { flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: all 0.3s ease; opacity: 0.9; }
+    /* LA ESCALA HORIZONTAL (Fix) */
+    .scale-container { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: flex-start;
+      gap: 10px; 
+      margin-top: 20px; 
+      width: 100%;
+    }
+    .scale-option { 
+      flex: 1; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      cursor: pointer; 
+      transition: 0.2s; opacity: 0.8; 
+    }
     .scale-option:hover { opacity: 1; transform: translateY(-5px); }
     
     .scale-circle {
-      width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ddd; background: #fff;
+      width: 50px; height: 50px; 
+      border-radius: 50%; 
+      border: 2px solid #ddd; 
+      background: #fff;
       display: flex; align-items: center; justify-content: center; 
-      font-weight: 700; font-size: 1.2rem; color: #aaa; margin-bottom: 10px; transition: all 0.3s ease;
+      font-weight: 700; font-size: 1.2rem; color: #999; 
+      margin-bottom: 10px;
+      transition: 0.2s;
     }
-    .scale-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #999; text-align: center; line-height: 1.2; transition: 0.3s; }
+    .scale-label { 
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; 
+      color: #999; text-align: center; line-height: 1.2; 
+    }
     
-    /* Colores por opción */
+    /* Hover Effects */
+    
+    /* 1. NUNCA (Rojo Arcilla) */
     .scale-option:nth-child(1):hover .scale-circle { background: #D66D5E; border-color: #D66D5E; color: white; }
     .scale-option:nth-child(1):hover .scale-label { color: #D66D5E; }
+
+    /* 2. RARA VEZ (Naranja Coral) */
     .scale-option:nth-child(2):hover .scale-circle { background: #E89F71; border-color: #E89F71; color: white; }
     .scale-option:nth-child(2):hover .scale-label { color: #E89F71; }
+
+    /* 3. A VECES (Dorado Neutro) */
     .scale-option:nth-child(3):hover .scale-circle { background: #D9C375; border-color: #D9C375; color: white; }
     .scale-option:nth-child(3):hover .scale-label { color: #D9C375; }
+
+    /* 4. FRECUENTE (Verde Salvia) */
     .scale-option:nth-child(4):hover .scale-circle { background: #87B38D; border-color: #87B38D; color: white; }
     .scale-option:nth-child(4):hover .scale-label { color: #87B38D; }
+
+    /* 5. SIEMPRE (Verde Marca) */
     .scale-option:nth-child(5):hover .scale-circle { background: var(--green); border-color: var(--green); color: white; }
     .scale-option:nth-child(5):hover .scale-label { color: var(--green); }
 
@@ -122,6 +152,7 @@
 <div class="parallax-bg"></div>
 
 <div class="container">
+  
   <header>
     <div class="logo" onclick="location.reload()">
       <div class="logo-icon">X</div> AXIS
@@ -170,7 +201,7 @@
       <h2 style="text-align:center">Tus Coordenadas</h2>
       <p style="text-align:center; margin-bottom:30px; opacity:0.7;">Necesarios para calcular tu carta astral.</p>
       
-      <div id="form-content">
+      <div id="user-form-inputs">
         <div class="input-group">
           <label>Nombre</label>
           <input type="text" id="name" required placeholder="Tu nombre">
@@ -181,7 +212,7 @@
         </div>
         <div class="input-group">
           <label>Lugar de Nacimiento</label>
-          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." autocomplete="off" oninput="handleCityInput(this.value)">
+          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." oninput="handleCityInput(this.value)" autocomplete="off">
           <input type="hidden" id="lat"><input type="hidden" id="lon">
           <div id="suggestions" class="suggestions"></div>
         </div>
@@ -192,10 +223,6 @@
 
   <div id="view-quiz" class="hidden fade-in">
     <div class="quiz-container">
-      <div class="progress-header">
-        <span>Progreso</span>
-        <span id="progress-text">0%</span>
-      </div>
       <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
       
       <div class="question-card">
@@ -203,21 +230,27 @@
         
         <div class="scale-container">
           <div class="scale-option" onclick="vote(1)">
-            <div class="scale-circle">1</div><div class="scale-label">Nunca<br>me pasa</div>
+            <div class="scale-circle">1</div>
+            <div class="scale-label">Nunca<br>me pasa</div>
           </div>
           <div class="scale-option" onclick="vote(2)">
-            <div class="scale-circle">2</div><div class="scale-label">Rara<br>vez</div>
+            <div class="scale-circle">2</div>
+            <div class="scale-label">Rara<br>vez</div>
           </div>
           <div class="scale-option" onclick="vote(3)">
-            <div class="scale-circle">3</div><div class="scale-label">A<br>veces</div>
+            <div class="scale-circle">3</div>
+            <div class="scale-label">A<br>veces</div>
           </div>
           <div class="scale-option" onclick="vote(4)">
-            <div class="scale-circle">4</div><div class="scale-label">Frecuente<br>mente</div>
+            <div class="scale-circle">4</div>
+            <div class="scale-label">Frecuente<br>mente</div>
           </div>
           <div class="scale-option" onclick="vote(5)">
-            <div class="scale-circle">5</div><div class="scale-label">Totalmente<br>yo</div>
+            <div class="scale-circle">5</div>
+            <div class="scale-label">Totalmente<br>yo</div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -267,13 +300,145 @@
 </div>
 
 <script>
-  // 1. FUNCIONES UI
+ <script>
+  // --- PREGUNTAS (99 Items - Riso-Hudson) ---
+  const questions = [
+// ENEATIPO 1
+{ t:1, q:"Busco hacer las cosas correctamente porque siento una presión interna por cumplir con lo que considero correcto." },
+{ t:1, q:"Me cuesta relajarme porque siempre percibo que algo podría hacerse mejor." },
+{ t:1, q:"Me critico con dureza porque siento que no debería cometer errores." },
+{ t:1, q:"Mantengo estándares altos porque temo actuar de una manera incorrecta o reprochable." },
+{ t:1, q:"Siento incomodidad o culpa porque no logro cumplir con mis propios ideales." },
+{ t:1, q:"Contengo mi enojo porque creo que expresarlo sería inapropiado o injusto." },
+{ t:1, q:"Me resulta difícil disfrutar porque siento que primero debo cumplir con mis responsabilidades." },
+{ t:1, q:"Me irrita la falta de compromiso porque creo que las personas deberían esforzarse más." },
+{ t:1, q:"Evito el conflicto porque prefiero mantener la armonía y el autocontrol." },
+{ t:1, q:"Corrijo o ayudo a otros porque siento responsabilidad por que las cosas se hagan bien." },
+{ t:1, q:"Me esfuerzo por ser responsable y correcto porque así siento que soy una buena persona." },
+
+// ENEATIPO 2
+{ t:2, q:"Estoy atento a las necesidades de los demás porque temo no ser querido si no soy necesario." },
+{ t:2, q:"Me involucro emocionalmente con otros porque necesito sentirme importante en sus vidas." },
+{ t:2, q:"Me cuesta reconocer mis propias necesidades porque priorizo el bienestar de los demás." },
+{ t:2, q:"Ofrezco ayuda incluso sin que me la pidan porque temo ser dejado de lado." },
+{ t:2, q:"Busco cercanía afectiva porque necesito sentir que soy valioso para otros." },
+{ t:2, q:"Me adapto a lo que otros esperan porque así aseguro el vínculo." },
+{ t:2, q:"Evito pedir ayuda porque siento que debo dar más de lo que recibo." },
+{ t:2, q:"Me esfuerzo por agradar porque temo perder el afecto de las personas importantes." },
+{ t:2, q:"Me contengo emocionalmente porque prefiero mantener la calma y no generar tensión." },
+{ t:2, q:"Me esfuerzo por destacar y ser útil porque así siento que merezco amor." },
+{ t:2, q:"Me involucro intensamente en las relaciones porque necesito sentirme indispensable." },
+
+// ENEATIPO 3
+{ t:3, q:"Me esfuerzo por lograr objetivos porque necesito sentir que valgo por lo que hago." },
+{ t:3, q:"Busco ser eficiente porque temo fracasar y perder reconocimiento." },
+{ t:3, q:"Me adapto a distintos contextos porque quiero asegurar el éxito." },
+{ t:3, q:"Evito mostrar debilidades porque temo parecer incompetente." },
+{ t:3, q:"Me enfoco en resultados porque siento que el valor personal depende del rendimiento." },
+{ t:3, q:"Me mantengo ocupado porque detenerme me conecta con la sensación de vacío." },
+{ t:3, q:"Muestro una imagen segura porque temo que otros vean mis inseguridades." },
+{ t:3, q:"Compito conmigo mismo porque necesito superarme constantemente." },
+{ t:3, q:"Busco agradar y ayudar porque quiero ser valorado por los demás." },
+{ t:3, q:"Busco diferenciarme porque necesito sentirme especial además de exitoso." },
+{ t:3, q:"Me esfuerzo por mantener una imagen exitosa porque así siento que tengo identidad." },
+
+// ENEATIPO 4
+{ t:4, q:"Me siento diferente a los demás porque percibo que me falta algo esencial." },
+{ t:4, q:"Busco profundidad emocional porque temo vivir una vida vacía o superficial." },
+{ t:4, q:"Me conecto con emociones intensas porque así siento que soy auténtico." },
+{ t:4, q:"Me comparo con otros porque siento que ellos tienen algo que yo no tengo." },
+{ t:4, q:"Busco una identidad propia porque temo no tener un lugar claro." },
+{ t:4, q:"Me refugio en mis emociones porque me ayudan a entender quién soy." },
+{ t:4, q:"Me cuesta sostener la estabilidad porque siento que perdería intensidad." },
+{ t:4, q:"Idealizo lo que no tengo porque me conecta con el anhelo." },
+{ t:4, q:"Me esfuerzo por lograr cosas porque quiero sentir que valgo tanto como otros." },
+{ t:4, q:"Me retraigo y observo porque necesito proteger mi mundo interno." },
+{ t:4, q:"Busco vínculos intensos porque necesito sentirme profundamente conectado." },
+
+// ENEATIPO 5
+{ t:5, q:"Me distancio emocionalmente porque temo quedarme sin recursos internos." },
+{ t:5, q:"Busco comprender antes de actuar porque necesito sentirme preparado." },
+{ t:5, q:"Protejo mi tiempo y energía porque temo sentirme invadido." },
+{ t:5, q:"Me retiro del contacto social porque necesito conservar mi autonomía." },
+{ t:5, q:"Acumulo conocimiento porque siento que así puedo manejar el mundo." },
+{ t:5, q:"Analizo situaciones porque me ayuda a no sentirme desbordado." },
+{ t:5, q:"Evito depender de otros porque temo perder control." },
+{ t:5, q:"Me mantengo reservado porque necesito cuidar mi espacio interno." },
+{ t:5, q:"Me conecto con lo emocional porque busco profundidad personal." },
+{ t:5, q:"Busco seguridad en reglas o personas confiables porque necesito certeza." },
+{ t:5, q:"Prioritizo la autosuficiencia porque necesito sentir que puedo sostenerme solo." },
+
+// ENEATIPO 6
+{ t:6, q:"Busco seguridad porque temo que algo salga mal." },
+{ t:6, q:"Me mantengo alerta porque necesito anticipar riesgos." },
+{ t:6, q:"Dudo de mis decisiones porque temo equivocarme." },
+{ t:6, q:"Busco apoyo externo porque necesito sentir respaldo." },
+{ t:6, q:"Desconfío inicialmente porque temo ser traicionado." },
+{ t:6, q:"Me preparo para distintos escenarios porque necesito sentirme seguro." },
+{ t:6, q:"Cuestiono la autoridad porque temo confiar ciegamente." },
+{ t:6, q:"Me comprometo con personas o grupos porque necesito pertenecer." },
+{ t:6, q:"Me retraigo para observar porque necesito claridad antes de actuar." },
+{ t:6, q:"Actúo con firmeza porque necesito demostrar fortaleza." },
+{ t:6, q:"Busco lealtad y estructura porque así siento estabilidad." },
+
+// ENEATIPO 7
+{ t:7, q:"Busco nuevas experiencias porque temo sentirme limitado o atrapado." },
+{ t:7, q:"Evito el dolor porque quiero mantenerme bien." },
+{ t:7, q:"Me entusiasmo rápidamente porque necesito sentirme vivo." },
+{ t:7, q:"Cambio de intereses porque temo aburrirme o perder opciones." },
+{ t:7, q:"Mantengo una actitud positiva porque temo enfrentar el sufrimiento." },
+{ t:7, q:"Planeo múltiples alternativas porque quiero asegurar libertad." },
+{ t:7, q:"Me distraigo fácilmente porque evito quedarme en lo incómodo." },
+{ t:7, q:"Minimizo los problemas porque quiero seguir adelante." },
+{ t:7, q:"Me enfoco en ayudar porque quiero sentir conexión emocional." },
+{ t:7, q:"Me afirmo con firmeza porque necesito sentir control." },
+{ t:7, q:"Busco satisfacción constante porque necesito evitar el vacío." },
+
+// ENEATIPO 8
+{ t:8, q:"Me muestro fuerte porque temo ser controlado o dañado." },
+{ t:8, q:"Tomo el control porque necesito protegerme." },
+{ t:8, q:"Actúo de forma directa porque no quiero mostrar vulnerabilidad." },
+{ t:8, q:"Desconfío de la debilidad porque temo perder poder." },
+{ t:8, q:"Me enfrento a los conflictos porque necesito sentirme en control." },
+{ t:8, q:"Protejo a los míos porque siento responsabilidad por ellos." },
+{ t:8, q:"Reacciono con intensidad porque no tolero sentirme limitado." },
+{ t:8, q:"Me afirmo con fuerza porque temo que otros me dominen." },
+{ t:8, q:"Me conecto emocionalmente porque confío profundamente." },
+{ t:8, q:"Me vuelvo estratégico porque necesito anticiparme." },
+{ t:8, q:"Busco autonomía total porque necesito sentir que nadie me controla." },
+
+// ENEATIPO 9
+{ t:9, q:"Evito el conflicto porque temo perder la conexión con los demás." },
+{ t:9, q:"Me adapto a otros porque quiero mantener la armonía." },
+{ t:9, q:"Minimizo mis propias necesidades porque temo generar tensión." },
+{ t:9, q:"Busco tranquilidad porque no quiero sentirme alterado." },
+{ t:9, q:"Me cuesta priorizarme porque temo crear conflicto." },
+{ t:9, q:"Postergó decisiones porque quiero evitar el malestar." },
+{ t:9, q:"Me desconecto internamente porque así mantengo la calma." },
+{ t:9, q:"Acepto situaciones porque prefiero no confrontar." },
+{ t:9, q:"Me esfuerzo por hacer lo correcto porque quiero sentir coherencia." },
+{ t:9, q:"Busco agradar porque quiero sentir pertenencia." },
+{ t:9, q:"Busco estabilidad y paz porque necesito sentirme en equilibrio." }
+  ];
+
+  // --- VARIABLES DE ESTADO ---
+  let user = { name: "", date: "", time: "", city: "", lat: 0, lon: 0 };
+  let scores = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
+  let qIdx = 0;
+
+  // --- NAVEGACIÓN ---
   function nav(id) {
     document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
     window.scrollTo(0,0);
   }
 
+  // --- PARALLAX ---
+  window.addEventListener('scroll', () => { 
+    document.documentElement.style.setProperty('--scroll', window.scrollY); 
+  });
+
+  // --- BUSCADOR ---
   let debounce;
   async function handleCityInput(val) {
     clearTimeout(debounce);
@@ -302,123 +467,6 @@
     },300);
   }
 
-  // --- VARIABLES DE ESTADO ---
-  let user = { name: "", date: "", time: "", city: "", lat: 0, lon: 0 };
-  let userResponses = { 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}, 9:{} };
-  let qIdx = 0;
-
-  // --- LAS 99 PREGUNTAS ---
-  const questions = [
-    // TIPO 1
-    { t:1, q:"Busco hacer las cosas correctamente porque siento una presión interna por cumplir con lo que considero correcto." },
-    { t:1, q:"Me cuesta relajarme porque siempre percibo que algo podría hacerse mejor." },
-    { t:1, q:"Me critico con dureza porque siento que no debería cometer errores." },
-    { t:1, q:"Mantengo estándares altos porque temo actuar de una manera incorrecta o reprochable." },
-    { t:1, q:"Siento incomodidad o culpa porque no logro cumplir con mis propios ideales." },
-    { t:1, q:"Contengo mi enojo porque creo que expresarlo sería inapropiado o injusto." },
-    { t:1, q:"Me resulta difícil disfrutar porque siento que primero debo cumplir con mis responsabilidades." },
-    { t:1, q:"Me irrita la falta de compromiso porque creo que las personas deberían esforzarse más." },
-    { t:1, q:"Evito el conflicto porque prefiero mantener la armonía y el autocontrol." },
-    { t:1, q:"Corrijo o ayudo a otros porque siento responsabilidad por que las cosas se hagan bien." },
-    { t:1, q:"Me esfuerzo por ser responsable y correcto porque así siento que soy una buena persona." },
-    // TIPO 2
-    { t:2, q:"Estoy atento a las necesidades de los demás porque temo no ser querido si no soy necesario." },
-    { t:2, q:"Me involucro emocionalmente con otros porque necesito sentirme importante en sus vidas." },
-    { t:2, q:"Me cuesta reconocer mis propias necesidades porque priorizo el bienestar de los demás." },
-    { t:2, q:"Ofrezco ayuda incluso sin que me la pidan porque temo ser dejado de lado." },
-    { t:2, q:"Busco cercanía afectiva porque necesito sentir que soy valioso para otros." },
-    { t:2, q:"Me adapto a lo que otros esperan porque así aseguro el vínculo." },
-    { t:2, q:"Evito pedir ayuda porque siento que debo dar más de lo que recibo." },
-    { t:2, q:"Me esfuerzo por agradar porque temo perder el afecto de las personas importantes." },
-    { t:2, q:"Me contengo emocionalmente porque prefiero mantener la calma y no generar tensión." },
-    { t:2, q:"Me esfuerzo por destacar y ser útil porque así siento que merezco amor." },
-    { t:2, q:"Me involucro intensamente en las relaciones porque necesito sentirme indispensable." },
-    // TIPO 3
-    { t:3, q:"Me esfuerzo por lograr objetivos porque necesito sentir que valgo por lo que hago." },
-    { t:3, q:"Busco ser eficiente porque temo fracasar y perder reconocimiento." },
-    { t:3, q:"Me adapto a distintos contextos porque quiero asegurar el éxito." },
-    { t:3, q:"Evito mostrar debilidades porque temo parecer incompetente." },
-    { t:3, q:"Me enfoco en resultados porque siento que el valor personal depende del rendimiento." },
-    { t:3, q:"Me mantengo ocupado porque detenerme me conecta con la sensación de vacío." },
-    { t:3, q:"Muestro una imagen segura porque temo que otros vean mis inseguridades." },
-    { t:3, q:"Compito conmigo mismo porque necesito superarme constantemente." },
-    { t:3, q:"Busco agradar y ayudar porque quiero ser valorado por los demás." },
-    { t:3, q:"Busco diferenciarme porque necesito sentirme especial además de exitoso." },
-    { t:3, q:"Me esfuerzo por mantener una imagen exitosa porque así siento que tengo identidad." },
-    // TIPO 4
-    { t:4, q:"Me siento diferente a los demás porque percibo que me falta algo esencial." },
-    { t:4, q:"Busco profundidad emocional porque temo vivir una vida vacía o superficial." },
-    { t:4, q:"Me conecto con emociones intensas porque así siento que soy auténtico." },
-    { t:4, q:"Me comparo con otros porque siento que ellos tienen algo que yo no tengo." },
-    { t:4, q:"Busco una identidad propia porque temo no tener un lugar claro." },
-    { t:4, q:"Me refugio en mis emociones porque me ayudan a entender quién soy." },
-    { t:4, q:"Me cuesta sostener la estabilidad porque siento que perdería intensidad." },
-    { t:4, q:"Idealizo lo que no tengo porque me conecta con el anhelo." },
-    { t:4, q:"Me esfuerzo por lograr cosas porque quiero sentir que valgo tanto como otros." },
-    { t:4, q:"Me retraigo y observo porque necesito proteger mi mundo interno." },
-    { t:4, q:"Busco vínculos intensos porque necesito sentirme profundamente conectado." },
-    // TIPO 5
-    { t:5, q:"Me distancio emocionalmente porque temo quedarme sin recursos internos." },
-    { t:5, q:"Busco comprender antes de actuar porque necesito sentirme preparado." },
-    { t:5, q:"Protejo mi tiempo y energía porque temo sentirme invadido." },
-    { t:5, q:"Me retiro del contacto social porque necesito conservar mi autonomía." },
-    { t:5, q:"Acumulo conocimiento porque siento que así puedo manejar el mundo." },
-    { t:5, q:"Analizo situaciones porque me ayuda a no sentirme desbordado." },
-    { t:5, q:"Evito depender de otros porque temo perder control." },
-    { t:5, q:"Me mantengo reservado porque necesito cuidar mi espacio interno." },
-    { t:5, q:"Me conecto con lo emocional porque busco profundidad personal." },
-    { t:5, q:"Busco seguridad en reglas o personas confiables porque necesito certeza." },
-    { t:5, q:"Prioritizo la autosuficiencia porque necesito sentir que puedo sostenerme solo." },
-    // TIPO 6
-    { t:6, q:"Busco seguridad porque temo que algo salga mal." },
-    { t:6, q:"Me mantengo alerta porque necesito anticipar riesgos." },
-    { t:6, q:"Dudo de mis decisiones porque temo equivocarme." },
-    { t:6, q:"Busco apoyo externo porque necesito sentir respaldo." },
-    { t:6, q:"Desconfío inicialmente porque temo ser traicionado." },
-    { t:6, q:"Me preparo para distintos escenarios porque necesito sentirme seguro." },
-    { t:6, q:"Cuestiono la autoridad porque temo confiar ciegamente." },
-    { t:6, q:"Me comprometo con personas o grupos porque necesito pertenecer." },
-    { t:6, q:"Me retraigo para observar porque necesito claridad antes de actuar." },
-    { t:6, q:"Actúo con firmeza porque necesito demostrar fortaleza." },
-    { t:6, q:"Busco lealtad y estructura porque así siento estabilidad." },
-    // TIPO 7
-    { t:7, q:"Busco nuevas experiencias porque temo sentirme limitado o atrapado." },
-    { t:7, q:"Evito el dolor porque quiero mantenerme bien." },
-    { t:7, q:"Me entusiasmo rápidamente porque necesito sentirme vivo." },
-    { t:7, q:"Cambio de intereses porque temo aburrirme o perder opciones." },
-    { t:7, q:"Mantengo una actitud positiva porque temo enfrentar el sufrimiento." },
-    { t:7, q:"Planeo múltiples alternativas porque quiero asegurar libertad." },
-    { t:7, q:"Me distraigo fácilmente porque evito quedarme en lo incómodo." },
-    { t:7, q:"Minimizo los problemas porque quiero seguir adelante." },
-    { t:7, q:"Me enfoco en ayudar porque quiero sentir conexión emocional." },
-    { t:7, q:"Me afirmo con firmeza porque necesito sentir control." },
-    { t:7, q:"Busco satisfacción constante porque necesito evitar el vacío." },
-    // TIPO 8
-    { t:8, q:"Me muestro fuerte porque temo ser controlado o dañado." },
-    { t:8, q:"Tomo el control porque necesito protegerme." },
-    { t:8, q:"Actúo de forma directa porque no quiero mostrar vulnerabilidad." },
-    { t:8, q:"Desconfío de la debilidad porque temo perder poder." },
-    { t:8, q:"Me enfrento a los conflictos porque necesito sentirme en control." },
-    { t:8, q:"Protejo a los míos porque siento responsabilidad por ellos." },
-    { t:8, q:"Reacciono con intensidad porque no tolero sentirme limitado." },
-    { t:8, q:"Me afirmo con fuerza porque temo que otros me dominen." },
-    { t:8, q:"Me conecto emocionalmente porque confío profundamente." },
-    { t:8, q:"Me vuelvo estratégico porque necesito anticiparme." },
-    { t:8, q:"Busco autonomía total porque necesito sentir que nadie me controla." },
-    // TIPO 9
-    { t:9, q:"Evito el conflicto porque temo perder la conexión con los demás." },
-    { t:9, q:"Me adapto a otros porque quiero mantener la armonía." },
-    { t:9, q:"Minimizo mis propias necesidades porque temo generar tensión." },
-    { t:9, q:"Busco tranquilidad porque no quiero sentirme alterado." },
-    { t:9, q:"Me cuesta priorizarme porque temo crear conflicto." },
-    { t:9, q:"Postergó decisiones porque quiero evitar el malestar." },
-    { t:9, q:"Me desconecto internamente porque así mantengo la calma." },
-    { t:9, q:"Acepto situaciones porque prefiero no confrontar." },
-    { t:9, q:"Me esfuerzo por hacer lo correcto porque quiero sentir coherencia." },
-    { t:9, q:"Busco agradar porque quiero sentir pertenencia." },
-    { t:9, q:"Busco estabilidad y paz porque necesito sentirme en equilibrio." }
-  ];
-
   // --- QUIZ MOTOR ---
   function startQuiz() {
     user.name = document.getElementById('name').value;
@@ -434,71 +482,14 @@
 
   function renderQ() {
     if (qIdx >= questions.length) { finish(); return; }
-    // Texto
     document.getElementById('q-text').innerText = questions[qIdx].q;
-    // Barra
-    let pct = Math.round((qIdx / questions.length) * 100);
-    document.getElementById('progress-fill').style.width = pct + "%";
-    document.getElementById('progress-text').innerText = pct + "%";
+    document.getElementById('progress-fill').style.width = ((qIdx/questions.length)*100)+"%";
   }
 
-  function vote(pts) { 
-    const currentType = questions[qIdx].t;
-    const itemIdx = (qIdx % 11) + 1;
-    
-    if (!userResponses[currentType]) userResponses[currentType] = {};
-    userResponses[currentType][itemIdx] = pts;
-
+  function vote(p) { 
+    scores[questions[qIdx].t]+=p; 
     qIdx++; 
     renderQ(); 
-  }
-
-  // --- ALGORITMO PONDERADO ---
-  function calcularResultadoEneagrama(responses) {
-    const WEIGHTS = { CORE:1.5, STRATEGY:1, WING:0.75, INSTINCT:0.5 };
-    const CORE_MIN_AVG = 3.6;
-    const CORE_MIN_ITEM = 3;
-    const WING_DIFF = 0.75;
-    const INSTINCT_MIN = 4;
-    const TIE_THRESHOLD = 0.05;
-    const MIN_SCORE_RATIO = 0.65;
-    const INSTINCT_MAP = { 1:"Autoconservación",2:"Sexual",3:"Social", 4:"Sexual",5:"Autoconservación",6:"Social", 7:"Autoconservación",8:"Sexual",9:"Social" };
-
-    function scoreType(items){
-      let s=0;
-      for(let i=1;i<=5;i++) if(items[i]) s+=items[i]*WEIGHTS.CORE;
-      for(let i=6;i<=8;i++) if(items[i]) s+=items[i]*WEIGHTS.STRATEGY;
-      for(let i=9;i<=10;i++) if(items[i]) s+=items[i]*WEIGHTS.WING;
-      if(items[11]) s+=items[11]*WEIGHTS.INSTINCT;
-      return s;
-    }
-
-    function detectWing(items){
-      const a=items[9]||0, b=items[10]||0;
-      if(a<3 && b<3) return "Ala poco marcada";
-      if(Math.abs(a-b)>=WING_DIFF) return a>b?"Ala A":"Ala B";
-      return "Ala balanceada"; 
-    }
-
-    let scoresObj={};
-    for(let t=1;t<=9;t++){
-      scoresObj[t]=scoreType(responses[t]);
-    }
-
-    let sorted=Object.entries(scoresObj).sort((a,b)=>b[1]-a[1]);
-    let top=sorted[0], second=sorted[1];
-
-    if((top[1]-second[1])/top[1]<TIE_THRESHOLD){
-      // Empate técnico: devolvemos el primero pero marcamos el estado
-      return {estado:"Empate", eneatipo:Number(top[0]), ala:"Indefinida"};
-    }
-
-    return { 
-      estado:"Resultado válido", 
-      eneatipo:Number(top[0]), 
-      ala:detectWing(responses[top[0]]), 
-      instinto: (responses[top[0]][11]>=INSTINCT_MIN) ? INSTINCT_MAP[top[0]] : "No definido" 
-    };
   }
 
   // --- CÁLCULOS ASTRONÓMICOS ---
@@ -528,25 +519,15 @@
     const debug = document.getElementById('loading-debug');
 
     try {
-        // 1. Ejecutar Algoritmo
-        const resultado = calcularResultadoEneagrama(userResponses);
-        let type = resultado.eneatipo;
-        
+        // Eneagrama
+        let max=0, type=1;
+        for(let t in scores){ if(scores[t]>max){ max=scores[t]; type=t; } }
         let tInt = parseInt(type);
         let prev = tInt===1?9:tInt-1;
         let next = tInt===9?1:tInt+1;
-        let alaVal;
+        let w = scores[prev] > scores[next] ? prev : next;
 
-        if (resultado.ala === "Ala A") {
-            alaVal = prev; 
-        } else if (resultado.ala === "Ala B") {
-            alaVal = next; 
-        } else {
-            // "Balanceada", "Poco marcada" o "Indefinida"
-            alaVal = "Balanceada"; 
-        }
-
-        // 3. Cálculos Astrales
+        // Astros
         const date = new Date(user.date + 'T' + user.time);
         
         const sun = calculateSign('Sun', date);
@@ -556,7 +537,7 @@
         const mars = calculateSign('Mars', date);
         const asc = "(Hora " + user.time + ")";
 
-        // 4. Render Datos
+        // Render Gratis
         document.getElementById('r-name').innerText = user.name;
         document.getElementById('r-type').innerText = "Tipo " + type;
         document.getElementById('r-sun').innerText = sun;
@@ -564,15 +545,12 @@
         document.getElementById('r-mars').innerText = mars;
         document.getElementById('r-venus').innerText = ven;
 
-        // 5. Llamada API
+        // Llamada IA
         const res = await fetch('/api/reporte', {
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
-              nombre: user.name, 
-              eneatipo: type, 
-              ala: alaVal, 
-              instinto: resultado.instinto,
+              nombre: user.name, eneatipo: type, ala: w,
               astros: { sol:sun, luna:moon, asc:asc, mercurio:merc, venus:ven, marte:mars }
             })
         });
@@ -587,7 +565,7 @@
         debug.innerText = "Error: " + e.message;
         document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
         document.getElementById('error-msg').style.display = 'block';
-        document.getElementById('ai-content').innerHTML = "<h3>Reporte generado internamente.</h3><p>Cálculos listos. Desbloquea para ver detalles.</p>";
+        document.getElementById('ai-content').innerHTML = "<h3>Reporte generado internamente.</h3><p>Problema de conexión con IA, pero tus cálculos astrales están listos. Desbloquea para ver el detalle.</p>";
         nav('view-result');
     }
   }
