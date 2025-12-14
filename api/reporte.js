@@ -1,68 +1,73 @@
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // Asegúrate de tener esto en tu .env
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export default async function handler(req, res) {
-  // Solo permitimos solicitudes POST
+  // Evitamos problemas de conexión cruzada
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    // 1. Recibimos los datos que envía el index.html
     const { nombre, eneatipo, ala, instinto, astros } = req.body;
 
-    // 2. Definimos el "Mega-Prompt" (Las instrucciones para la IA)
-    const promptSistema = `
-      Actúa como un experto mundial en Astrología Evolutiva y Psicología del Eneagrama (Riso-Hudson).
-      Vas a recibir un perfil con: Nombre, Eneatipo, Ala, Instinto y Posiciones Astrales.
-
-      TU TAREA:
-      Generar un reporte profundo, directo y transformador para ${nombre}. 
-      No uses lenguaje místico vago; usa psicología práctica y arquitectura de personalidad.
+    const prompt = `
+      Actúa como un experto mundial en Eneagrama Riso-Hudson y Astrología Psicológica Avanzada.
+      Estás analizando el perfil de: ${nombre}.
       
-      ESTRUCTURA OBLIGATORIA DEL REPORTE (Usa HTML simple: <h3>, <p>, <ul>, <li>, <strong>):
+      DATOS:
+      - Eneatipo Principal: ${eneatipo}
+      - Ala: ${ala}
+      - Instinto: ${instinto}
+      - Carta Astral: Sol en ${astros.sol}, Luna en ${astros.luna}, Ascendente ${astros.asc}, Marte en ${astros.marte}, Venus en ${astros.venus}, Mercurio en ${astros.mercurio}.
 
-      1. <h3>LA ARQUITECTURA DE TU EGO (TIPO ${eneatipo} ${instinto})</h3>
-         - Explica la tensión o sinergia entre su Eneatipo (su herida: ${eneatipo}) y su Sol en ${astros.sol} / Luna en ${astros.luna}.
-         - Analiza cómo su instinto (${instinto}) modifica su comportamiento principal.
+      OBJETIVO:
+      Crear un reporte de transformación personal extenso y profundo. Enfócate radicalmente en la INTEGRACIÓN (Sanación).
 
-      2. <h3>TU CAMINO DE DESINTEGRACIÓN (EL ESTRÉS)</h3>
-         - Explica qué pasa cuando cae en su sombra. NO digas solo "te vas al número X". Explica el comportamiento tóxico real.
-         - Cruza esto con su MARTE en ${astros.marte} (cómo acciona en conflicto).
-         - Ejemplo: "Cuando te estresas, tu Marte en ${astros.marte} te vuelve..."
+      ESTRUCTURA HTML OBLIGATORIA (Solo contenido dentro de <h3>, <p>, <ul>, <li>):
 
-      3. <h3>TU CAMINO DE INTEGRACIÓN (LA EVOLUCIÓN)</h3>
-         - Este es el núcleo. Explica qué significa evolucionar hacia su integración.
-         - Explica que "Integrar" no es dejar de ser quien es, sino sumar nuevas herramientas.
-         - Cruza esto con su VENUS en ${astros.venus} o ASCENDENTE (${astros.asc}) como puntos de equilibrio.
+      1. <h3>TU ARQUITECTURA DE EGO (Tipo ${eneatipo} + Sol en ${astros.sol})</h3>
+         - <p>Explica la fricción o armonía entre su herida del Eneagrama ${eneatipo} y su identidad solar en ${astros.sol}.</p>
+         - <p>Menciona cómo su Luna en ${astros.luna} procesa las emociones de este tipo.</p>
 
-      4. <h3>HERRAMIENTAS DE ALINEACIÓN</h3>
-         - Dame 3 acciones concretas (Bullet points) basadas en su Ala (${ala === 'Balanceada' ? 'Alas Balanceadas' : 'Ala ' + ala}) y su Mercurio en ${astros.mercurio}.
-         - Nada de "respira hondo". Acciones reales y estratégicas.
+      2. <h3>LA TRAMPA: TU DESINTEGRACIÓN</h3>
+         - <p>Explica brevemente qué pasa bajo estrés. No digas solo números. Describe la conducta reactiva.</p>
+         - <p>CRUCE ASTRAL: Explica cómo su MARTE en ${astros.marte} agrava esta reacción (¿Se vuelve agresivo, pasivo, huye?).</p>
 
-      TONO: Profesional, empático, directo, revelador.
-      FORMATO: HTML limpio (sin etiquetas de código, solo el contenido del div).
+      3. <h3>TU CAMINO DE INTEGRACIÓN (La Gran Evolución)</h3>
+         - <p><strong>Esta es la parte más importante. Extiéndete aquí.</strong></p>
+         - <p>Explica detalladamente qué significa ir hacia su Eneagrama de Integración. (Ej: Si es 8, ir al 2 no es ser débil, es cuidar). Explica el cambio de consciencia necesario.</p>
+         - <p>Diferencia claramente entre actuar desde el ego vs. actuar desde la esencia integrada.</p>
+         - <p><strong>LA CLAVE ASTRAL:</strong> Usa su VENUS en ${astros.venus} o su ASCENDENTE como la herramienta "secreta" para facilitar esta integración. ¿Cómo esa energía suaviza su eneatipo?</p>
+
+      4. <h3>PRÁCTICAS DE ALINEACIÓN</h3>
+         - <ul>
+           <li>Una práctica concreta para su Instinto ${instinto}.</li>
+           <li>Un consejo mental basado en su Mercurio en ${astros.mercurio}.</li>
+           <li>Un mantra o frase de poder para su integración.</li>
+         </ul>
+
+      TONO: Directo, sofisticado, psicológico y empoderador.
     `;
 
-    // 3. Enviamos el mensaje a OpenAI
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini", // O "gpt-3.5-turbo" si quieres ahorrar
+      model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: promptSistema },
-        { role: "user", content: `Analiza este perfil: Nombre: ${nombre}, Eneatipo: ${eneatipo}, Ala: ${ala}, Instinto: ${instinto}, Astros: ${JSON.stringify(astros)}.` }
+        { role: "system", content: prompt },
       ],
-      temperature: 0.7, // Creatividad equilibrada
+      temperature: 0.7,
+      max_tokens: 1500, // Aumentado para que escriba más
     });
 
-    // 4. Devolvemos la respuesta al Frontend
-    const reporteGenerado = completion.choices[0].message.content;
-    res.status(200).json({ reporte: reporteGenerado });
+    res.status(200).json({ reporte: completion.choices[0].message.content });
 
   } catch (error) {
-    console.error("Error en OpenAI:", error);
-    res.status(500).json({ error: "Error generando el reporte." });
+    console.error("Error OpenAI:", error);
+    res.status(500).json({ error: "Error de conexión con la IA." });
   }
 }
