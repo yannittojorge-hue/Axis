@@ -5,7 +5,7 @@ const openai = new OpenAI({
 });
 
 export default async function handler(req, res) {
-  // Evitamos problemas de conexión cruzada
+  // Configuración de cabeceras
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST');
 
@@ -14,45 +14,43 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { nombre, eneatipo, ala, instinto, astros } = req.body;
+    // YA NO recibimos astros, solo datos del Eneagrama
+    const { nombre, eneatipo, ala, instinto } = req.body;
 
     const prompt = `
-      Actúa como un experto mundial en Eneagrama Riso-Hudson y Astrología Psicológica Avanzada.
-      Estás analizando el perfil de: ${nombre}.
+      Actúa como un experto mundial en Psicología del Eneagrama (Escuela Riso-Hudson).
+      Vas a analizar el perfil de: ${nombre}.
       
-      DATOS:
-      - Eneatipo Principal: ${eneatipo}
-      - Ala: ${ala}
-      - Instinto: ${instinto}
-      - Carta Astral: Sol en ${astros.sol}, Luna en ${astros.luna}, Ascendente ${astros.asc}, Marte en ${astros.marte}, Venus en ${astros.venus}, Mercurio en ${astros.mercurio}.
+      DATOS TÉCNICOS:
+      - Eneatipo Central: ${eneatipo}
+      - Ala Dominante: ${ala}
+      - Instinto Predominante: ${instinto}
 
       OBJETIVO:
-      Crear un reporte de transformación personal extenso y profundo. Enfócate radicalmente en la INTEGRACIÓN (Sanación).
+      Crear un reporte de autoconocimiento radical, sin misticismo, basado en la estructura de la personalidad y la neurosis.
 
-      ESTRUCTURA HTML OBLIGATORIA (Solo contenido dentro de <h3>, <p>, <ul>, <li>):
+      ESTRUCTURA HTML OBLIGATORIA (Solo devuelve el contenido dentro de las etiquetas <h3>, <p>, <ul>, <li>):
 
-      1. <h3>TU ARQUITECTURA DE EGO (Tipo ${eneatipo} + Sol en ${astros.sol})</h3>
-         - <p>Explica la fricción o armonía entre su herida del Eneagrama ${eneatipo} y su identidad solar en ${astros.sol}.</p>
-         - <p>Menciona cómo su Luna en ${astros.luna} procesa las emociones de este tipo.</p>
+      1. <h3>TU ARQUITECTURA PSICOLÓGICA (Tipo ${eneatipo})</h3>
+         - <p>Describe con precisión quirúrgica su herida básica y su motivación principal.</p>
+         - <p>Explica cómo el Instinto ${instinto} "colorea" o modifica específicamente a este Eneatipo (Subtipo).</p>
 
-      2. <h3>LA TRAMPA: TU DESINTEGRACIÓN</h3>
-         - <p>Explica brevemente qué pasa bajo estrés. No digas solo números. Describe la conducta reactiva.</p>
-         - <p>CRUCE ASTRAL: Explica cómo su MARTE en ${astros.marte} agrava esta reacción (¿Se vuelve agresivo, pasivo, huye?).</p>
+      2. <h3>EL SUEÑO HIPNÓTICO (Tu Desintegración)</h3>
+         - <p>Describe los síntomas de estrés específicos de este perfil. No digas "vas al número X", describe la conducta tóxica y el mecanismo de defensa que se activa.</p>
 
-      3. <h3>TU CAMINO DE INTEGRACIÓN (La Gran Evolución)</h3>
-         - <p><strong>Esta es la parte más importante. Extiéndete aquí.</strong></p>
-         - <p>Explica detalladamente qué significa ir hacia su Eneagrama de Integración. (Ej: Si es 8, ir al 2 no es ser débil, es cuidar). Explica el cambio de consciencia necesario.</p>
-         - <p>Diferencia claramente entre actuar desde el ego vs. actuar desde la esencia integrada.</p>
-         - <p><strong>LA CLAVE ASTRAL:</strong> Usa su VENUS en ${astros.venus} o su ASCENDENTE como la herramienta "secreta" para facilitar esta integración. ¿Cómo esa energía suaviza su eneatipo?</p>
+      3. <h3>EL CAMINO DE INTEGRACIÓN (La Salida)</h3>
+         - <p>Explica qué significa psicológicamente avanzar hacia su punto de integración.</p>
+         - <p>Aclara que integrar no es cambiar de personalidad, sino incorporar herramientas que le faltan.</p>
+         - <p>Da un ejemplo concreto de cómo se ve este tipo cuando está sano y centrado.</p>
 
-      4. <h3>PRÁCTICAS DE ALINEACIÓN</h3>
+      4. <h3>HERRAMIENTAS DE ALINEACIÓN</h3>
          - <ul>
-           <li>Una práctica concreta para su Instinto ${instinto}.</li>
-           <li>Un consejo mental basado en su Mercurio en ${astros.mercurio}.</li>
-           <li>Un mantra o frase de poder para su integración.</li>
+           <li>Una práctica de auto-observación específica para el Tipo ${eneatipo}.</li>
+           <li>Un consejo para equilibrar su Ala ${ala}.</li>
+           <li>Una frase de recordatorio para desactivar su piloto automático.</li>
          </ul>
 
-      TONO: Directo, sofisticado, psicológico y empoderador.
+      TONO: Profesional, directo, empático y transformador.
     `;
 
     const completion = await openai.chat.completions.create({
@@ -61,7 +59,7 @@ export default async function handler(req, res) {
         { role: "system", content: prompt },
       ],
       temperature: 0.7,
-      max_tokens: 1500, // Aumentado para que escriba más
+      max_tokens: 1200,
     });
 
     res.status(200).json({ reporte: completion.choices[0].message.content });
