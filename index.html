@@ -3,110 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AXIS | Tu Mapa Interno</title>
+  <title>AXIS | Conocerte nunca fue tan fácil</title>
   
   <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- ESTILOS VISUALES --- */
+    /* --- PALETA DE COLORES AXIS --- */
     :root {
-      --bg-main: #F4EFE9; --bg-alt: #FAF8F3;
-      --green: #2E5941; --blue: #274E55;
-      --coral: #FF7F66; --coral-hover: #E06550;
-      --text: #3A3A3A; --white: #FFFFFF;
-      --shadow: 0 10px 30px rgba(39, 78, 85, 0.08);
-      --scroll: 0;
+      --bg-main: #F4EFE9;       /* Beige claro */
+      --bg-alt: #FAF8F3;        /* Crema suave */
+      --green: #2E5941;         /* Verde bosque (Primario) */
+      --blue: #274E55;          /* Azul petróleo (Secundario) */
+      --coral: #FF7F66;         /* Coral suave (Acento) */
+      --coral-hover: #E06550;
+      --text: #3A3A3A;          /* Gris cálido */
+      --white: #FFFFFF;
+      --scroll: 0;              /* Variable para Parallax */
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-    /* PARALLAX */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* --- PARALLAX BACKGROUND --- */
     .parallax-bg {
       position: fixed; inset: 0; z-index: -1; pointer-events: none;
-      background: radial-gradient(circle at 10% 20%, rgba(255,127,102,0.1), transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(46,89,65,0.1), transparent 50%), var(--bg-main);
-      transform: translateY(calc(var(--scroll) * -0.2px));
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 127, 102, 0.15), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(46, 89, 65, 0.15), transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(39, 78, 85, 0.15), transparent 50%),
+        var(--bg-main);
+      transform: translateY(calc(var(--scroll) * -0.2px)); /* Efecto velocidad */
+      transition: transform 0.1s linear;
     }
 
+    /* --- UTILIDADES --- */
     .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
     .hidden { display: none !important; }
-    .fade-in { animation: fadeIn 0.6s ease forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.8s ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* TIPOGRAFÍA */
+    /* --- TIPOGRAFÍA --- */
     h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--blue); }
-    h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; font-weight: 600; }
-    .highlight { color: var(--coral); display: inline-block; }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 600; }
+    h2 { font-size: 2.2rem; margin-bottom: 1rem; color: var(--green); }
+    p { margin-bottom: 1.5rem; font-size: 1.1rem; color: #555; }
     
+    .highlight { color: var(--coral); position: relative; display: inline-block; }
+    
+    /* --- BOTONES --- */
     .btn {
-      background: var(--coral); color: white; border: none; padding: 18px 40px;
-      border-radius: 50px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; 
-      cursor: pointer; transition: 0.3s; box-shadow: 0 8px 20px rgba(255,127,102,0.25); text-transform: uppercase; letter-spacing: 1px;
+      background: var(--coral); color: var(--white); border: none; padding: 18px 40px;
+      border-radius: 50px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;
+      cursor: pointer; transition: all 0.3s ease; display: inline-block; box-shadow: 0 10px 25px rgba(255, 127, 102, 0.3);
     }
-    .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 12px 25px rgba(255,127,102,0.35); }
+    .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 15px 30px rgba(255, 127, 102, 0.4); }
 
-    header { padding: 30px 0; }
-    .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--green); font-size: 1.5rem; cursor: pointer; }
-    .logo-icon { width: 35px; height: 35px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    /* --- HEADER --- */
+    header { padding: 30px 0; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--green); cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 40px; height: 40px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
 
-    /* SECCIONES LANDING */
-    .hero { padding: 80px 0; min-height: 70vh; display: flex; align-items: center; }
+    /* --- SECCIONES LANDING --- */
+    .hero { padding: 100px 0; text-align: left; min-height: 80vh; display: flex; align-items: center; }
+    
     .features { padding: 80px 0; background: var(--white); border-radius: 30px; margin-bottom: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.03); }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
-    .feature-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .feature-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--blue); }
     .feature-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
 
-    /* FORMULARIO */
-    .form-box { background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); max-width: 600px; margin: 40px auto; }
-    .input-group { margin-bottom: 20px; text-align: left; position: relative; }
-    label { font-weight: 600; font-size: 0.9rem; color: var(--blue); display: block; margin-bottom: 5px; }
-    input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: var(--bg-alt); }
-    .suggestions { position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ddd; border-radius: 8px; z-index: 100; max-height: 200px; overflow-y: auto; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-    .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-    .suggestion-item:hover { background: var(--bg-main); color: var(--green); }
+    /* --- FORMULARIO (Estilo Tarjeta) --- */
+    .form-container { max-width: 600px; margin: 60px auto; background: var(--white); padding: 50px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
+    .input-group { margin-bottom: 25px; text-align: left; position: relative; }
+    label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--blue); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    input { width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: var(--bg-alt); transition: 0.3s; }
+    input:focus { border-color: var(--green); outline: none; background: #fff; }
 
-    /* QUIZ MEJORADO */
-    .quiz-container { max-width: 700px; margin: 0 auto; text-align: center; padding: 60px 0; }
-    .progress-bar { height: 6px; background: #ddd; border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 0.3s; }
+    /* Buscador Ciudad */
+    .suggestions { position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ddd; border-radius: 8px; z-index: 100; max-height: 200px; overflow-y: auto; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; transition: 0.2s; }
+    .suggestion-item:hover { background: var(--bg-beige); color: var(--green); }
+
+    /* --- QUIZ (Updated Layout) --- */
+    .quiz-box { max-width: 800px; margin: 40px auto; text-align: center; padding-bottom: 100px; }
+    .progress-bar { height: 8px; background: #ddd; border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--green); width: 0%; transition: width 0.4s ease; }
     
-    .question-card { background: var(--white); padding: 50px 40px; border-radius: 20px; box-shadow: var(--shadow); }
-    .q-text { font-size: 1.5rem; font-weight: 500; margin-bottom: 40px; min-height: 80px; color: var(--blue); font-family: 'Poppins'; }
+    .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
+    .q-text { font-size: 1.5rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; min-height: 80px; }
     
-    /* ESCALA LIKERT VISUAL */
-    .scale-container { display: flex; justify-content: space-between; gap: 10px; margin-top: 30px; }
-    .scale-option { 
-      flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; 
-      transition: 0.2s; opacity: 0.7; 
-    }
+    /* Nueva Escala Visual */
+    .scale-container { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+    .scale-option { flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.2s; opacity: 0.7; }
     .scale-option:hover { opacity: 1; transform: translateY(-5px); }
-    .scale-circle {
-      width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ddd; 
-      display: flex; align-items: center; justify-content: center; 
-      font-weight: 700; font-size: 1.2rem; color: #999; margin-bottom: 10px; background: #fff;
-    }
-    .scale-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #999; text-align: center; line-height: 1.2; }
     
-    /* Colores activos al pasar mouse o seleccionar (lógica futura) */
+    .scale-circle {
+      width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ddd; background: #fff;
+      display: flex; align-items: center; justify-content: center; 
+      font-weight: 700; font-size: 1.2rem; color: #999; margin-bottom: 10px;
+    }
+    .scale-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #999; text-align: center; line-height: 1.2; }
+    
+    /* Hover Effects */
     .scale-option:hover .scale-circle { border-color: var(--coral); color: var(--coral); }
     .scale-option:hover .scale-label { color: var(--coral); }
 
-    /* RESULTADO */
+    /* --- RESULTADO --- */
     .result-header { text-align: center; margin-bottom: 40px; }
-    .astro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 30px; }
-    .astro-card { background: var(--white); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid rgba(0,0,0,0.05); }
-    .astro-label { font-size: 0.7rem; color: #888; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
-    .astro-val { font-size: 1.1rem; font-weight: 700; color: var(--blue); }
+    .astro-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 40px; }
+    .astro-card { background: var(--white); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(0,0,0,0.05); }
+    .astro-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #999; display: block; margin-bottom: 5px; }
+    .astro-data { font-size: 1.2rem; font-weight: 700; color: var(--green); }
+    .locked { filter: blur(4px); opacity: 0.5; }
+
+    /* --- REPORTE IA & PAYWALL --- */
+    .report-wrapper { position: relative; background: var(--white); padding: 50px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); text-align: left; }
+    .ai-text h3 { color: var(--green); margin-top: 30px; border-bottom: 2px solid var(--bg-beige); padding-bottom: 10px; }
+    .ai-text p { line-height: 1.8; color: #444; }
+    .blur-content { filter: blur(8px); user-select: none; opacity: 0.6; pointer-events: none; }
+
+    .paywall-box {
+      position: absolute; top: 150px; left: 0; width: 100%; height: calc(100% - 150px);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), #FFF 80%);
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 50px; z-index: 10;
+    }
     
-    .report-box { position: relative; background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); }
-    .ai-text { color: #444; line-height: 1.8; text-align: left; }
-    .ai-text h3 { color: var(--green); margin-top: 25px; border-bottom: 2px solid var(--bg-main); padding-bottom: 5px; }
-    .blur { filter: blur(6px); opacity: 0.6; user-select: none; pointer-events: none; }
-    .paywall { position: absolute; top: 100px; left: 0; width: 100%; height: calc(100% - 100px); background: linear-gradient(to bottom, rgba(255,255,255,0.4), #fff 90%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 50px; z-index: 10; }
-    
-    .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--coral); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+    .locked-features { text-align: left; background: rgba(255,255,255,0.9); padding: 30px; border-radius: 15px; border: 1px solid #eee; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .locked-features li { margin-bottom: 10px; color: var(--blue); font-weight: 500; list-style: none; }
+
+    /* --- LOADING --- */
+    .loader { width: 60px; height: 60px; border: 5px solid #eee; border-top: 5px solid var(--green); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 30px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
   </style>
 </head>
 <body>
@@ -122,26 +157,27 @@
   </header>
 
   <div id="view-home" class="fade-in">
+    
     <section class="hero">
       <div>
-        <span class="badge" style="background:rgba(46,89,65,0.1); color:var(--green); padding:5px 15px; border-radius:20px; font-weight:700; font-size:0.8rem; text-transform:uppercase;">Test Eneagrama + Carta Astral</span>
+        <span class="badge">Test Eneagrama + Carta Astral</span>
         <h1>Conocerte nunca fue<br><span class="highlight">tan fácil.</span></h1>
-        <p style="font-size:1.2rem; max-width:600px; margin-bottom:30px; opacity:0.8;">
+        <p style="font-size: 1.3rem; max-width: 600px;">
           Un test rápido y preciso que te explica cómo funcionás y qué te mueve, cruzando la psicología del <strong>Eneagrama</strong> con la precisión de tu <strong>Carta Astral</strong>.
         </p>
         <button class="btn" onclick="nav('view-form')">HACER EL TEST</button>
-        <p style="margin-top:15px; font-size:0.9rem; opacity:0.6;">Toma aprox. 10-12 minutos.</p>
+        <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.7;">Toma aprox. 10-12 minutos.</p>
       </div>
     </section>
 
     <section class="features">
       <div class="container">
-        <h2 style="text-align:center; margin-bottom:50px;">Cómo funciona</h2>
+        <h2 style="text-align: center; margin-bottom: 50px;">Cómo funciona</h2>
         <div class="grid-3">
           <div class="feature-card">
             <span class="feature-icon">1️⃣</span>
             <h3>Respondés</h3>
-            <p>Preguntas profundas diseñadas para detectar tus motivaciones inconscientes.</p>
+            <p>100 preguntas diseñadas para detectar tu tipo principal, alas y subtipos instintivos.</p>
           </div>
           <div class="feature-card">
             <span class="feature-icon">2️⃣</span>
@@ -156,38 +192,60 @@
         </div>
       </div>
     </section>
+
+    <section style="text-align: center; padding: 80px 0;">
+      <h2 style="color: var(--blue);">Toda tu claridad en un solo test.</h2>
+      <p>Sin misticismos. Solo autoconocimiento práctico.</p>
+      <button class="btn" onclick="nav('view-form')">COMENZAR AHORA</button>
+    </section>
+
+    <footer style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(0,0,0,0.1); font-size: 0.8rem; color: #999;">
+      <p>© 2025 AXIS. Todos los derechos reservados.</p>
+      <p>Contacto | Privacidad</p>
+    </footer>
   </div>
 
   <div id="view-form" class="hidden fade-in">
-    <div class="form-box">
-      <h2 style="text-align:center">Tus Coordenadas</h2>
-      <p style="text-align:center; margin-bottom:30px; opacity:0.7;">Necesarios para calcular tu carta astral.</p>
+    <div class="form-container">
+      <h2 style="text-align: center; margin-bottom: 10px;">Tus Coordenadas</h2>
+      <p style="text-align: center; margin-bottom: 30px;">Necesarios para calcular tu carta astral.</p>
+      
       <form onsubmit="startQuiz(event)">
         <div class="input-group">
           <label>Nombre</label>
           <input type="text" id="name" required placeholder="Tu nombre">
         </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-          <div class="input-group"><label>Fecha</label><input type="date" id="date" required></div>
-          <div class="input-group"><label>Hora</label><input type="time" id="time" required></div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="input-group">
+            <label>Fecha</label>
+            <input type="date" id="date" required>
+          </div>
+          <div class="input-group">
+            <label>Hora Exacta</label>
+            <input type="time" id="time" required>
+          </div>
         </div>
+
         <div class="input-group">
           <label>Lugar de Nacimiento</label>
-          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." oninput="handleCityInput(this.value)" autocomplete="off">
-          <input type="hidden" id="lat"><input type="hidden" id="lon">
+          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." autocomplete="off" oninput="handleCityInput(this.value)">
+          <input type="hidden" id="lat">
+          <input type="hidden" id="lon">
           <div id="suggestions" class="suggestions"></div>
         </div>
-        <button class="btn" style="width:100%; margin-top:10px;">IR A LAS PREGUNTAS</button>
+
+        <button class="btn" style="width: 100%; margin-top: 10px;">IR A LAS PREGUNTAS</button>
       </form>
     </div>
   </div>
 
   <div id="view-quiz" class="hidden fade-in">
-    <div class="quiz-container">
+    <div class="quiz-box">
       <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
       
       <div class="question-card">
-        <div class="q-text" id="q-text">Cargando...</div>
+        <div class="q-text" id="q-text">Cargando pregunta...</div>
         
         <div class="scale-container">
           <div class="scale-option" onclick="vote(1)">
@@ -204,7 +262,7 @@
           </div>
           <div class="scale-option" onclick="vote(4)">
             <div class="scale-circle">4</div>
-            <div class="scale-label">Frecuente-<br>mente</div>
+            <div class="scale-label">Frecuente<br>mente</div>
           </div>
           <div class="scale-option" onclick="vote(5)">
             <div class="scale-circle">5</div>
@@ -216,13 +274,58 @@
     </div>
   </div>
 
-  <div id="view-loading" class="hidden fade-in" style="text-align:center; padding:100px 0;">
+  <div id="view-loading" class="hidden fade-in" style="text-align: center; padding: 150px 0;">
     <div class="loader"></div>
-    <h3 style="color:var(--blue)">Analizando patrones...</h3>
+    <h3 style="color: var(--blue);">Analizando patrones...</h3>
     <p>Cruzando tu Eneagrama con tus posiciones planetarias.</p>
-    <p id="loading-debug" style="font-size:0.8rem; color:red; margin-top:20px;"></p>
   </div>
 
   <div id="view-result" class="hidden fade-in">
     <div class="result-header">
-      <span class="badge" style="background:#
+      <span class="badge" style="background: #E6F4EA; color: #1E8E3E;">✓ REPORTE LISTO</span>
+      <h2 style="margin-top: 15px;">Tu Mapa AXIS</h2>
+      <p>Hola <strong id="res-name"></strong>, aquí está tu diseño único.</p>
+    </div>
+
+    <div class="astro-dashboard">
+      <div class="astro-card" style="background: var(--blue); color: white;">
+        <span class="astro-title" style="color: rgba(255,255,255,0.7);">ENEATIPO</span>
+        <div class="astro-data" id="res-type" style="color: white;">...</div>
+      </div>
+      <div class="astro-card">
+        <span class="astro-title">SOL (ESENCIA)</span>
+        <div class="astro-data" id="res-sun">...</div>
+      </div>
+      <div class="astro-card" style="opacity: 0.6;">
+        <span class="astro-title">LUNA</span>
+        <div class="astro-data">🔒</div>
+      </div>
+      <div class="astro-card" style="opacity: 0.6;">
+        <span class="astro-title">ASCENDENTE</span>
+        <div class="astro-data">🔒</div>
+      </div>
+      <div class="astro-card" style="opacity: 0.6;">
+        <span class="astro-title">MARTE</span>
+        <div class="astro-data">🔒</div>
+      </div>
+      <div class="astro-card" style="opacity: 0.6;">
+        <span class="astro-title">VENUS</span>
+        <div class="astro-data">🔒</div>
+      </div>
+    </div>
+
+    <div class="report-wrapper">
+      <div id="ai-content" class="ai-text blur-content">
+        <h3>Tu Arquitectura Psicológica</h3>
+        <p>Generando análisis detallado...</p>
+        <h3>El Cruce Astral</h3>
+        <p>Calculando influencias planetarias...</p>
+      </div>
+
+      <div id="paywall" class="paywall-box">
+        <h3 style="color: var(--blue); margin-bottom: 10px;">Desbloquear Lectura Completa</h3>
+        
+        <ul class="locked-features">
+          <li>🔒 Tu <strong>Ala Dominante</strong> y Subtipo</li>
+          <li>🔒 Tus <strong>6 Astros</strong> calculados (Sol, Luna, Asc, Marte, Venus, Mercurio)</li>
+          <li>🔒 Análisis de <strong>Compatibilidad
