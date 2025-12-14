@@ -109,8 +109,26 @@
     }
     
     /* Hover Effects */
-    .scale-option:hover .scale-circle { border-color: var(--coral); background: var(--coral); color: white; }
-    .scale-option:hover .scale-label { color: var(--coral); }
+    
+    /* 1. NUNCA (Rojo Arcilla) */
+    .scale-option:nth-child(1):hover .scale-circle { background: #D66D5E; border-color: #D66D5E; color: white; }
+    .scale-option:nth-child(1):hover .scale-label { color: #D66D5E; }
+
+    /* 2. RARA VEZ (Naranja Coral) */
+    .scale-option:nth-child(2):hover .scale-circle { background: #E89F71; border-color: #E89F71; color: white; }
+    .scale-option:nth-child(2):hover .scale-label { color: #E89F71; }
+
+    /* 3. A VECES (Dorado Neutro) */
+    .scale-option:nth-child(3):hover .scale-circle { background: #D9C375; border-color: #D9C375; color: white; }
+    .scale-option:nth-child(3):hover .scale-label { color: #D9C375; }
+
+    /* 4. FRECUENTE (Verde Salvia) */
+    .scale-option:nth-child(4):hover .scale-circle { background: #87B38D; border-color: #87B38D; color: white; }
+    .scale-option:nth-child(4):hover .scale-label { color: #87B38D; }
+
+    /* 5. SIEMPRE (Verde Marca) */
+    .scale-option:nth-child(5):hover .scale-circle { background: var(--green); border-color: var(--green); color: white; }
+    .scale-option:nth-child(5):hover .scale-label { color: var(--green); }
 
     /* RESULTADO */
     .result-header { text-align: center; margin-bottom: 40px; }
