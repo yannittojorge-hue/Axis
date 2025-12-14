@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AXIS | Conocerte nunca fue tan fácil</title>
+  <title>AXIS | Tu Mapa Interno</title>
   
   <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- PALETA DE COLORES AXIS --- */
+    /* --- ESTILOS VISUALES --- */
     :root {
       --bg-main: #F4EFE9; --bg-alt: #FAF8F3;
       --green: #2E5941; --blue: #274E55;
       --coral: #FF7F66; --coral-hover: #E06550;
       --text: #3A3A3A; --white: #FFFFFF;
+      --shadow: 0 10px 30px rgba(39, 78, 85, 0.08);
       --scroll: 0;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,59 +29,81 @@
       transform: translateY(calc(var(--scroll) * -0.2px));
     }
 
-    /* COMPONENTES */
     .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
     .hidden { display: none !important; }
-    .fade-in { animation: fadeIn 0.8s ease forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; } }
+    .fade-in { animation: fadeIn 0.6s ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+    /* TIPOGRAFÍA */
     h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--blue); }
-    .btn { background: var(--coral); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255,127,102,0.3); font-size: 1rem; }
-    .btn:hover { transform: translateY(-3px); background: var(--coral-hover); }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; font-weight: 600; }
+    .highlight { color: var(--coral); display: inline-block; }
+    
+    .btn {
+      background: var(--coral); color: white; border: none; padding: 18px 40px;
+      border-radius: 50px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; 
+      cursor: pointer; transition: 0.3s; box-shadow: 0 8px 20px rgba(255,127,102,0.25); text-transform: uppercase; letter-spacing: 1px;
+    }
+    .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 12px 25px rgba(255,127,102,0.35); }
 
-    /* HEADER */
     header { padding: 30px 0; }
-    .logo { display: flex; align-items: center; gap: 10px; font-family: 'Poppins'; font-weight: 700; color: var(--green); font-size: 1.5rem; cursor: pointer; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--green); font-size: 1.5rem; cursor: pointer; }
     .logo-icon { width: 35px; height: 35px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-    /* SECCIONES */
+    /* SECCIONES LANDING */
     .hero { padding: 80px 0; min-height: 70vh; display: flex; align-items: center; }
-    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; }
-    .hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; opacity: 0.8; }
-    .badge { background: rgba(46,89,65,0.1); color: var(--green); padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+    .features { padding: 80px 0; background: var(--white); border-radius: 30px; margin-bottom: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.03); }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
+    .feature-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .feature-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
 
     /* FORMULARIO */
     .form-box { background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); max-width: 600px; margin: 40px auto; }
     .input-group { margin-bottom: 20px; text-align: left; position: relative; }
     label { font-weight: 600; font-size: 0.9rem; color: var(--blue); display: block; margin-bottom: 5px; }
-    input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
-    .suggestions { position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ddd; border-radius: 8px; z-index: 100; max-height: 200px; overflow-y: auto; display: none; }
-    .suggestion-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-    .suggestion-item:hover { background: #f9f9f9; }
+    input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: var(--bg-alt); }
+    .suggestions { position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ddd; border-radius: 8px; z-index: 100; max-height: 200px; overflow-y: auto; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+    .suggestion-item:hover { background: var(--bg-main); color: var(--green); }
 
-    /* QUIZ */
+    /* QUIZ MEJORADO */
     .quiz-container { max-width: 700px; margin: 0 auto; text-align: center; padding: 60px 0; }
     .progress-bar { height: 6px; background: #ddd; border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 0.3s; }
-    .question-card { background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); }
-    .q-text { font-size: 1.4rem; font-weight: 600; margin-bottom: 30px; min-height: 70px; }
-    .options { display: flex; flex-direction: column; gap: 10px; }
-    .option-btn { padding: 15px; border: 1px solid #ddd; border-radius: 10px; background: #fff; cursor: pointer; text-align: left; transition: 0.2s; font-weight: 500; }
-    .option-btn:hover { border-color: var(--coral); background: #fff5f5; }
+    
+    .question-card { background: var(--white); padding: 50px 40px; border-radius: 20px; box-shadow: var(--shadow); }
+    .q-text { font-size: 1.5rem; font-weight: 500; margin-bottom: 40px; min-height: 80px; color: var(--blue); font-family: 'Poppins'; }
+    
+    /* ESCALA LIKERT VISUAL */
+    .scale-container { display: flex; justify-content: space-between; gap: 10px; margin-top: 30px; }
+    .scale-option { 
+      flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; 
+      transition: 0.2s; opacity: 0.7; 
+    }
+    .scale-option:hover { opacity: 1; transform: translateY(-5px); }
+    .scale-circle {
+      width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ddd; 
+      display: flex; align-items: center; justify-content: center; 
+      font-weight: 700; font-size: 1.2rem; color: #999; margin-bottom: 10px; background: #fff;
+    }
+    .scale-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #999; text-align: center; line-height: 1.2; }
+    
+    /* Colores activos al pasar mouse o seleccionar (lógica futura) */
+    .scale-option:hover .scale-circle { border-color: var(--coral); color: var(--coral); }
+    .scale-option:hover .scale-label { color: var(--coral); }
 
     /* RESULTADO */
     .result-header { text-align: center; margin-bottom: 40px; }
     .astro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 30px; }
-    .astro-card { background: var(--white); padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+    .astro-card { background: var(--white); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid rgba(0,0,0,0.05); }
     .astro-label { font-size: 0.7rem; color: #888; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
     .astro-val { font-size: 1.1rem; font-weight: 700; color: var(--blue); }
     
-    /* REPORT IA */
     .report-box { position: relative; background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); }
-    .ai-text { color: #444; line-height: 1.7; }
-    .ai-text h3 { color: var(--green); margin-top: 20px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+    .ai-text { color: #444; line-height: 1.8; text-align: left; }
+    .ai-text h3 { color: var(--green); margin-top: 25px; border-bottom: 2px solid var(--bg-main); padding-bottom: 5px; }
     .blur { filter: blur(6px); opacity: 0.6; user-select: none; pointer-events: none; }
-    .paywall { position: absolute; top: 100px; left: 0; width: 100%; height: calc(100% - 100px); background: linear-gradient(to bottom, rgba(255,255,255,0.5), #fff 80%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 50px; z-index: 10; }
+    .paywall { position: absolute; top: 100px; left: 0; width: 100%; height: calc(100% - 100px); background: linear-gradient(to bottom, rgba(255,255,255,0.4), #fff 90%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 50px; z-index: 10; }
     
     .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--coral); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -91,6 +114,7 @@
 <div class="parallax-bg"></div>
 
 <div class="container">
+  
   <header>
     <div class="logo" onclick="location.reload()">
       <div class="logo-icon">X</div> AXIS
@@ -100,10 +124,36 @@
   <div id="view-home" class="fade-in">
     <section class="hero">
       <div>
-        <span class="badge">Eneagrama + Astrología</span>
-        <h1>Descubrí tu verdadero<br><span style="color:var(--coral)">Mapa Interno.</span></h1>
-        <p>Un test que cruza la psicología del Eneagrama con la precisión matemática de tu Carta Astral. Análisis profundo con IA.</p>
-        <button class="btn" onclick="nav('view-form')">COMENZAR TEST</button>
+        <span class="badge" style="background:rgba(46,89,65,0.1); color:var(--green); padding:5px 15px; border-radius:20px; font-weight:700; font-size:0.8rem; text-transform:uppercase;">Test Eneagrama + Carta Astral</span>
+        <h1>Conocerte nunca fue<br><span class="highlight">tan fácil.</span></h1>
+        <p style="font-size:1.2rem; max-width:600px; margin-bottom:30px; opacity:0.8;">
+          Un test rápido y preciso que te explica cómo funcionás y qué te mueve, cruzando la psicología del <strong>Eneagrama</strong> con la precisión de tu <strong>Carta Astral</strong>.
+        </p>
+        <button class="btn" onclick="nav('view-form')">HACER EL TEST</button>
+        <p style="margin-top:15px; font-size:0.9rem; opacity:0.6;">Toma aprox. 10-12 minutos.</p>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2 style="text-align:center; margin-bottom:50px;">Cómo funciona</h2>
+        <div class="grid-3">
+          <div class="feature-card">
+            <span class="feature-icon">1️⃣</span>
+            <h3>Respondés</h3>
+            <p>Preguntas profundas diseñadas para detectar tus motivaciones inconscientes.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">2️⃣</span>
+            <h3>Analizamos</h3>
+            <p>Nuestra IA cruza tus respuestas con tu fecha, hora y lugar de nacimiento exactos.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">3️⃣</span>
+            <h3>Descubrís</h3>
+            <p>Recibís un mapa personal completo que integra tu psicología y tu energía astral.</p>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -111,12 +161,13 @@
   <div id="view-form" class="hidden fade-in">
     <div class="form-box">
       <h2 style="text-align:center">Tus Coordenadas</h2>
+      <p style="text-align:center; margin-bottom:30px; opacity:0.7;">Necesarios para calcular tu carta astral.</p>
       <form onsubmit="startQuiz(event)">
         <div class="input-group">
           <label>Nombre</label>
           <input type="text" id="name" required placeholder="Tu nombre">
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
           <div class="input-group"><label>Fecha</label><input type="date" id="date" required></div>
           <div class="input-group"><label>Hora</label><input type="time" id="time" required></div>
         </div>
@@ -126,7 +177,7 @@
           <input type="hidden" id="lat"><input type="hidden" id="lon">
           <div id="suggestions" class="suggestions"></div>
         </div>
-        <button class="btn" style="width:100%">CONTINUAR</button>
+        <button class="btn" style="width:100%; margin-top:10px;">IR A LAS PREGUNTAS</button>
       </form>
     </div>
   </div>
@@ -134,92 +185,44 @@
   <div id="view-quiz" class="hidden fade-in">
     <div class="quiz-container">
       <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      
       <div class="question-card">
-        <div class="q-text" id="q-text">...</div>
-        <div class="options" id="opts"></div>
+        <div class="q-text" id="q-text">Cargando...</div>
+        
+        <div class="scale-container">
+          <div class="scale-option" onclick="vote(1)">
+            <div class="scale-circle">1</div>
+            <div class="scale-label">Nunca<br>me pasa</div>
+          </div>
+          <div class="scale-option" onclick="vote(2)">
+            <div class="scale-circle">2</div>
+            <div class="scale-label">Rara<br>vez</div>
+          </div>
+          <div class="scale-option" onclick="vote(3)">
+            <div class="scale-circle">3</div>
+            <div class="scale-label">A<br>veces</div>
+          </div>
+          <div class="scale-option" onclick="vote(4)">
+            <div class="scale-circle">4</div>
+            <div class="scale-label">Frecuente-<br>mente</div>
+          </div>
+          <div class="scale-option" onclick="vote(5)">
+            <div class="scale-circle">5</div>
+            <div class="scale-label">Totalmente<br>yo</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
   <div id="view-loading" class="hidden fade-in" style="text-align:center; padding:100px 0;">
     <div class="loader"></div>
-    <h3>Analizando Estrellas y Patrones...</h3>
-    <p>Calculando posiciones planetarias y redactando tu reporte.</p>
+    <h3 style="color:var(--blue)">Analizando patrones...</h3>
+    <p>Cruzando tu Eneagrama con tus posiciones planetarias.</p>
     <p id="loading-debug" style="font-size:0.8rem; color:red; margin-top:20px;"></p>
   </div>
 
   <div id="view-result" class="hidden fade-in">
     <div class="result-header">
-      <span class="badge" style="background:#E6F4EA; color:#1E8E3E;">REPORTE LISTO</span>
-      <h2 style="margin-top:10px;">Tu Mapa AXIS</h2>
-      <p>Hola <strong id="r-name"></strong>, aquí está tu diseño único.</p>
-    </div>
-
-    <div class="astro-grid">
-      <div class="astro-card" style="background:var(--blue);"><span class="astro-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span><div class="astro-val" style="color:white" id="r-type">...</div></div>
-      <div class="astro-card"><span class="astro-label">SOL</span><div class="astro-val" id="r-sun">...</div></div>
-      <div class="astro-card"><span class="astro-label">LUNA</span><div class="astro-val" id="r-moon">Calculando...</div></div>
-      <div class="astro-card"><span class="astro-label">ASCENDENTE</span><div class="astro-val">🔒</div></div>
-      <div class="astro-card"><span class="astro-label">MARTE</span><div class="astro-val" id="r-mars">...</div></div>
-      <div class="astro-card"><span class="astro-label">VENUS</span><div class="astro-val" id="r-venus">...</div></div>
-    </div>
-
-    <div class="report-box">
-      <div id="ai-content" class="ai-text blur">
-        <h3>Tu Arquitectura</h3><p>Generando análisis profundo...</p>
-        <h3>Cruce Astral</h3><p>Calculando influencias...</p>
-      </div>
-      <div id="paywall" class="paywall">
-        <h3 style="color:var(--blue)">Desbloquear Reporte Completo</h3>
-        <ul style="text-align:left; margin-bottom:20px; color:#555; list-style:none;">
-          <li>🔒 <strong>Ala Dominante</strong> y Subtipo</li>
-          <li>🔒 Análisis de <strong>Luna y Ascendente</strong></li>
-          <li>🔒 Influencia de <strong>Marte y Venus</strong></li>
-          <li>🔒 Camino de <strong>Integración</strong></li>
-        </ul>
-        <div style="background:var(--green); color:white; padding:5px 15px; border-radius:20px; font-weight:700; margin-bottom:15px; display:inline-block;">$5.000 ARS</div><br>
-        <button class="btn" onclick="unlock()">DESBLOQUEAR AHORA</button>
-      </div>
-    </div>
-    <p id="err-msg" style="color:red; text-align:center; display:none; margin-top:20px;"></p>
-  </div>
-</div>
-
-<script>
-  // --- VARIABLES ---
-  let user = { name: "", date: "", time: "", city: "", lat: 0, lon: 0 };
-  let scores = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
-  let qIdx = 0;
-
-  // --- LAS 100 PREGUNTAS (Riso-Hudson) ---
-  const questions = [
-    {t:1, q:"Siento una fuerte presión interna por hacer las cosas bien."},
-    {t:9, q:"Suelo decir que sí para evitar conflictos."},
-    {t:3, q:"Me siento inquieto si no estoy logrando objetivos."},
-    {t:2, q:"Me esfuerzo por ser indispensable para otros."},
-    {t:5, q:"Me agota estar con mucha gente, necesito soledad."},
-    {t:6, q:"Suelo imaginar escenarios negativos por seguridad."},
-    {t:7, q:"Me aterra la rutina y el aburrimiento."},
-    {t:8, q:"Detecto rápidamente quién tiene el poder."},
-    {t:4, q:"Siento que mis emociones son más profundas que las del resto."},
-    {t:1, q:"Me irrita ver a la gente rompiendo reglas."},
-    {t:3, q:"Cuando me estreso, me pongo a trabajar más."},
-    {t:2, q:"Si me ignoran, me vuelvo quejoso o demandante."},
-    {t:6, q:"Dudo de mí mismo y busco consejos externos."},
-    {t:5, q:"Me desconecto emocionalmente en los conflictos."},
-    {t:8, q:"Si me presionan, presiono más fuerte de vuelta."},
-    {t:9, q:"Dejo las cosas importantes para último momento."},
-    {t:7, q:"Busco el lado positivo para no sentir dolor."},
-    {t:4, q:"A veces me quedo atrapado en la melancolía."},
-    {t:1, q:"Me enorgullece ser íntegro y lógico."},
-    {t:2, q:"Soy el consejero de mis amigos."},
-    {t:3, q:"Es vital dar una buena imagen."},
-    {t:4, q:"Me siento diferente o incomprendido."},
-    {t:5, q:"Valoro el conocimiento más que lo social."},
-    {t:6, q:"La lealtad es sagrada para mí."},
-    {t:7, q:"Tengo mucha energía y planes futuros."},
-    {t:8, q:"Protejo a los míos con fiereza."},
-    {t:9, q:"Soy calmado y fácil de llevar."},
-    {t:2, q:"Doy mucho más de lo que recibo."},
-    {t:8, q:"Prefiero la verdad directa aunque duela."},
-    {t:4
+      <span class="badge" style="background:#
