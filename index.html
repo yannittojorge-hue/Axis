@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- VARIABLES GLOBALES --- */
+    /* --- VARIABLES & ESTILOS --- */
     :root {
       --bg-main: #F4EFE9; --bg-alt: #FAF8F3;
       --green: #2E5941; --blue: #274E55;
@@ -46,11 +46,12 @@
     }
     .btn:hover { transform: translateY(-3px); background: var(--coral-hover); box-shadow: 0 12px 25px rgba(255,127,102,0.35); }
 
-    /* SECCIONES */
+    /* HEADER */
     header { padding: 30px 0; }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--green); font-size: 1.5rem; cursor: pointer; }
     .logo-icon { width: 35px; height: 35px; border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
+    /* SECCIONES */
     .hero { padding: 80px 0; min-height: 70vh; display: flex; align-items: center; }
     .features { padding: 80px 0; background: var(--white); border-radius: 30px; margin-bottom: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.03); }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
@@ -66,10 +67,8 @@
     .suggestion-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
     .suggestion-item:hover { background: var(--bg-main); color: var(--green); }
 
-    /* QUIZ CONTAINER */
+    /* QUIZ & BARRA DE PROGRESO */
     .quiz-container { max-width: 800px; margin: 0 auto; text-align: center; padding: 60px 0; }
-    
-    /* BARRA DE PROGRESO */
     .progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.8rem; color: #888; font-weight: 700; text-transform: uppercase; }
     .progress-bar { height: 8px; background: #e0e0e0; border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--green); width: 0%; transition: width 0.3s ease; }
@@ -77,7 +76,7 @@
     .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
     .q-text { font-size: 1.5rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; min-height: 80px; }
     
-    /* ESCALA VISUAL - EARTH TONES */
+    /* ESCALA VISUAL (Earth Tones) */
     .scale-container { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-top: 20px; width: 100%; }
     .scale-option { flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: all 0.3s ease; opacity: 0.9; }
     .scale-option:hover { opacity: 1; transform: translateY(-5px); }
@@ -89,7 +88,7 @@
     }
     .scale-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #999; text-align: center; line-height: 1.2; transition: 0.3s; }
     
-    /* COLORES GRADIENTES */
+    /* Colores por opción */
     .scale-option:nth-child(1):hover .scale-circle { background: #D66D5E; border-color: #D66D5E; color: white; }
     .scale-option:nth-child(1):hover .scale-label { color: #D66D5E; }
     .scale-option:nth-child(2):hover .scale-circle { background: #E89F71; border-color: #E89F71; color: white; }
@@ -123,6 +122,7 @@
 <div class="parallax-bg"></div>
 
 <div class="container">
+  
   <header>
     <div class="logo" onclick="location.reload()">
       <div class="logo-icon">X</div> AXIS
@@ -132,236 +132,4 @@
   <div id="view-home" class="fade-in">
     <section class="hero">
       <div>
-        <span class="badge" style="background:rgba(46,89,65,0.1); color:var(--green); padding:5px 15px; border-radius:20px; font-weight:700; font-size:0.8rem; text-transform:uppercase;">Test Eneagrama + Carta Astral</span>
-        <h1>Conocerte nunca fue<br><span class="highlight">tan fácil.</span></h1>
-        <p style="font-size:1.2rem; max-width:600px; margin-bottom:30px; opacity:0.8;">
-          Un test rápido y preciso que te explica cómo funcionás y qué te mueve, cruzando la psicología del <strong>Eneagrama</strong> con la precisión de tu <strong>Carta Astral</strong>.
-        </p>
-        <button class="btn" onclick="nav('view-form')">HACER EL TEST</button>
-        <p style="margin-top:15px; font-size:0.9rem; opacity:0.6;">Toma aprox. 10-12 minutos.</p>
-      </div>
-    </section>
-
-    <section class="features">
-      <div class="container">
-        <h2 style="text-align:center; margin-bottom:50px;">Cómo funciona</h2>
-        <div class="grid-3">
-          <div class="feature-card">
-            <span class="feature-icon">1️⃣</span>
-            <h3>Respondés</h3>
-            <p>Preguntas profundas diseñadas para detectar tus motivaciones inconscientes.</p>
-          </div>
-          <div class="feature-card">
-            <span class="feature-icon">2️⃣</span>
-            <h3>Analizamos</h3>
-            <p>Nuestra IA cruza tus respuestas con tu fecha, hora y lugar de nacimiento exactos.</p>
-          </div>
-          <div class="feature-card">
-            <span class="feature-icon">3️⃣</span>
-            <h3>Descubrís</h3>
-            <p>Recibís un mapa personal completo que integra tu psicología y tu energía astral.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div id="view-form" class="hidden fade-in">
-    <div class="form-box">
-      <h2 style="text-align:center">Tus Coordenadas</h2>
-      <p style="text-align:center; margin-bottom:30px; opacity:0.7;">Necesarios para calcular tu carta astral.</p>
-      
-      <div id="form-content">
-        <div class="input-group">
-          <label>Nombre</label>
-          <input type="text" id="name" required placeholder="Tu nombre">
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-          <div class="input-group"><label>Fecha</label><input type="date" id="date" required></div>
-          <div class="input-group"><label>Hora</label><input type="time" id="time" required></div>
-        </div>
-        <div class="input-group">
-          <label>Lugar de Nacimiento</label>
-          <input type="text" id="city-input" placeholder="Escribe tu ciudad..." autocomplete="off" oninput="handleCityInput(this.value)">
-          <input type="hidden" id="lat"><input type="hidden" id="lon">
-          <div id="suggestions" class="suggestions"></div>
-        </div>
-        <button class="btn" style="width:100%; margin-top:10px;" onclick="startQuiz()">IR A LAS PREGUNTAS</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="view-quiz" class="hidden fade-in">
-    <div class="quiz-container">
-      
-      <div class="progress-header">
-        <span>Progreso</span>
-        <span id="progress-text">0%</span>
-      </div>
-      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-      
-      <div class="question-card">
-        <div class="q-text" id="q-text">Cargando...</div>
-        
-        <div class="scale-container">
-          <div class="scale-option" onclick="vote(1)">
-            <div class="scale-circle">1</div><div class="scale-label">Nunca<br>me pasa</div>
-          </div>
-          <div class="scale-option" onclick="vote(2)">
-            <div class="scale-circle">2</div><div class="scale-label">Rara<br>vez</div>
-          </div>
-          <div class="scale-option" onclick="vote(3)">
-            <div class="scale-circle">3</div><div class="scale-label">A<br>veces</div>
-          </div>
-          <div class="scale-option" onclick="vote(4)">
-            <div class="scale-circle">4</div><div class="scale-label">Frecuente<br>mente</div>
-          </div>
-          <div class="scale-option" onclick="vote(5)">
-            <div class="scale-circle">5</div><div class="scale-label">Totalmente<br>yo</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="view-loading" class="hidden fade-in" style="text-align:center; padding:100px 0;">
-    <div class="loader"></div>
-    <h3 style="color:var(--blue)">Analizando patrones...</h3>
-    <p>Cruzando tu Eneagrama con tus posiciones planetarias.</p>
-    <p id="loading-debug" style="font-size:0.8rem; color:red; margin-top:20px;"></p>
-  </div>
-
-  <div id="view-result" class="hidden fade-in">
-    <div class="result-header">
-      <span class="badge" style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">✓ REPORTE LISTO</span>
-      <h2 style="margin-top:15px;">Tu Mapa AXIS</h2>
-      <p>Hola <strong id="r-name"></strong>, aquí está tu diseño único.</p>
-    </div>
-
-    <div class="astro-grid">
-      <div class="astro-card" style="background:var(--blue);"><span class="astro-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span><div class="astro-val" style="color:white" id="r-type">...</div></div>
-      <div class="astro-card"><span class="astro-label">SOL</span><div class="astro-val" id="r-sun">...</div></div>
-      <div class="astro-card"><span class="astro-label">LUNA</span><div class="astro-val" id="r-moon">...</div></div>
-      <div class="astro-card" style="opacity:0.6"><span class="astro-label">ASCENDENTE</span><div class="astro-val">🔒</div></div>
-      <div class="astro-card" style="opacity:0.6"><span class="astro-label">MARTE</span><div class="astro-val" id="r-mars">...</div></div>
-      <div class="astro-card" style="opacity:0.6"><span class="astro-label">VENUS</span><div class="astro-val" id="r-venus">...</div></div>
-    </div>
-
-    <div class="report-box">
-      <div id="ai-content" class="ai-text blur">
-        <h3>Tu Arquitectura</h3><p>Generando análisis profundo...</p>
-        <h3>Cruce Astral</h3><p>Calculando influencias...</p>
-      </div>
-      <div id="paywall" class="paywall">
-        <h3 style="color:var(--blue)">Desbloquear Reporte Completo</h3>
-        <ul style="text-align:left; margin-bottom:20px; color:#555; list-style:none;">
-          <li>🔒 <strong>Ala Dominante</strong> y Subtipo</li>
-          <li>🔒 Tus <strong>6 Astros</strong> calculados</li>
-          <li>🔒 Análisis de <strong>Compatibilidad Interna</strong></li>
-          <li>🔒 Consejo de <strong>Integración</strong></li>
-        </ul>
-        <div style="background:var(--green); color:white; padding:8px 20px; border-radius:50px; font-weight:700; margin-bottom:15px;">$5.000 ARS</div>
-        <button class="btn" onclick="unlock()">DESBLOQUEAR AHORA</button>
-      </div>
-    </div>
-    <div id="error-msg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
-  </div>
-</div>
-
-<script>
-  // 1. FUNCIONES UI (Al principio para que los botones funcionen siempre)
-  function nav(id) {
-    document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-    window.scrollTo(0,0);
-  }
-
-  let debounce;
-  async function handleCityInput(val) {
-    clearTimeout(debounce);
-    const box = document.getElementById('suggestions');
-    if(val.length<3){box.style.display='none';return;}
-    debounce = setTimeout(async()=>{
-      try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${val}`);
-        const data = await res.json();
-        box.innerHTML='';
-        if(data.length>0){
-          box.style.display='block';
-          data.forEach(p=>{
-            const d=document.createElement('div');
-            d.className='suggestion-item';
-            d.innerText=p.display_name;
-            d.onclick=()=>{
-              document.getElementById('city-input').value=p.display_name;
-              user.lat=parseFloat(p.lat); user.lon=parseFloat(p.lon);
-              box.style.display='none';
-            };
-            box.appendChild(d);
-          });
-        }
-      } catch(e){}
-    },300);
-  }
-
-  // --- VARIABLES DE ESTADO ---
-  let user = { name: "", date: "", time: "", city: "", lat: 0, lon: 0 };
-  let userResponses = { 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}, 9:{} };
-  let qIdx = 0;
-
-  // --- LAS 99 PREGUNTAS (11 por tipo) ---
-  const questions = [
-    // TIPO 1
-    { t:1, q:"Busco hacer las cosas correctamente porque siento una presión interna por cumplir con lo que considero correcto." },
-    { t:1, q:"Me cuesta relajarme porque siempre percibo que algo podría hacerse mejor." },
-    { t:1, q:"Me critico con dureza porque siento que no debería cometer errores." },
-    { t:1, q:"Mantengo estándares altos porque temo actuar de una manera incorrecta o reprochable." },
-    { t:1, q:"Siento incomodidad o culpa porque no logro cumplir con mis propios ideales." },
-    { t:1, q:"Contengo mi enojo porque creo que expresarlo sería inapropiado o injusto." },
-    { t:1, q:"Me resulta difícil disfrutar porque siento que primero debo cumplir con mis responsabilidades." },
-    { t:1, q:"Me irrita la falta de compromiso porque creo que las personas deberían esforzarse más." },
-    { t:1, q:"Evito el conflicto porque prefiero mantener la armonía y el autocontrol." },
-    { t:1, q:"Corrijo o ayudo a otros porque siento responsabilidad por que las cosas se hagan bien." },
-    { t:1, q:"Me esfuerzo por ser responsable y correcto porque así siento que soy una buena persona." },
-    // TIPO 2
-    { t:2, q:"Estoy atento a las necesidades de los demás porque temo no ser querido si no soy necesario." },
-    { t:2, q:"Me involucro emocionalmente con otros porque necesito sentirme importante en sus vidas." },
-    { t:2, q:"Me cuesta reconocer mis propias necesidades porque priorizo el bienestar de los demás." },
-    { t:2, q:"Ofrezco ayuda incluso sin que me la pidan porque temo ser dejado de lado." },
-    { t:2, q:"Busco cercanía afectiva porque necesito sentir que soy valioso para otros." },
-    { t:2, q:"Me adapto a lo que otros esperan porque así aseguro el vínculo." },
-    { t:2, q:"Evito pedir ayuda porque siento que debo dar más de lo que recibo." },
-    { t:2, q:"Me esfuerzo por agradar porque temo perder el afecto de las personas importantes." },
-    { t:2, q:"Me contengo emocionalmente porque prefiero mantener la calma y no generar tensión." },
-    { t:2, q:"Me esfuerzo por destacar y ser útil porque así siento que merezco amor." },
-    { t:2, q:"Me involucro intensamente en las relaciones porque necesito sentirme indispensable." },
-    // TIPO 3
-    { t:3, q:"Me esfuerzo por lograr objetivos porque necesito sentir que valgo por lo que hago." },
-    { t:3, q:"Busco ser eficiente porque temo fracasar y perder reconocimiento." },
-    { t:3, q:"Me adapto a distintos contextos porque quiero asegurar el éxito." },
-    { t:3, q:"Evito mostrar debilidades porque temo parecer incompetente." },
-    { t:3, q:"Me enfoco en resultados porque siento que el valor personal depende del rendimiento." },
-    { t:3, q:"Me mantengo ocupado porque detenerme me conecta con la sensación de vacío." },
-    { t:3, q:"Muestro una imagen segura porque temo que otros vean mis inseguridades." },
-    { t:3, q:"Compito conmigo mismo porque necesito superarme constantemente." },
-    { t:3, q:"Busco agradar y ayudar porque quiero ser valorado por los demás." },
-    { t:3, q:"Busco diferenciarme porque necesito sentirme especial además de exitoso." },
-    { t:3, q:"Me esfuerzo por mantener una imagen exitosa porque así siento que tengo identidad." },
-    // TIPO 4
-    { t:4, q:"Me siento diferente a los demás porque percibo que me falta algo esencial." },
-    { t:4, q:"Busco profundidad emocional porque temo vivir una vida vacía o superficial." },
-    { t:4, q:"Me conecto con emociones intensas porque así siento que soy auténtico." },
-    { t:4, q:"Me comparo con otros porque siento que ellos tienen algo que yo no tengo." },
-    { t:4, q:"Busco una identidad propia porque temo no tener un lugar claro." },
-    { t:4, q:"Me refugio en mis emociones porque me ayudan a entender quién soy." },
-    { t:4, q:"Me cuesta sostener la estabilidad porque siento que perdería intensidad." },
-    { t:4, q:"Idealizo lo que no tengo porque me conecta con el anhelo." },
-    { t:4, q:"Me esfuerzo por lograr cosas porque quiero sentir que valgo tanto como otros." },
-    { t:4, q:"Me retraigo y observo porque necesito proteger mi mundo interno." },
-    { t:4, q:"Busco vínculos intensos porque necesito sentirme profundamente conectado." },
-    // TIPO 5
-    { t:5, q:"Me distancio emocionalmente porque temo quedarme sin recursos internos." },
-    { t:5, q:"Busco comprender antes de actuar porque necesito sentirme preparado." },
-    { t:5, q:"Protejo mi tiempo y energía porque temo sentirme invadido." },
-    { t:5, q:"Me retiro del contacto social porque necesito conservar mi autonomía." },
-    { t:5, q:"Acumulo conocimiento porque siento que así puedo manejar el mundo
+        <span class="badge" style="background:rgba(46,89,65,0.1); color:var(--green); padding:5px 15px; border-radius:20px; font-weight
