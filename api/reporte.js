@@ -1,86 +1,68 @@
-const https = require('https');
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, // Asegúrate de tener esto en tu .env
+});
 
 export default async function handler(req, res) {
-  // 1. Configuración de Seguridad (CORS)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
-
-  if (req.method === 'OPTIONS') { res.status(200).end(); return; }
-  if (req.method !== 'POST') { return res.status(405).json({ error: 'Método no permitido' }); }
+  // Solo permitimos solicitudes POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
   try {
-    const { nombre, eneatipo, ala, astros } = req.body;
-    const apiKey = process.env.OPENAI_API_KEY;
+    // 1. Recibimos los datos que envía el index.html
+    const { nombre, eneatipo, ala, instinto, astros } = req.body;
 
-    if (!apiKey) return res.status(500).json({ error: "Falta API Key" });
+    // 2. Definimos el "Mega-Prompt" (Las instrucciones para la IA)
+    const promptSistema = `
+      Actúa como un experto mundial en Astrología Evolutiva y Psicología del Eneagrama (Riso-Hudson).
+      Vas a recibir un perfil con: Nombre, Eneatipo, Ala, Instinto y Posiciones Astrales.
 
-    // 2. PROMPT MAESTRO (Riso-Hudson + Astrología Completa)
-    const prompt = `
-      Actúa como un experto mundial en Eneagrama (Escuela Riso-Hudson) y Astrología Evolutiva.
-      Vas a escribir el reporte "AXIS: Tu Mapa Interno" para: ${nombre}.
+      TU TAREA:
+      Generar un reporte profundo, directo y transformador para ${nombre}. 
+      No uses lenguaje místico vago; usa psicología práctica y arquitectura de personalidad.
+      
+      ESTRUCTURA OBLIGATORIA DEL REPORTE (Usa HTML simple: <h3>, <p>, <ul>, <li>, <strong>):
 
-      DATOS DEL USUARIO:
-      - Eneatipo Principal: Tipo ${eneatipo} (Ala ${ala}).
-      - Carta Astral:
-        * Sol (Esencia): ${astros.sol}
-        * Luna (Mundo Emocional): ${astros.luna}
-        * Ascendente (Máscara/Ruta): ${astros.asc}
-        * Mercurio (Mente/Comunicación): ${astros.mercurio}
-        * Venus (Deseo/Valores): ${astros.venus}
-        * Marte (Acción/Conflicto): ${astros.marte}
+      1. <h3>LA ARQUITECTURA DE TU EGO (TIPO ${eneatipo} ${instinto})</h3>
+         - Explica la tensión o sinergia entre su Eneatipo (su herida: ${eneatipo}) y su Sol en ${astros.sol} / Luna en ${astros.luna}.
+         - Analiza cómo su instinto (${instinto}) modifica su comportamiento principal.
 
-      INSTRUCCIONES DE REDACCIÓN:
-      - Tono: Profesional, cálido, directo y revelador ("te leo la mente").
-      - Formato: HTML limpio (usa <h3> para títulos, <p> para párrafos, <strong> para énfasis). No uses Markdown.
-      - Longitud: Aproximadamente 450 palabras.
+      2. <h3>TU CAMINO DE DESINTEGRACIÓN (EL ESTRÉS)</h3>
+         - Explica qué pasa cuando cae en su sombra. NO digas solo "te vas al número X". Explica el comportamiento tóxico real.
+         - Cruza esto con su MARTE en ${astros.marte} (cómo acciona en conflicto).
+         - Ejemplo: "Cuando te estresas, tu Marte en ${astros.marte} te vuelve..."
 
-      ESTRUCTURA DEL REPORTE:
+      3. <h3>TU CAMINO DE INTEGRACIÓN (LA EVOLUCIÓN)</h3>
+         - Este es el núcleo. Explica qué significa evolucionar hacia su integración.
+         - Explica que "Integrar" no es dejar de ser quien es, sino sumar nuevas herramientas.
+         - Cruza esto con su VENUS en ${astros.venus} o ASCENDENTE (${astros.asc}) como puntos de equilibrio.
 
-      <h3>1. TU ARQUITECTURA (Eneatipo ${eneatipo}w${ala})</h3>
-      <p>Define su arquetipo con un nombre creativo. Explica su <strong>Miedo Básico</strong> y su <strong>Deseo Básico</strong>. Menciona cómo su Ala ${ala} modifica su comportamiento (sin gráficos, solo explicación profunda).</p>
-      <p>Revela la "Mentira Personal" que su ego le cuenta para sobrevivir.</p>
+      4. <h3>HERRAMIENTAS DE ALINEACIÓN</h3>
+         - Dame 3 acciones concretas (Bullet points) basadas en su Ala (${ala === 'Balanceada' ? 'Alas Balanceadas' : 'Ala ' + ala}) y su Mercurio en ${astros.mercurio}.
+         - Nada de "respira hondo". Acciones reales y estratégicas.
 
-      <h3>2. EL CRUCE ASTRAL (Tus 6 Astros)</h3>
-      <p><strong>Sol en ${astros.sol}:</strong> Analiza cómo tu esencia zodiacal interactúa con tu Eneatipo. ¿Se potencian o entran en conflicto?</p>
-      <p><strong>Luna en ${astros.luna} y Ascendente ${astros.asc}:</strong> Cómo procesas tus emociones y cómo te muestras al mundo vs. quién eres realmente.</p>
-      <p><strong>Tus Herramientas (Mercurio, Venus, Marte):</strong> Breve análisis de cómo tu mente (${astros.mercurio}), tus valores (${astros.venus}) y tu forma de actuar (${astros.marte}) colorean tu personalidad.</p>
-
-      <h3>3. TU CAMINO DE INTEGRACIÓN</h3>
-      <p>Indica hacia qué Eneatipo debe moverse para sanar (Integración) y qué comportamientos de desintegración debe evitar.</p>
-      <p><em>Termina con una frase de cierre inspiradora y personalizada.</em></p>
+      TONO: Profesional, empático, directo, revelador.
+      FORMATO: HTML limpio (sin etiquetas de código, solo el contenido del div).
     `;
 
-    // 3. Llamada a OpenAI
-    const responseText = await new Promise((resolve, reject) => {
-      const reqApi = https.request({
-        hostname: 'api.openai.com',
-        path: '/v1/chat/completions',
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` }
-      }, (resApi) => {
-        let data = '';
-        resApi.on('data', chunk => data += chunk);
-        resApi.on('end', () => resolve(data));
-      });
-      
-      reqApi.on('error', (e) => reject(e));
-      
-      reqApi.write(JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [{ role: "system", content: "Eres AXIS AI." }, { role: "user", content: prompt }],
-        temperature: 0.7
-      }));
-      reqApi.end();
+    // 3. Enviamos el mensaje a OpenAI
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini", // O "gpt-3.5-turbo" si quieres ahorrar
+      messages: [
+        { role: "system", content: promptSistema },
+        { role: "user", content: `Analiza este perfil: Nombre: ${nombre}, Eneatipo: ${eneatipo}, Ala: ${ala}, Instinto: ${instinto}, Astros: ${JSON.stringify(astros)}.` }
+      ],
+      temperature: 0.7, // Creatividad equilibrada
     });
 
-    const data = JSON.parse(responseText);
-    if (data.error) return res.status(500).json({ error: data.error.message });
-
-    return res.status(200).json({ reporte: data.choices[0].message.content });
+    // 4. Devolvemos la respuesta al Frontend
+    const reporteGenerado = completion.choices[0].message.content;
+    res.status(200).json({ reporte: reporteGenerado });
 
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error("Error en OpenAI:", error);
+    res.status(500).json({ error: "Error generando el reporte." });
   }
 }
