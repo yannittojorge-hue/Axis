@@ -469,8 +469,16 @@
 
   function renderQ() {
     if (qIdx >= questions.length) { finish(); return; }
+    
+    // 1. Actualizar texto de pregunta
     document.getElementById('q-text').innerText = questions[qIdx].q;
-    document.getElementById('progress-fill').style.width = ((qIdx/questions.length)*100)+"%";
+    
+    // 2. Calcular porcentaje matemático
+    let pct = Math.round((qIdx / questions.length) * 100);
+    
+    // 3. Actualizar la barra y el texto del número
+    document.getElementById('progress-fill').style.width = pct + "%";
+    document.getElementById('progress-text').innerText = pct + "%";
   }
 
   function vote(p) { 
