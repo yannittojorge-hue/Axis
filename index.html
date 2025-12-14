@@ -98,27 +98,44 @@
     .question-card { background: var(--white); padding: 50px 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
     .q-text { font-size: 1.6rem; font-weight: 500; color: var(--blue); margin-bottom: 40px; font-family: 'Poppins', sans-serif; }
     
- /* ESTILOS DE LA ESCALA VISUAL */
-    .scale-container { display: flex; justify-content: space-between; gap: 5px; margin-top: 30px; }
-    .scale-option { 
-      flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; 
-      transition: 0.2s; opacity: 0.7; 
+ /* ESTILOS DE LA ESCALA (NUEVO) */
+    .scale-container { 
+      display: flex; 
+      justify-content: space-between; /* Los separa horizontalmente */
+      align-items: flex-start;
+      gap: 5px; 
+      margin-top: 40px; 
     }
-    .scale-option:hover { opacity: 1; transform: translateY(-3px); }
+    .scale-option { 
+      flex: 1; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      cursor: pointer; 
+      transition: 0.3s;
+    }
+    .scale-option:hover { transform: translateY(-5px); }
     
     .scale-circle {
-      width: 45px; height: 45px; border-radius: 50%; border: 2px solid #ddd; background: #fff;
+      width: 50px; height: 50px; 
+      border-radius: 50%; 
+      border: 2px solid #ddd; 
+      background: #fff;
       display: flex; align-items: center; justify-content: center; 
-      font-weight: 700; font-size: 1.1rem; color: #999; margin-bottom: 8px;
+      font-weight: 700; font-size: 1.2rem; color: #aaa; 
+      margin-bottom: 10px;
+      transition: 0.3s;
     }
-    /* Texto pequeño debajo del numero */
     .scale-label { 
-      font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: #999; 
-      text-align: center; line-height: 1.1; 
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase; 
+      color: #999; text-align: center; line-height: 1.2; 
     }
     
-    /* Efecto al pasar el mouse */
-    .scale-option:hover .scale-circle { border-color: var(--coral); color: var(--coral); background: #fff5f5; }
+    /* Efecto al pasar el mouse (HOVER) */
+    .scale-option:hover .scale-circle { 
+      border-color: var(--coral); background: var(--coral); color: white; 
+      box-shadow: 0 5px 15px rgba(255, 127, 102, 0.4);
+    }
     .scale-option:hover .scale-label { color: var(--coral); }
 
     /* --- RESULTADO --- */
@@ -251,7 +268,31 @@
       <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
       
       <div class="question-card">
-        <div class="q-text" id="q-text">Cargando pregunta...</div>
+        <div class="q-text" id="q-text">Cargando...</div>
+        
+        <div class="scale-container">
+          <div class="scale-option" onclick="vote(1)">
+            <div class="scale-circle">1</div>
+            <div class="scale-label">Nunca</div>
+          </div>
+          <div class="scale-option" onclick="vote(2)">
+            <div class="scale-circle">2</div>
+            <div class="scale-label">Rara<br>vez</div>
+          </div>
+          <div class="scale-option" onclick="vote(3)">
+            <div class="scale-circle">3</div>
+            <div class="scale-label">A<br>veces</div>
+          </div>
+          <div class="scale-option" onclick="vote(4)">
+            <div class="scale-circle">4</div>
+            <div class="scale-label">Frecuente</div>
+          </div>
+          <div class="scale-option" onclick="vote(5)">
+            <div class="scale-circle">5</div>
+            <div class="scale-label">Siempre</div>
+          </div>
+        </div>
+      </div>
         
         <div class="likert-scale">
           <div class="likert-btn" onclick="vote(1)">1</div>
@@ -451,10 +492,12 @@
     renderQ();
   }
 
+ 
   function renderQ() {
     if (qIdx >= questions.length) { finish(); return; }
     document.getElementById('q-text').innerText = questions[qIdx].q;
     document.getElementById('progress-fill').style.width = ((qIdx/questions.length)*100) + "%";
+  }
   }
 
   function vote(pts) {
