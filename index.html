@@ -77,6 +77,34 @@
 
     /* Estilo para el botón volver */
      #btn-back:hover { color: var(--coral) !important; text-decoration: underline; }
+
+   /* PANTALLA DE PAGO */
+    .pay-gate { 
+      background: var(--white); 
+      padding: 50px 20px; 
+      border-radius: 20px; 
+      box-shadow: var(--shadow); 
+      text-align: center; 
+      max-width: 600px; 
+      margin: 40px auto; 
+    }
+/* ESTILOS NUEVOS PARA VENTA */
+    .social-proof { background: #e8f5e9; color: var(--green); display: inline-block; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; }
+    
+    .checkout-box { border: 2px solid var(--green); background: #fff; padding: 25px; border-radius: 15px; margin-bottom: 30px; }
+    .price-tag { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+    
+    .feature-list { text-align: left; margin: 0 auto 30px auto; max-width: 500px; }
+    .feature-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; color: #555; font-size: 0.95rem; }
+    .icon-check { color: var(--white); background: var(--green); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* RESEÑAS */
+    .reviews-section { margin-top: 50px; text-align: left; }
+    .reviews-title { text-align: center; font-size: 1.2rem; margin-bottom: 20px; color: var(--blue); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .review-card { background: #f9f9f9; padding: 20px; border-radius: 12px; font-size: 0.9rem; color: #444; }
+    .stars { color: #FFC107; margin-bottom: 8px; letter-spacing: 2px; }
+    .review-author { display: block; margin-top: 10px; font-weight: 700; color: var(--text); font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -85,15 +113,8 @@
 
 <div class="container">
  <header>
-    <div class="logo" onclick="location.reload()" style="align-items: center;">
-      
-      <svg width="34" height="34" viewBox="0 0 100 100" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" stroke-width="5"/>
-        <path d="M50 5 L89 80 L11 80 Z" stroke-width="4" stroke-linejoin="round"/>
-        <path d="M80 25 L20 65 L35 95 L65 35 L80 65 L20 25 Z" stroke-width="3" opacity="0.7" stroke-linejoin="round"/>
-      </svg>
-
-      <span style="position: relative; top: 2px;">Mi Eneatipo</span>
+    <div class="logo" onclick="location.reload()">
+      Mi Eneatipo
     </div>
   </header>
 
@@ -154,27 +175,86 @@
     <p>La IA está analizando tus patrones.</p>
   </div>
 
-  <div id="view-result" class="hidden fade-in">
-    <div class="result-header">
-      <span class="badge" style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">✓ ANÁLISIS COMPLETADO</span>
-      <h2 style="margin-top:15px;">Tu Mapa Mi Eneatipo</h2>
-      <p>Hola <strong id="r-name"></strong>, aquí está tu diseño único.</p>
+ <div id="payment-gate" class="pay-gate">
+      
+      <div class="social-proof">🔥 +20.500 personas ya descubrieron su perfil</div>
+      
+      <h2 style="margin-bottom:10px; line-height:1.2;">¡Tu perfil está listo para ser revelado!</h2>
+      <p style="margin-bottom:30px; color:#666;">Desbloqueá tu reporte completo y empezá tu camino de crecimiento.</p>
+
+      <div class="checkout-box">
+        <div class="price-tag">
+          <span>Reporte Premium + Guía</span>
+          <span style="color:var(--green);">$4.800</span>
+        </div>
+        
+        <a href="https://mpago.la/2X3TnFY" class="btn" style="width:100%; display:block; text-decoration:none; font-size:1.1rem; padding: 20px;">
+          OBTENER MIS RESULTADOS
+        </a>
+        <div style="font-size:0.75rem; color:#999; margin-top:10px; display:flex; justify-content:center; gap:15px;">
+          <span>🔒 Pago 100% Seguro</span>
+          <span>⚡ Acceso Inmediato</span>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item"><div class="icon-check">✓</div><div><strong>Reporte Detallado:</strong> Descubrí tu Eneatipo, Ala e Instinto dominante con precisión.</div></div>
+        <div class="feature-item"><div class="icon-check">✓</div><div><strong>Mapa de Estrés:</strong> Entendé exactamente qué te pasa cuando estás bajo presión (y cómo salir).</div></div>
+        <div class="feature-item"><div class="icon-check">✓</div><div><strong>Ruta de Crecimiento:</strong> Ejercicios prácticos para integrar tu personalidad y sanar tu herida.</div></div>
+        <div class="feature-item"><div class="icon-check">✓</div><div><strong>Guía de Relaciones:</strong> Cómo te vinculás con los demás desde tu tipo.</div></div>
+      </div>
+
+      <div class="reviews-section">
+        <h4 class="reviews-title">Lo que dicen quienes ya lo hicieron:</h4>
+        <div class="reviews-grid">
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            "Che, la verdad que me voló la cabeza. Le pegó en todo, hasta en cosas que no le admito a nadie. Muy útil para entender mis mambos."
+            <span class="review-author">Juan Martín P.</span>
+          </div>
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            "Al principio dudé, pero posta que vale la pena. No es el típico horóscopo, es psicología pura. Me sirvió un montón para mi laburo."
+            <span class="review-author">Sofía G.</span>
+          </div>
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            "El reporte es súper completo. Me ayudó a ver por qué chocaba tanto con mi pareja. Recomendadísimo si querés mejorar posta."
+            <span class="review-author">Lucas M.</span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="result-grid">
-      <div class="result-card" style="background:var(--blue);">
-        <span class="card-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span>
-        <div class="card-val" style="color:white;" id="r-type">...</div>
+    <div id="actual-report" class="hidden">
+      <div class="result-header">
+        <span class="badge" style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">✓ REPORTE DESBLOQUEADO</span>
+        <h2 style="margin-top:15px;">Tu Mapa Mi Eneatipo</h2>
+        <p>Hola <strong id="r-name"></strong>, este es tu diseño único.</p>
       </div>
-      <div class="result-card">
-        <span class="card-label">ALA DOMINANTE</span>
-        <div class="card-val" id="r-wing">...</div>
+
+      <div class="result-grid">
+        <div class="result-card" style="background:var(--blue);">
+          <span class="card-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span>
+          <div class="card-val" style="color:white;" id="r-type">...</div>
+        </div>
+        <div class="result-card">
+          <span class="card-label">ALA DOMINANTE</span>
+          <div class="card-val" id="r-wing">...</div>
+        </div>
+        <div class="result-card">
+          <span class="card-label">INSTINTO</span>
+          <div class="card-val" id="r-instinct">...</div>
+        </div>
       </div>
-      <div class="result-card">
-        <span class="card-label">INSTINTO</span>
-        <div class="card-val" id="r-instinct">...</div>
+
+      <div class="report-box">
+        <div id="ai-content" class="ai-text"></div>
       </div>
     </div>
+    
+    <div id="error-msg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
 
     <div class="report-box">
       <div id="ai-content" class="ai-text blur">
@@ -188,7 +268,7 @@
           <li>🔒 Ruta detallada de <strong>Integración</strong></li>
           <li>🔒 Prácticas de <strong>Alineación</strong></li>
         </ul>
-        <div style="background:var(--green); color:white; padding:8px 20px; border-radius:50px; font-weight:700; margin-bottom:20px;">$5.000 ARS</div>
+        <div style="background:var(--green); color:white; padding:8px 20px; border-radius:50px; font-weight:700; margin-bottom:20px;">$4.800 ARS</div>
         <button class="btn" onclick="unlock()">DESBLOQUEAR AHORA</button>
       </div>
     </div>
@@ -446,8 +526,19 @@
             })
         });
 
-        const data = await res.json();
-        if(data.error) throw new Error(data.error);
+     // 1. Guardamos todo en la memoria del navegador
+        localStorage.setItem('eneagrama_result', JSON.stringify({
+          name: user.name,
+          type: type,
+          wing: alaText,
+          instinct: resultado.instinto,
+          report: data.reporte
+        }));
+
+        // 2. Mostramos la vista de resultados, pero SOLO el cartel de pago
+        nav('view-result');
+        document.getElementById('payment-gate').classList.remove('hidden');
+        document.getElementById('actual-report').classList.add('hidden');
         
         document.getElementById('ai-content').innerHTML = data.reporte;
         nav('view-result');
@@ -460,13 +551,33 @@
         nav('view-result');
     }
   }
+ // Al cargar la página, revisamos si viene de pagar
+  window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Si Mercado Pago le agregó "?status=approved" a tu link
+    if (urlParams.has('status') && urlParams.get('status') === 'approved') {
+      
+      // Recuperamos los datos guardados
+      const savedData = localStorage.getItem('eneagrama_result');
+      
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        
+        // Llenamos el reporte oculto
+        document.getElementById('r-name').innerText = data.name;
+        document.getElementById('r-type').innerText = "Tipo " + data.type;
+        document.getElementById('r-wing').innerText = data.wing;
+        document.getElementById('r-instinct').innerText = data.instinct;
+        document.getElementById('ai-content').innerHTML = data.report;
 
-  function unlock() {
-    if(confirm("Ir a Mercado Pago...")) {
-      document.getElementById('paywall').style.display='none';
-      document.getElementById('ai-content').classList.remove('blur');
+        // Ocultamos el pago y mostramos el reporte
+        nav('view-result');
+        document.getElementById('payment-gate').classList.add('hidden');
+        document.getElementById('actual-report').classList.remove('hidden');
+      }
     }
-  }
+  };
 </script>
 
 </body>
