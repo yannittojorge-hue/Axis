@@ -116,7 +116,7 @@
     <div class="logo" onclick="location.reload()">
       Mi Eneatipo
     </div>
-  </header>
+ </header>
 
   <div id="view-home" class="fade-in">
     <section class="hero">
@@ -175,7 +175,9 @@
     <p>La IA está analizando tus patrones.</p>
   </div>
 
- <div id="payment-gate" class="pay-gate">
+  <div id="view-result" class="hidden fade-in">
+    
+    <div id="payment-gate" class="pay-gate">
       
       <div class="social-proof">🔥 +20.500 personas ya descubrieron su perfil</div>
       
@@ -224,7 +226,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div id="actual-report" class="hidden">
@@ -250,30 +251,14 @@
       </div>
 
       <div class="report-box">
-        <div id="ai-content" class="ai-text"></div>
+        <div id="ai-content" class="ai-text">
+          </div>
       </div>
     </div>
-    
-    <div id="error-msg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
 
-    <div class="report-box">
-      <div id="ai-content" class="ai-text blur">
-        <h3>Tu Arquitectura</h3><p>Generando análisis profundo...</p>
-      </div>
-      <div id="paywall" class="paywall">
-        <h3 style="color:var(--blue); margin-bottom:10px;">Desbloquear Reporte Completo</h3>
-        <ul style="text-align:left; margin-bottom:20px; color:#555; list-style:none;">
-          <li>🔒 Análisis de <strong>Herida y Deseo</strong></li>
-          <li>🔒 Explicación de tu <strong>Mecanismo de Defensa</strong></li>
-          <li>🔒 Ruta detallada de <strong>Integración</strong></li>
-          <li>🔒 Prácticas de <strong>Alineación</strong></li>
-        </ul>
-        <div style="background:var(--green); color:white; padding:8px 20px; border-radius:50px; font-weight:700; margin-bottom:20px;">$4.800 ARS</div>
-        <button class="btn" onclick="unlock()">DESBLOQUEAR AHORA</button>
-      </div>
-    </div>
     <div id="error-msg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
   </div>
+
 </div>
 
 <script>
@@ -506,13 +491,7 @@
 
         if (resultado.ala === "Ala A") alaText = "Ala " + prev;
         else if (resultado.ala === "Ala B") alaText = "Ala " + next;
-        else alaText = "Ala Balanceada";
-
-        // Render Local
-        document.getElementById('r-name').innerText = user.name;
-        document.getElementById('r-type').innerText = "Tipo " + type;
-        document.getElementById('r-wing').innerText = alaText;
-        document.getElementById('r-instinct').innerText = resultado.instinto;
+        else alaText = "Alas Balanceadas";
 
         // Llamada API (Solo Eneagrama)
         const res = await fetch('/api/reporte', {
@@ -526,7 +505,11 @@
             })
         });
 
-     // 1. Guardamos todo en la memoria del navegador
+      // 1. OBTENEMOS EL DATO REAL DE LA API
+       const data = await res.json();
+       if(data.error) throw new Error(data.error);
+
+      // 2. Guardamos todo en la memoria del navegador
         localStorage.setItem('eneagrama_result', JSON.stringify({
           name: user.name,
           type: type,
@@ -535,14 +518,11 @@
           report: data.reporte
         }));
 
-        // 2. Mostramos la vista de resultados, pero SOLO el cartel de pago
+        // 3. Mostramos la vista de resultados, pero SOLO el cartel de pago
         nav('view-result');
         document.getElementById('payment-gate').classList.remove('hidden');
         document.getElementById('actual-report').classList.add('hidden');
         
-        document.getElementById('ai-content').innerHTML = data.reporte;
-        nav('view-result');
-
     } catch(e) {
         document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
         document.getElementById('error-msg').style.display = 'block';
