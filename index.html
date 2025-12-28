@@ -99,13 +99,51 @@
     .icon-check { color: var(--white); background: var(--green); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0; margin-top: 2px; }
 
     /* RESEÑAS */
-    .reviews-section { margin-top: 50px; text-align: left; }
-    .reviews-title { text-align: center; font-size: 1.2rem; margin-bottom: 20px; color: var(--blue); }
-    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-    .review-card { background: #f9f9f9; padding: 20px; border-radius: 12px; font-size: 0.9rem; color: #444; }
-    .stars { color: #FFC107; margin-bottom: 8px; letter-spacing: 2px; }
-    .review-author { display: block; margin-top: 10px; font-weight: 700; color: var(--text); font-size: 0.8rem; }
+    .testimonials-wrap { 
+      margin-top: 60px; 
+      overflow: hidden; 
+      position: relative; 
+      width: 100%; 
+      padding: 20px 0;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.5), transparent); /* Sutil brillo */
+    }
+    
+    /* Pista Larga: 7 testimonios + 7 duplicados = 14 tarjetas */
+    /* Ancho tarjeta (300px) + Gap (20px) = 320px * 14 = 4480px */
+    .carousel-track { 
+      display: flex; 
+      gap: 20px; 
+      width: 4480px; 
+      animation: scroll 60s linear infinite; /* 60 segundos para que se lea bien */
+    }
+    
+    /* Animación: Se mueve hacia la izquierda */
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-2240px); } /* Se mueve la mitad exacta */
+    }
 
+    /* Diseño de la Tarjeta */
+    .testi-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      padding: 25px;
+      width: 300px; /* Ancho fijo */
+      flex-shrink: 0; /* No se achica */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    .testi-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .testi-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--green); }
+    .testi-info h5 { margin: 0; font-size: 0.9rem; color: var(--blue); font-weight: 700; }
+    .testi-info span { font-size: 0.75rem; color: var(--green); font-weight: 600; text-transform: uppercase; display: block; }
+    .testi-stars { color: #FFC107; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 2px; }
+    .testi-text { font-size: 0.85rem; color: #555; line-height: 1.5; font-style: italic; }
    /* ESTILOS NUEVOS LANDING*/
     .badge-verified {
       background: #e6f4ea; 
@@ -205,6 +243,85 @@
           <div class="benefit-icon">🚀</div>
           <div class="benefit-title">Ruta de Crecimiento</div>
           <div class="benefit-desc">Recibí un plan de acción claro para integrar tu personalidad y mejorar tus vínculos.</div>
+       
+        <div class="testimonials-wrap">
+      <h4 style="text-align:center; color:var(--blue); margin-bottom:25px; font-weight:600;">Lo que dicen quienes ya lo hicieron 👇</h4>
+      
+       <div class="carousel-track">
+        
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Martina S.</h5><span>Eneatipo 3</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Siempre creí que era 'workaholic' y ya. El test me mostró que en realidad buscaba validación. Ahora soy igual de productiva pero sin la ansiedad de demostrar todo el tiempo."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Julián M.</h5><span>Eneatipo 7</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Me costaba horrores comprometerme, saltaba de una cosa a la otra. Entender mi 'miedo a perderme algo' fue clave para enfocarme. ¡Posta funciona!"</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Clara F.</h5><span>Eneatipo 9</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Lo hice por curiosidad y quedé helada. Me describió tal cual: me guardo todo para no discutir. La guía de crecimiento me ayuda un montón a poner límites."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Federico L.</h5><span>Eneatipo 6</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Soy bastante escéptico con estas cosas, pero la precisión del análisis de riesgos me sorprendió. Es una herramienta muy útil para entender tus mambos."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Gonzalo D.</h5><span>Eneatipo 1</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Era insoportable con los detalles, me amargaba si algo salía mal. Entender a mi 'crítico interno' me dio una paz mental que no tenía hace años."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Valentina R.</h5><span>Eneatipo 2</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Me vivía desviviendo por los demás y me olvidaba de mí. El reporte me cantó la justa: tengo que aprender a decir que no sin sentir culpa."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Esteban K.</h5><span>Eneatipo 8</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Siempre me decían que era muy intenso o chocante. Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</p>
+        </div>
+
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Martina S.</h5><span>Eneatipo 3</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Siempre creí que era 'workaholic' y ya. El test me mostró que en realidad buscaba validación. Ahora soy igual de productiva pero sin la ansiedad."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Julián M.</h5><span>Eneatipo 7</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. ¡Posta funciona!"</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Clara F.</h5><span>Eneatipo 9</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Lo hice por curiosidad y quedé helada. Me describió tal cual: me guardo todo para no discutir. La guía de crecimiento me ayuda un montón."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Federico L.</h5><span>Eneatipo 6</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Soy bastante escéptico con estas cosas, pero la precisión del análisis de riesgos me sorprendió. Es una herramienta muy útil."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Gonzalo D.</h5><span>Eneatipo 1</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio una paz mental que no tenía hace años. Recomendado."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Valentina R.</h5><span>Eneatipo 2</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Me vivía desviviendo por los demás. El reporte me cantó la justa: tengo que aprender a decir que no sin sentir culpa."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Esteban K.</h5><span>Eneatipo 8</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Siempre me decían que era muy intenso. Descubrí que busco control para no ser herido. Me ayudó a bajar un cambio."</p></div>
+
+      </div>
+    </div>
         </div>
       </div>
 
@@ -308,23 +425,84 @@
         </div>
       </div>
 
-      <div class="reviews-section">
-        <h4 class="reviews-title">Lo que dicen quienes ya lo hicieron:</h4>
-        <div class="reviews-grid">
-          <div class="review-card">
-            <div class="stars">★★★★★</div>
-            "Che, la verdad que me voló la cabeza. Le pegó en todo, hasta en cosas que no le admito a nadie. Muy útil para entender mis mambos."
-            <span class="review-author">Juan Martín P.</span>
+<div class="testimonials-wrap">
+      <h4 style="text-align:center; color:var(--blue); margin-bottom:25px; font-weight:600;">Lo que dicen quienes ya lo hicieron 👇</h4>
+      
+      <div class="carousel-track">
+        
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Martina S.</h5><span>Eneatipo 3</span></div>
           </div>
-          <div class="review-card">
-            <div class="stars">★★★★★</div>
-            "Al principio dudé, pero posta que vale la pena. No es el típico horóscopo, es psicología pura. Me sirvió un montón para mi laburo."
-            <span class="review-author">Sofía G.</span>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Siempre creí que era 'workaholic' y ya. El test me mostró que en realidad buscaba validación. Ahora soy igual de productiva pero sin la ansiedad de demostrar todo el tiempo."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Julián M.</h5><span>Eneatipo 7</span></div>
           </div>
-          <div class="review-card">
-            <div class="stars">★★★★★</div>
-            "El reporte es súper completo. Me ayudó a ver por qué chocaba tanto con mi pareja. Recomendadísimo si querés mejorar posta."
-            <span class="review-author">Lucas M.</span>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Me costaba horrores comprometerme, saltaba de una cosa a la otra. Entender mi 'miedo a perderme algo' fue clave para enfocarme. ¡Posta funciona!"</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Clara F.</h5><span>Eneatipo 9</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Lo hice por curiosidad y quedé helada. Me describió tal cual: me guardo todo para no discutir. La guía de crecimiento me ayuda un montón a poner límites."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Federico L.</h5><span>Eneatipo 6</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Soy bastante escéptico con estas cosas, pero la precisión del análisis de riesgos me sorprendió. Es una herramienta muy útil para entender tus mambos."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Gonzalo D.</h5><span>Eneatipo 1</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Era insoportable con los detalles, me amargaba si algo salía mal. Entender a mi 'crítico interno' me dio una paz mental que no tenía hace años."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Valentina R.</h5><span>Eneatipo 2</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Me vivía desviviendo por los demás y me olvidaba de mí. El reporte me cantó la justa: tengo que aprender a decir que no sin sentir culpa."</p>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-header">
+            <img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=100&h=100" class="testi-img">
+            <div class="testi-info"><h5>Esteban K.</h5><span>Eneatipo 8</span></div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Siempre me decían que era muy intenso o chocante. Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</p>
+        </div>
+
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Martina S.</h5><span>Eneatipo 3</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Siempre creí que era 'workaholic' y ya. El test me mostró que en realidad buscaba validación. Ahora soy igual de productiva pero sin la ansiedad."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Julián M.</h5><span>Eneatipo 7</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. ¡Posta funciona!"</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Clara F.</h5><span>Eneatipo 9</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Lo hice por curiosidad y quedé helada. Me describió tal cual: me guardo todo para no discutir. La guía de crecimiento me ayuda un montón."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Federico L.</h5><span>Eneatipo 6</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Soy bastante escéptico con estas cosas, pero la precisión del análisis de riesgos me sorprendió. Es una herramienta muy útil."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Gonzalo D.</h5><span>Eneatipo 1</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio una paz mental que no tenía hace años. Recomendado."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Valentina R.</h5><span>Eneatipo 2</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Me vivía desviviendo por los demás. El reporte me cantó la justa: tengo que aprender a decir que no sin sentir culpa."</p></div>
+        <div class="testi-card"><div class="testi-header"><img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=100&h=100" class="testi-img"><div class="testi-info"><h5>Esteban K.</h5><span>Eneatipo 8</span></div></div><div class="testi-stars">★★★★★</div><p class="testi-text">"Siempre me decían que era muy intenso. Descubrí que busco control para no ser herido. Me ayudó a bajar un cambio."</p></div>
+
+            </div>
+           </div>
           </div>
         </div>
       </div>
