@@ -279,15 +279,15 @@
         El test más preciso para identificar tu Eneatipo, entender tus motivaciones inconscientes y potenciar tu crecimiento personal.
       </p>
       
-      <button class="btn" onclick="nav('view-form')" style="padding: 20px 50px; font-size: 1.1rem; margin-bottom: 40px;">
+      <button class="btn" onclick="nav('view-form')" style="padding: 20px 50px; font-size: 1.1rem; margin-bottom: 20px;">
         EMPEZAR TEST
       </button>
       
-      <div style="font-size: 0.8rem; color: #888; margin-bottom: 50px;">
+      <div style="font-size: 0.8rem; color: #888; margin-bottom: 60px;">
         ⏱ Toma solo 10-12 minutos • 🔒 Tus datos están seguros
       </div>
 
-      <div class="benefits-grid">
+      <div class="benefits-grid" style="margin-bottom: 60px;">
         <div class="benefit-card">
           <div class="benefit-icon">🧠</div>
           <div class="benefit-title">Tu Perfil Nuclear</div>
@@ -304,75 +304,11 @@
           <div class="benefit-desc">Recibí un plan de acción claro para integrar tu personalidad y mejorar tus vínculos.</div>
         </div>
       </div>
-      
-<div class="slider-container">
-        <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
-        
-        <div class="slider-window">
-            <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
-            <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
 
-            <div class="slider-track">
-               <div class="slide">
-                 <div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div>
-                 <div class="slide-content">
-                   <div class="stars">★★★★★</div>
-                   <span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span>
-                   <span class="author-name">Martina Sánchez</span>
-                   <span class="author-type">Eneatipo 3 (El Triunfador)</span>
-                 </div>
-               </div>
-               <div class="slide">
-                 <div class="slide-img-box"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200"></div>
-                 <div class="slide-content">
-                   <div class="stars">★★★★★</div>
-                   <span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme en mi carrera."</span>
-                   <span class="author-name">Julián Mendez</span>
-                   <span class="author-type">Eneatipo 7 (El Entusiasta)</span>
-                 </div>
-               </div>
-               <div class="slide">
-                 <div class="slide-img-box"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200"></div>
-                 <div class="slide-content">
-                   <div class="stars">★★★★★</div>
-                   <span class="quote-text">"Lo hice por curiosidad y quedé helada. Me describió tal cual: me guardo todo para no discutir y termino explotando."</span>
-                   <span class="author-name">Clara Fernández</span>
-                   <span class="author-type">Eneatipo 9 (El Pacificador)</span>
-                 </div>
-               </div>
-                <div class="slide">
-                 <div class="slide-img-box"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"></div>
-                 <div class="slide-content">
-                   <div class="stars">★★★★★</div>
-                   <span class="quote-text">"Soy bastante escéptico con estas cosas, pero la precisión del análisis de riesgos me sorprendió. Es una herramienta muy útil."</span>
-                   <span class="author-name">Federico López</span>
-                   <span class="author-type">Eneatipo 6 (El Leal)</span>
-                 </div>
-               </div>
-            </div>
-        </div>
-      </div>
-<button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
-        </div>
-    </div>
-  </div> </div> <div id="view-form" class="hidden fade-in">
-  <section class="hero">
-    <div class="form-box">
-      <h1 style="font-size:2rem; margin-bottom:30px;">Antes de empezar...</h1>
+      <div style="background:white; padding:40px 30px; border-radius:20px; text-align:left; border: 1px solid rgba(0,0,0,0.05); max-width: 600px; margin: 0 auto 60px auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
+        <h3 style="font-size:1.4rem; margin-bottom:25px; color:var(--blue); font-weight: 700; text-align: center;">¿Qué vas a descubrir hoy?</h3>
 
-      <div class="input-group">
-        <label for="name">¿Cómo te gustaría que te llamemos?</label>
-        <input type="text" id="name" placeholder="Tu nombre" />
-      </div>
-
-      <button class="btn" onclick="startQuiz()" style="width:100%; margin-bottom:30px;">
-        COMENZAR TEST
-      </button>
-
-      <div style="background:var(--bg-alt); padding:25px; border-radius:15px; text-align:left; border: 1px solid rgba(0,0,0,0.05);">
-        <h3 style="font-size:1.1rem; margin-bottom:20px; color:var(--blue); font-weight: 700;">¿Qué vas a descubrir hoy?</h3>
-
-        <div class="feature-list" style="margin:0;">
+        <div class="feature-list" style="margin:0 auto;">
            <div class="feature-item">
               <div class="icon-check">✓</div>
               <div>Tu <strong>Eneatipo dominante</strong>, Ala e Instinto.</div>
@@ -391,7 +327,51 @@
            </div>
         </div>
       </div>
+      
+      <div class="slider-container">
+        <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
+        
+        <div class="slider-wrapper">
+            <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
+            
+            <div class="slider-window">
+              <div class="slider-track">
+                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span><span class="author-name">Martina Sánchez</span><span class="author-type">Eneatipo 3 (El Triunfador)</span></div></div>
+                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. ¡Posta funciona!"</span><span class="author-name">Julián Mendez</span><span class="author-type">Eneatipo 7 (El Entusiasta)</span></div></div>
+                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">Eneatipo 9 (El Pacificador)</span></div></div>
+                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Soy escéptico, pero la precisión del análisis de riesgos me sorprendió. Una herramienta muy útil."</span><span class="author-name">Federico López</span><span class="author-type">Eneatipo 6 (El Leal)</span></div></div>
+                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span><span class="author-name">Gonzalo Duarte</span><span class="author-type">Eneatipo 1 (El Reformador)</span></div></div>
+                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me vivía desviviendo por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span><span class="author-name">Valentina Ricci</span><span class="author-type">Eneatipo 2 (El Ayudador)</span></div></div>
+                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span><span class="author-name">Esteban K.</span><span class="author-type">Eneatipo 8 (El Desafiador)</span></div></div>
+              </div>
+            </div>
+            
+            <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
+        </div>
+    </div>
+    
+    <button class="btn" onclick="nav('view-form')" style="padding: 20px 50px; font-size: 1.1rem; margin-top: 20px;">
+        QUIERO MI ANÁLISIS AHORA
+    </button>
+
+    </section>
+</div>
+
+<div id="view-form" class="hidden fade-in">
+  <section class="hero">
+    <div class="form-box">
+      <h1 style="font-size:2rem; margin-bottom:10px;">Antes de empezar...</h1>
+      <p style="color:#666; margin-bottom:30px;">Necesitamos tu nombre para personalizar tu reporte final.</p>
+
+      <div class="input-group">
+        <label for="name">¿Cómo te gustaría que te llamemos?</label>
+        <input type="text" id="name" placeholder="Tu nombre" />
       </div>
+
+      <button class="btn" onclick="startQuiz()" style="width:100%;">
+        COMENZAR TEST
+      </button>
+    </div>
   </section>
 </div>
 
