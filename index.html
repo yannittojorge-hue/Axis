@@ -147,58 +147,68 @@
     .preview-section { margin-top: 60px; text-align: left; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow); }
     .preview-list li { margin-bottom: 12px; display: flex; gap: 10px; align-items: center; color: #444; }
 
-/* --- SLIDER DE TESTIMONIOS (CORREGIDO) --- */
+/* --- SLIDER DE TESTIMONIOS (REPARADO) --- */
     .slider-container { 
       max-width: 800px; 
-      margin: 50px auto; 
-      padding: 0 10px; /* Margen de seguridad */
+      margin: 40px auto; 
+      padding: 0 10px;
+      position: relative; /* Para que las flechas se posicionen respecto a esto */
     }
 
     .slider-title { 
       text-align: center; 
       color: var(--blue); 
-      font-size: 1.5rem; 
+      font-size: 1.4rem; 
       font-weight: 700; 
-      margin-bottom: 25px; 
+      margin-bottom: 20px; 
       display: flex; align-items: center; justify-content: center; gap: 10px; 
     }
 
-    /* NUEVO: Envoltorio para que las flechas se centren SOLO en la tarjeta */
-    .slider-wrapper {
-      position: relative;
-      padding: 0 45px; /* Espacio reservado para las flechas a los costados */
-    }
-
     .slider-window { 
-      overflow: hidden; 
+      overflow: hidden; /* Oculta lo que sobra */
       border-radius: 20px; 
       background: #fff; 
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
       border: 1px solid rgba(0,0,0,0.05); 
-      position: relative; 
+      position: relative;
     }
 
-    .slider-track { display: flex; transition: transform 0.5s ease-in-out; width: 100%; }
+    .slider-track { 
+      display: flex; 
+      transition: transform 0.5s ease-in-out; 
+      width: 100%; 
+      margin: 0; padding: 0; /* Importante para evitar desfasajes */
+    }
     
+    /* ESTO ARREGLA EL CORTE DE TEXTO */
     .slide { 
-      min-width: 100%; 
+      flex: 0 0 100%; /* Obliga a ocupar el 100% del espacio, ni más ni menos */
+      width: 100%;
       box-sizing: border-box; 
-      padding: 40px; 
+      padding: 40px 60px; /* 60px a los lados para dejar lugar a las flechas */
       display: flex; 
       align-items: center; 
       gap: 30px; 
+      justify-content: center;
     }
 
-    .slide-img-box { flex-shrink: 0; width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 4px solid #e6f4ea; }
+    .slide-img-box { 
+      flex-shrink: 0; 
+      width: 110px; height: 110px; 
+      border-radius: 50%; 
+      overflow: hidden; 
+      border: 4px solid #e6f4ea; 
+    }
     .slide-img-box img { width: 100%; height: 100%; object-fit: cover; }
+    
     .slide-content { text-align: left; flex: 1; }
     
-    .stars { color: #FFC107; letter-spacing: 3px; margin-bottom: 15px; font-size: 1.1rem; }
-    .quote-text { font-size: 1rem; color: #555; font-style: italic; line-height: 1.6; margin-bottom: 20px; display: block; }
-    .author-name { font-weight: 800; color: var(--text); font-size: 1.1rem; display: block; }
-    .author-type { color: var(--green); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; margin-top: 5px; display: block;}
+    .stars { color: #FFC107; letter-spacing: 2px; margin-bottom: 10px; font-size: 1rem; }
+    .quote-text { font-size: 0.95rem; color: #555; font-style: italic; line-height: 1.5; margin-bottom: 15px; display: block; }
+    .author-name { font-weight: 800; color: var(--text); font-size: 1rem; display: block; }
+    .author-type { color: var(--green); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; margin-top: 4px; display: block;}
 
-    /* Flechas ajustadas perfectamente */
+    /* FLECHAS VISIBLES */
     .slider-btn { 
       position: absolute; 
       top: 50%; 
@@ -211,23 +221,23 @@
       display: flex; align-items: center; justify-content: center; 
       font-weight: bold; color: var(--blue); 
       box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-      transition: 0.2s; 
-      z-index: 10; 
+      z-index: 100; /* Asegura que estén encima de todo */
       font-size: 1.2rem; 
     }
     .slider-btn:hover { background: var(--green); color: white; border-color: var(--green); }
     
-    /* Posición exacta dentro del wrapper */
-    .prev-btn { left: 0; }
-    .next-btn { right: 0; }
+    /* Ubicación exacta de flechas */
+    .prev-btn { left: 10px; }
+    .next-btn { right: 10px; }
 
+    /* RESPONSIVE */
     @media (max-width: 600px) {
-      .slider-wrapper { padding: 0; } /* En celular quitamos el padding lateral */
-      .slide { flex-direction: column; text-align: center; padding: 40px 20px 60px 20px; } /* Más padding abajo para las flechas */
+      .slide { flex-direction: column; text-align: center; padding: 30px 20px 60px 20px; }
       .slide-content { text-align: center; }
+      .slide-img-box { width: 90px; height: 90px; margin-bottom: 15px; }
       
-      /* En celular las flechas van abajo para no tapar el texto */
-      .slider-btn { top: auto; bottom: 15px; width: 35px; height: 35px; }
+      /* En celular bajamos las flechas para que no tapen la cara */
+      .slider-btn { top: auto; bottom: 10px; width: 35px; height: 35px; }
       .prev-btn { left: 30%; transform: translateX(-50%); }
       .next-btn { right: 30%; transform: translateX(50%); }
     }
@@ -293,69 +303,53 @@
         </div>
       </div>
       
-      <div class="slider-container">
+<div class="slider-container">
         <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
         
-        <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
-        
         <div class="slider-window">
-          <div class="slider-track">
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span><span class="author-name">Martina Sánchez</span><span class="author-type">Eneatipo 3 (El Triunfador)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme en mi carrera. ¡Posta funciona!"</span><span class="author-name">Julián Mendez</span><span class="author-type">Eneatipo 7 (El Entusiasta)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">Eneatipo 9 (El Pacificador)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Soy escéptico, pero la precisión del análisis de riesgos me sorprendió. Una herramienta muy útil."</span><span class="author-name">Federico López</span><span class="author-type">Eneatipo 6 (El Leal)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span><span class="author-name">Gonzalo Duarte</span><span class="author-type">Eneatipo 1 (El Reformador)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me vivía desviviendo por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span><span class="author-name">Valentina Ricci</span><span class="author-type">Eneatipo 2 (El Ayudador)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span><span class="author-name">Esteban K.</span><span class="author-type">Eneatipo 8 (El Desafiador)</span></div></div>
-          </div>
-        </div>
-        
-        <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
-      </div>
+            <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
 
-      <div class="preview-section">
-        <h3 style="margin-bottom: 20px;">¿Qué vas a descubrir hoy?</h3>
-        <ul class="preview-list" style="list-style: none; padding: 0;">
-          <li><span style="color:var(--green); font-weight:bold;">✓</span> Tu Eneatipo dominante, Ala e Instinto.</li>
-          <li><span style="color:var(--green); font-weight:bold;">✓</span> Análisis de tu Herida de Origen y Deseo Básico.</li>
-          <li><span style="color:var(--green); font-weight:bold;">✓</span> Prácticas de alineación personalizadas.</li>
-          <li><span style="color:var(--green); font-weight:bold;">✓</span> Acceso inmediato a tu informe digital.</li>
-        </ul>
-      </div>
-
-    </section>
-  </div>
-
-  <div id="view-form" class="hidden fade-in">
-    <div class="form-box">
-      <h2 style="margin-bottom:20px;">Para empezar...</h2>
-      <div class="input-group">
-        <label>¿Cómo te llamas?</label>
-        <input type="text" id="name" required placeholder="Tu nombre" style="font-size:1.2rem;">
-      </div>
-      <button class="btn" style="width:100%;" onclick="startQuiz()">IR A LAS PREGUNTAS</button>
-    </div>
-  </div>
-
-  <div id="view-quiz" class="hidden fade-in">
-    <div class="quiz-container">
-      <div class="progress-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <span id="btn-back" onclick="goBack()" style="cursor:pointer; font-size:0.8rem; color:#999; font-weight:700; visibility:hidden;">← VOLVER</span>
-        <span style="font-size:0.8rem; color:#999; font-weight:700;">PROGRESO <span id="progress-text">0%</span></span>
-      </div>
-      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-      <div class="question-card">
-        <div class="q-text" id="q-text">Cargando...</div>
-        <div class="scale-container">
-          <div class="scale-option" onclick="vote(1)"><div class="scale-circle">1</div><div class="scale-label">Nunca</div></div>
-          <div class="scale-option" onclick="vote(2)"><div class="scale-circle">2</div><div class="scale-label">Rara vez</div></div>
-          <div class="scale-option" onclick="vote(3)"><div class="scale-circle">3</div><div class="scale-label">A veces</div></div>
-          <div class="scale-option" onclick="vote(4)"><div class="scale-circle">4</div><div class="scale-label">Frecuente</div></div>
-          <div class="scale-option" onclick="vote(5)"><div class="scale-circle">5</div><div class="scale-label">Siempre</div></div>
+            <div class="slider-track">
+               <div class="slide">
+                 <div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div>
+                 <div class="slide-content">
+                   <div class="stars">★★★★★</div>
+                   <span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span>
+                   <span class="author-name">Martina Sánchez</span>
+                   <span class="author-type">Eneatipo 3 (El Triunfador)</span>
+                 </div>
+               </div>
+               <div class="slide">
+                 <div class="slide-img-box"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200"></div>
+                 <div class="slide-content">
+                   <div class="stars">★★★★★</div>
+                   <span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme en mi carrera."</span>
+                   <span class="author-name">Julián Mendez</span>
+                   <span class="author-type">Eneatipo 7 (El Entusiasta)</span>
+                 </div>
+               </div>
+               <div class="slide">
+                 <div class="slide-img-box"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200"></div>
+                 <div class="slide-content">
+                   <div class="stars">★★★★★</div>
+                   <span class="quote-text">"Lo hice por curiosidad y quedé helada. Me describió tal cual: me guardo todo para no discutir y termino explotando."</span>
+                   <span class="author-name">Clara Fernández</span>
+                   <span class="author-type">Eneatipo 9 (El Pacificador)</span>
+                 </div>
+               </div>
+                <div class="slide">
+                 <div class="slide-img-box"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"></div>
+                 <div class="slide-content">
+                   <div class="stars">★★★★★</div>
+                   <span class="quote-text">"Soy bastante escéptico con estas cosas, pero la precisión del análisis de riesgos me sorprendió. Es una herramienta muy útil."</span>
+                   <span class="author-name">Federico López</span>
+                   <span class="author-type">Eneatipo 6 (El Leal)</span>
+                 </div>
+               </div>
+            </div>
         </div>
       </div>
-    </div>
-  </div>
 
   <div id="view-loading" class="hidden fade-in" style="text-align:center; padding:100px 0;">
     <div class="loader"></div>
