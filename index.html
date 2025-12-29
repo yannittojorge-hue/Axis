@@ -46,89 +46,67 @@
     .question-card { background:var(--white); padding:50px 30px; border-radius:20px; box-shadow:0 15px 40px rgba(0,0,0,0.04); min-height:300px; display:flex; flex-direction:column; justify-content:center; }
     .q-text { font-size:1.6rem; font-weight:500; color:var(--blue); margin-bottom:40px; font-family:'Poppins', sans-serif; }
     
-/* --- ESCALA DE PREGUNTAS (CORREGIDO FINAL) --- */
+/* --- ESCALA DE PREGUNTAS (CON RETRASO VISUAL) --- */
     .scale-container { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-top:20px; width:100%; }
     
     .scale-option { 
-      flex:1; 
-      display:flex; 
-      flex-direction:column; 
-      align-items:center; 
-      cursor:pointer; 
-      /* Quitamos la transición aquí para que el movimiento sea rápido */
+      flex:1; display:flex; flex-direction:column; align-items:center; cursor:pointer; 
       -webkit-tap-highlight-color: transparent; 
     }
-    
-    /* Efecto físico de presionar */
     .scale-option:active { transform: scale(0.90); } 
 
     .scale-circle { 
-      width:55px; 
-      height:55px; 
-      border-radius:50%; 
-      border:2px solid #ddd; 
-      background:#fff; 
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      font-weight:700; 
-      font-size:1.3rem; 
-      color:#aaa; 
-      margin-bottom:12px; 
-      /* Transición suave SOLO para cuando el color se va */
-      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; 
+      width:55px; height:55px; border-radius:50%; border:2px solid #ddd; background:#fff; 
+      display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.3rem; color:#aaa; margin-bottom:12px; 
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; 
     }
     
-    .scale-label { 
-      font-size:0.7rem; 
-      font-weight:700; 
-      text-transform:uppercase; 
-      color:#999; 
-      text-align:center; 
-      line-height:1.2; 
-      transition: color 0.2s ease; 
-    }
+    .scale-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; color:#999; text-align:center; line-height:1.2; transition: color 0.3s ease; }
     
-    /* ----------------------------------------------------- */
-    /* 1. MÓVIL Y CLICK (:active) - SIN TRANSICIÓN (INSTANTÁNEO) */
-    /* Al poner transition: none, el color explota al tacto  */
-    /* ----------------------------------------------------- */
+    /* --- COLORES ACTIVOS (Funciona al Tocar :active Y al Seleccionar .selected) --- */
     
-    .scale-option:nth-child(1):active .scale-circle { background:#D66D5E; border-color:#D66D5E; color:white; transition: none; }
-    .scale-option:nth-child(1):active .scale-label { color:#D66D5E; transition: none; }
+    /* Opción 1 */
+    .scale-option:nth-child(1):active .scale-circle, 
+    .scale-option:nth-child(1).selected .scale-circle { background:#D66D5E; border-color:#D66D5E; color:white; transition: none; }
+    .scale-option:nth-child(1):active .scale-label,
+    .scale-option:nth-child(1).selected .scale-label { color:#D66D5E; transition: none; }
 
-    .scale-option:nth-child(2):active .scale-circle { background:#E89F71; border-color:#E89F71; color:white; transition: none; }
-    .scale-option:nth-child(2):active .scale-label { color:#E89F71; transition: none; }
+    /* Opción 2 */
+    .scale-option:nth-child(2):active .scale-circle,
+    .scale-option:nth-child(2).selected .scale-circle { background:#E89F71; border-color:#E89F71; color:white; transition: none; }
+    .scale-option:nth-child(2):active .scale-label,
+    .scale-option:nth-child(2).selected .scale-label { color:#E89F71; transition: none; }
 
-    .scale-option:nth-child(3):active .scale-circle { background:#D9C375; border-color:#D9C375; color:white; transition: none; }
-    .scale-option:nth-child(3):active .scale-label { color:#D9C375; transition: none; }
+    /* Opción 3 */
+    .scale-option:nth-child(3):active .scale-circle,
+    .scale-option:nth-child(3).selected .scale-circle { background:#D9C375; border-color:#D9C375; color:white; transition: none; }
+    .scale-option:nth-child(3):active .scale-label,
+    .scale-option:nth-child(3).selected .scale-label { color:#D9C375; transition: none; }
 
-    .scale-option:nth-child(4):active .scale-circle { background:#87B38D; border-color:#87B38D; color:white; transition: none; }
-    .scale-option:nth-child(4):active .scale-label { color:#87B38D; transition: none; }
+    /* Opción 4 */
+    .scale-option:nth-child(4):active .scale-circle,
+    .scale-option:nth-child(4).selected .scale-circle { background:#87B38D; border-color:#87B38D; color:white; transition: none; }
+    .scale-option:nth-child(4):active .scale-label,
+    .scale-option:nth-child(4).selected .scale-label { color:#87B38D; transition: none; }
 
-    .scale-option:nth-child(5):active .scale-circle { background:var(--green); border-color:var(--green); color:white; transition: none; }
-    .scale-option:nth-child(5):active .scale-label { color:var(--green); transition: none; }
+    /* Opción 5 */
+    .scale-option:nth-child(5):active .scale-circle,
+    .scale-option:nth-child(5).selected .scale-circle { background:var(--green); border-color:var(--green); color:white; transition: none; }
+    .scale-option:nth-child(5):active .scale-label,
+    .scale-option:nth-child(5).selected .scale-label { color:var(--green); transition: none; }
 
-    /* ----------------------------------------------------- */
-    /* 2. PC (:hover) - Mantiene la suavidad original        */
-    /* ----------------------------------------------------- */
-    
+    /* PC Hover (Solo Mouse) */
     @media (hover: hover) {
         .scale-option:nth-child(1):hover .scale-circle { background:#D66D5E; border-color:#D66D5E; color:white; }
         .scale-option:nth-child(1):hover .scale-label { color:#D66D5E; }
-
         .scale-option:nth-child(2):hover .scale-circle { background:#E89F71; border-color:#E89F71; color:white; }
         .scale-option:nth-child(2):hover .scale-label { color:#E89F71; }
-
         .scale-option:nth-child(3):hover .scale-circle { background:#D9C375; border-color:#D9C375; color:white; }
         .scale-option:nth-child(3):hover .scale-label { color:#D9C375; }
-
         .scale-option:nth-child(4):hover .scale-circle { background:#87B38D; border-color:#87B38D; color:white; }
         .scale-option:nth-child(4):hover .scale-label { color:#87B38D; }
-
         .scale-option:nth-child(5):hover .scale-circle { background:var(--green); border-color:var(--green); color:white; }
-        .scale-option:nth-child(5):hover .scale-label { color:var(--green); }
-    }
+}
     /* --- RESULTADOS --- */
     .result-header { text-align:center; margin-bottom:40px; }
     .result-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; margin-bottom:40px; }
