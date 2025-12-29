@@ -46,7 +46,7 @@
     .question-card { background:var(--white); padding:50px 30px; border-radius:20px; box-shadow:0 15px 40px rgba(0,0,0,0.04); min-height:300px; display:flex; flex-direction:column; justify-content:center; }
     .q-text { font-size:1.6rem; font-weight:500; color:var(--blue); margin-bottom:40px; font-family:'Poppins', sans-serif; }
     
-/* --- ESCALA DE PREGUNTAS (CON RETRASO VISUAL) --- */
+  /* --- ESCALA DE PREGUNTAS (CON RETRASO VISUAL) --- */
     .scale-container { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-top:20px; width:100%; }
     
     .scale-option { 
@@ -106,7 +106,8 @@
         .scale-option:nth-child(4):hover .scale-circle { background:#87B38D; border-color:#87B38D; color:white; }
         .scale-option:nth-child(4):hover .scale-label { color:#87B38D; }
         .scale-option:nth-child(5):hover .scale-circle { background:var(--green); border-color:var(--green); color:white; }
-}
+        .scale-option:nth-child(5):hover .scale-label { color:var(--green); }
+    }
     /* --- RESULTADOS --- */
     .result-header { text-align:center; margin-bottom:40px; }
     .result-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; margin-bottom:40px; }
@@ -173,6 +174,18 @@
       .prev-btn { left: 0; }
       .next-btn { right: 0; }
     }
+/* CORRECCIÓN PARA QUE SE VEA EL SLIDER EN HOME */
+    .hero-landing {
+        display: block !important; /* Fuerza bloque vertical */
+        padding-top: 40px;
+        padding-bottom: 80px;
+        height: auto !important; /* Deja que crezca lo que necesite */
+        min-height: 100vh;
+        text-align: center;
+    }
+    
+    /* Asegura que los slides no se achiquen */
+    .slide { flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -184,15 +197,13 @@
     <div class="logo" onclick="location.reload()">Mi Eneatipo</div>
  </header>
 
- <div style="text-align: center; margin-bottom: 20px;">
-    <div class="badge-verified" style="margin-bottom: 0;">
-      <span>✓</span> Basado en metodología Riso-Hudson & Psicología Transpersonal
-    </div>
- </div>
-
- <div id="view-home" class="fade-in">
+<div id="view-home" class="fade-in">
     <section class="hero hero-landing">
       
+      <div class="badge-verified">
+        <span>✓</span> Basado en metodología Riso-Hudson & Psicología Transpersonal
+      </div>
+
       <h1 style="margin-bottom: 15px;">Descubre tu verdadera<br><span class="highlight">Arquitectura Interna.</span></h1>
       
       <p style="font-size:1.2rem; max-width:700px; margin:0 auto 30px auto; opacity:0.8; line-height: 1.6;">
@@ -227,18 +238,21 @@
       
       <div class="slider-container">
         <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
+        
         <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
+        
         <div class="slider-window">
           <div class="slider-track">
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante y eso me agotaba."</span><span class="author-name">Martina Sánchez</span><span class="author-type">Eneatipo 3 (El Triunfador)</span></div></div>
+             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span><span class="author-name">Martina Sánchez</span><span class="author-type">Eneatipo 3 (El Triunfador)</span></div></div>
              <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme en mi carrera. ¡Posta funciona!"</span><span class="author-name">Julián Mendez</span><span class="author-type">Eneatipo 7 (El Entusiasta)</span></div></div>
              <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">Eneatipo 9 (El Pacificador)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Soy bastante escéptico con estas cosas, pero la precisión del análisis de riesgos me sorprendió. Es una herramienta muy útil."</span><span class="author-name">Federico López</span><span class="author-type">Eneatipo 6 (El Leal)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Era insoportable con los detalles, me amargaba el día si algo salía mal. Entender a mi 'crítico interno' me dio paz mental."</span><span class="author-name">Gonzalo Duarte</span><span class="author-type">Eneatipo 1 (El Reformador)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me vivía desviviendo por los demás y me olvidaba de mí misma. El reporte me cantó la justa: tengo que aprender a decir que no."</span><span class="author-name">Valentina Ricci</span><span class="author-type">Eneatipo 2 (El Ayudador)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Siempre me decían que era muy intenso. Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span><span class="author-name">Esteban K.</span><span class="author-type">Eneatipo 8 (El Desafiador)</span></div></div>
+             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Soy escéptico, pero la precisión del análisis de riesgos me sorprendió. Una herramienta muy útil."</span><span class="author-name">Federico López</span><span class="author-type">Eneatipo 6 (El Leal)</span></div></div>
+             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span><span class="author-name">Gonzalo Duarte</span><span class="author-type">Eneatipo 1 (El Reformador)</span></div></div>
+             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me vivía desviviendo por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span><span class="author-name">Valentina Ricci</span><span class="author-type">Eneatipo 2 (El Ayudador)</span></div></div>
+             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span><span class="author-name">Esteban K.</span><span class="author-type">Eneatipo 8 (El Desafiador)</span></div></div>
           </div>
         </div>
+        
         <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
       </div>
 
@@ -322,10 +336,10 @@
         <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
         <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
         <div class="slider-window">
-          <div class="slider-track">
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span><span class="author-name">Martina Sánchez</span><span class="author-type">Eneatipo 3 (El Triunfador)</span></div></div>
+          <div class="slider-track" id="track">
+             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante y eso me agotaba."</span><span class="author-name">Martina Sánchez</span><span class="author-type">Eneatipo 3 (El Triunfador)</span></div></div>
              <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme en mi carrera. ¡Posta funciona!"</span><span class="author-name">Julián Mendez</span><span class="author-type">Eneatipo 7 (El Entusiasta)</span></div></div>
-             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">Eneatipo 9 (El Pacificador)</span></div></div>
+             <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Lo hice por curiosidad y quedé helada. Me describió tal cual: me guardo todo para no discutir y termino explotando."</span><span class="author-name">Clara Fernández</span><span class="author-type">Eneatipo 9 (El Pacificador)</span></div></div>
              <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Soy bastante escéptico con estas cosas, pero la precisión del análisis de riesgos me sorprendió. Es una herramienta muy útil."</span><span class="author-name">Federico López</span><span class="author-type">Eneatipo 6 (El Leal)</span></div></div>
              <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Era insoportable con los detalles, me amargaba el día si algo salía mal. Entender a mi 'crítico interno' me dio paz mental."</span><span class="author-name">Gonzalo Duarte</span><span class="author-type">Eneatipo 1 (El Reformador)</span></div></div>
              <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me vivía desviviendo por los demás y me olvidaba de mí misma. El reporte me cantó la justa: tengo que aprender a decir que no."</span><span class="author-name">Valentina Ricci</span><span class="author-type">Eneatipo 2 (El Ayudador)</span></div></div>
@@ -482,7 +496,7 @@
     { t:9, q:"Busco estabilidad y paz porque necesito sentirme en equilibrio." }
   ];
 
-  // --- 4. MOTOR DEL QUIZ (CON RETRASO VISUAL) ---
+  // --- 4. MOTOR DEL QUIZ ---
   function startQuiz() {
     user.name = document.getElementById('name').value;
     if(!user.name) { alert("Por favor ingresa tu nombre"); return; }
@@ -501,20 +515,21 @@
     else btnBack.style.visibility = 'hidden';
   }
 
-  // VARIABLE PARA EVITAR DOBLE CLICK
+// Variable para evitar doble click rápido
   let isVoting = false;
 
   function vote(pts) { 
-    if (isVoting) return; 
+    if (isVoting) return; // Si ya está procesando, ignora clicks extra
     isVoting = true;
 
-    // 1. PINTAR EL BOTÓN
+    // 1. Identificar el botón tocado y pintarlo
     const buttons = document.querySelectorAll('.scale-option');
-    const selectedBtn = buttons[pts - 1]; 
+    const selectedBtn = buttons[pts - 1]; // pts es 1-5, el array es 0-4
     if(selectedBtn) selectedBtn.classList.add('selected');
 
-    // 2. ESPERAR 600ms
+    // 2. Esperar un momento (Efecto visual)
     setTimeout(() => {
+        // --- LÓGICA DE GUARDADO ---
         const currentType = questions[qIdx].t;
         const itemIdx = (qIdx % 11) + 1;
         
@@ -522,13 +537,15 @@
         userResponses[currentType][itemIdx] = pts;
         historyStack.push({ qIdx: qIdx, type: currentType, item: itemIdx });
         
+        // 3. Avanzar
         qIdx++; 
         renderQ(); 
 
-        // 3. LIMPIAR
+        // 4. Limpiar el color para la próxima pregunta
         if(selectedBtn) selectedBtn.classList.remove('selected');
-        isVoting = false;
-    }, 600);
+        isVoting = false; // Permitir votar de nuevo
+
+    }, 400); // <--- TIEMPO DE ESPERA (400ms = 0.4 segundos)
   }
 
   function goBack() {
@@ -666,5 +683,6 @@
 
   startAutoSlide();
 </script>
+
 </body>
 </html>
