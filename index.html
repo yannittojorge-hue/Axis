@@ -499,16 +499,38 @@
     else btnBack.style.visibility = 'hidden';
   }
 
-  function vote(pts) { 
-    const currentType = questions[qIdx].t;
-    const itemIdx = (qIdx % 11) + 1;
-    if (!userResponses[currentType]) userResponses[currentType] = {};
-    userResponses[currentType][itemIdx] = pts;
-    historyStack.push({ qIdx: qIdx, type: currentType, item: itemIdx });
-    qIdx++; 
-    renderQ(); 
-  }
+// Variable para evitar doble click rápido
+  let isVoting = false;
 
+  function vote(pts) { 
+    if (isVoting) return; // Si ya está procesando, ignora clicks extra
+    isVoting = true;
+
+    // 1. Identificar el botón tocado y pintarlo
+    const buttons = document.querySelectorAll('.scale-option');
+    const selectedBtn = buttons[pts - 1]; // pts es 1-5, el array es 0-4
+    if(selectedBtn) selectedBtn.classList.add('selected');
+
+    // 2. Esperar un momento (Efecto visual)
+    setTimeout(() => {
+        // --- LÓGICA DE GUARDADO ---
+        const currentType = questions[qIdx].t;
+        const itemIdx = (qIdx % 11) + 1;
+        
+        if (!userResponses[currentType]) userResponses[currentType] = {};
+        userResponses[currentType][itemIdx] = pts;
+        historyStack.push({ qIdx: qIdx, type: currentType, item: itemIdx });
+        
+        // 3. Avanzar
+        qIdx++; 
+        renderQ(); 
+
+        // 4. Limpiar el color para la próxima pregunta
+        if(selectedBtn) selectedBtn.classList.remove('selected');
+        isVoting = false; // Permitir votar de nuevo
+
+    }, 600); // <--- TIEMPO DE ESPERA (600ms = 0.6 segundos)
+  }
   function goBack() {
     if (historyStack.length === 0) return; 
     let lastStep = historyStack.pop();
