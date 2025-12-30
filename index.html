@@ -737,70 +737,75 @@
   }
 
   // --- 6. FINALIZAR ---
-async function finish() {
-  nav('view-loading');
+  async function finish() {
+    nav('view-loading');
 
-  try {
-    const resultado = calcularResultadoEneagrama(userResponses);
-    let type = resultado.eneatipo;
-    let tInt = parseInt(type);
-    let prev = tInt===1?9:tInt-1;
-    let next = tInt===9?1:tInt+1;
-    let alaText = "";
+    try {
+      const resultado = calcularResultadoEneagrama(userResponses);
+      let type = resultado.eneatipo;
+      let tInt = parseInt(type);
+      let prev = tInt===1?9:tInt-1;
+      let next = tInt===9?1:tInt+1;
+      let alaText = "";
 
-    if (resultado.ala === "Ala A") alaText = "Ala " + prev;
-    else if (resultado.ala === "Ala B") alaText = "Ala " + next;
-    else alaText = "Alas Balanceadas";
+      if (resultado.ala === "Ala A") alaText = "Ala " + prev;
+      else if (resultado.ala === "Ala B") alaText = "Ala " + next;
+      else alaText = "Alas Balanceadas";
 
-    // Creamos un token simple con lo necesario (base64)
-    const payload = { nombre: user.name, eneatipo: type, ala: alaText, instinto: resultado.instinto };
-    const token = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+      const payload = { nombre: user.name, eneatipo: type, ala: alaText, instinto: resultado.instinto };
+      const token = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
 
-    // Guardamos SOLO lo básico para mostrar luego
-    localStorage.setItem('eneagrama_token', token);
-    localStorage.setItem('eneagrama_basic', JSON.stringify({
-      name: user.name, type: type, wing: alaText, instinct: resultado.instinto
-    }));
+      localStorage.setItem('eneagrama_token', token);
+      localStorage.setItem('eneagrama_basic', JSON.stringify({
+        name: user.name, type: type, wing: alaText, instinct: resultado.instinto
+      }));
 
-    // Mostrar pantalla de pago
-    nav('view-result');
-    document.getElementById('payment-gate').classList.remove('hidden');
-    document.getElementById('actual-report').classList.add('hidden');
+      nav('view-result');
+      document.getElementById('payment-gate').classList.remove('hidden');
+      document.getElementById('actual-report').classList.add('hidden');
 
-    // Cambiamos el link del botón: ahora dispara el checkout dinámico
-const btn = document.getElementById("mp-pay-btn");
-btn.onclick = async () => {
-  try {
-    btn.innerText = "Redirigiendo...";
-    btn.style.pointerEvents = "none";
+      const btn = document.getElementById("mp-pay-btn");
+      btn.onclick = async () => {
+        try {
+          btn.innerText = "Redirigiendo...";
+          btn.style.pointerEvents = "none";
 
-    const token = localStorage.getItem("eneagrama_token");
-    if (!token) throw new Error("No hay token en localStorage");
+          const token = localStorage.getItem("eneagrama_token");
+          if (!token) throw new Error("No hay token en localStorage");
 
-    const r = await fetch("/api/mp_create_preference", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, price: 4800 })
-    });
+          const r = await fetch("/api/mp_create_preference", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token, price: 4800 })
+          });
 
-    const j = await r.json();
-    if (!r.ok) {
-  alert("No se pudo iniciar el pago: " + (j.error || "error desconocido"));
-  btn.innerText = "OBTENER MIS RESULTADOS";
-  btn.style.pointerEvents = "auto";
-  return;
-}
+          const j = await r.json();
+          if (!r.ok) {
+            alert("No se pudo iniciar el pago: " + (j.error || "error desconocido"));
+            btn.innerText = "OBTENER MIS RESULTADOS";
+            btn.style.pointerEvents = "auto";
+            return;
+          }
 
-    window.location.href = j.init_point;
-  } catch (e) {
-    console.error(e);
-    btn.innerText = "OBTENER MIS RESULTADOS";
-    btn.style.pointerEvents = "auto";
-    alert("Error al iniciar el pago. Abrí F12 > Console y mandame el error.");
+          window.location.href = j.init_point;
+        } catch (e) {
+          console.error(e);
+          btn.innerText = "OBTENER MIS RESULTADOS";
+          btn.style.pointerEvents = "auto";
+          alert("Error al iniciar el pago. Abrí F12 > Console y mandame el error.");
+        }
+      };
+
+    } catch (e) {
+      console.error(e);
+      nav('view-result');
+      document.getElementById('payment-gate').classList.remove('hidden');
+      document.getElementById('actual-report').classList.add('hidden');
+      const msg = document.getElementById('error-msg');
+      msg.innerText = "Ocurrió un error generando el resultado. Probá recargar la página.";
+      msg.style.display = 'block';
+    }
   }
-};
-
-
 
   // DETECTAR PAGO
 window.addEventListener("load", async () => {
