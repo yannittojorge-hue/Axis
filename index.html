@@ -768,33 +768,38 @@ async function finish() {
     document.getElementById('actual-report').classList.add('hidden');
 
     // Cambiamos el link del botón: ahora dispara el checkout dinámico
-    const btn = document.getElementById("mp-pay-btn");
-    btn.onclick = async () => {
-      btn.innerText = "Redirigiendo...";
-      btn.style.pointerEvents = "none";
+const btn = document.getElementById("mp-pay-btn");
+btn.onclick = async () => {
+  try {
+    btn.innerText = "Redirigiendo...";
+    btn.style.pointerEvents = "none";
 
-      const r = await fetch("/api/mp_create_preference", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, price: 4800 })
+    const token = localStorage.getItem("eneagrama_token");
+    if (!token) throw new Error("No hay token en localStorage");
+
+    const r = await fetch("/api/mp_create_preference", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, price: 4800 })
     });
 
-      const j = await r.json();
-      if (!j.init_point) throw new Error("No pude crear el link de pago");
-      window.location.href = j.init_point;
-    };
-
-} catch (e) {
-  console.error(e);
-  nav('view-result');
-  document.getElementById('payment-gate').classList.remove('hidden');
-  document.getElementById('actual-report').classList.add('hidden');
-  const msg = document.getElementById('error-msg');
-  msg.innerText = "Pago aprobado, pero falló la generación del reporte. Probá recargar la página. Si sigue, avisame y lo revisamos.";
-  msg.style.display = 'block';
+    const j = await r.json();
+    if (!r.ok) {
+  alert("No se pudo iniciar el pago: " + (j.error || "error desconocido"));
+  btn.innerText = "OBTENER MIS RESULTADOS";
+  btn.style.pointerEvents = "auto";
+  return;
 }
 
-}
+    window.location.href = j.init_point;
+  } catch (e) {
+    console.error(e);
+    btn.innerText = "OBTENER MIS RESULTADOS";
+    btn.style.pointerEvents = "auto";
+    alert("Error al iniciar el pago. Abrí F12 > Console y mandame el error.");
+  }
+};
+
 
 
   // DETECTAR PAGO
@@ -826,8 +831,10 @@ window.addEventListener("load", async () => {
     const mpSuccess = (p.get("mp_status") || "").toLowerCase() === "success";
 
     const paymentId = p.get("payment_id") || p.get("collection_id");
-    const tokenFromUrl = p.get("token");
-    const token = tokenFromUrl || localStorage.getItem("eneagrama_token");
+    const token = localStorage.getItem("eneagrama_token") || p.get("token");
+
+    console.log("mp_status:", p.get("mp_status"));
+    console.log("merchant_account_id:", p.get("merchant_account_id"));
 
     console.log("[RETURN]", { mpStatus, mpSuccess, paymentId, hasToken: !!token });
 

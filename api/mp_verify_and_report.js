@@ -7,9 +7,9 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   try {
-    const { token, payment_id } = req.body || {};
-    if (!token || !payment_id) {
-      return res.status(400).json({ error: "Falta token o payment_id" });
+    const { payment_id } = req.body || {};
+    if (!payment_id) {
+      return res.status(400).json({ error: "Falta payment_id" });
     }
 
     const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
@@ -33,20 +33,20 @@ export default async function handler(req, res) {
       return res.status(402).json({ error: "Pago no aprobado", status: mpData.status });
     }
 
-    // 3) Validar que el token coincida con external_reference
-    const extRef = mpData.external_reference ? decodeURIComponent(mpData.external_reference) : "";
-    const tok = token ? decodeURIComponent(token) : "";
-    if (extRef !== tok) {
-      return res.status(403).json({ error: "external_reference no coincide", extRef, tok });
+    // 3) Tomar token desde external_reference (este es el punto clave)
+    const extRefRaw = mpData.external_reference || "";
+    const tok = extRefRaw ? decodeURIComponent(extRefRaw) : "";
+    if (!tok) {
+      return res.status(400).json({ error: "Pago aprobado pero falta external_reference en Mercado Pago" });
     }
 
-    // 4) Token es un base64 con JSON: decodificar
+    // 4) Token es base64 con JSON: decodificar
     const jsonStr = Buffer.from(tok, "base64").toString("utf-8");
     let payload;
     try {
       payload = JSON.parse(jsonStr);
     } catch {
-      return res.status(400).json({ error: "Token inválido (no es JSON base64)" });
+      return res.status(400).json({ error: "external_reference inválido (no es JSON base64)" });
     }
 
     const { nombre, eneatipo, ala, instinto } = payload || {};
@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Token incompleto", payload });
     }
 
-    // 5) Generar reporte con OpenAI (sin librerías)
+    // 5) Generar reporte con OpenAI
     const prompt = `
 Actúa como un Psicoterapeuta experto en Eneagrama Transpersonal (Escuela Riso-Hudson).
 Vas a redactar un informe de personalidad profunda para: ${nombre}.
@@ -87,7 +87,10 @@ TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
       },
       body: JSON.stringify({
         model: "gpt-4o",
-        messages: [{ role: "system", content: prompt }],
+        messages: [
+          { role: "system", content: "Sos un psicoterapeuta experto en Eneagrama Transpersonal (Riso-Hudson)." },
+          { role: "user", content: prompt },
+        ],
         temperature: 0.7,
         max_tokens: 1600,
       }),
