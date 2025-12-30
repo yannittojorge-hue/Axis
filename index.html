@@ -795,8 +795,8 @@ async function finish() {
 
       const r = await fetch("/api/mp_create_preference", {
         method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ token })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, price: 4800 })
     });
 
       const j = await r.json();
