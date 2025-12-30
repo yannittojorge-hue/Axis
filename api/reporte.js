@@ -61,8 +61,10 @@ export default async function handler(req, res) {
     const completion = await openai.chat.completions.create({
       model: "gpt-4o", // Modelo rápido y capaz
       messages: [
-        { role: "system", content: prompt },
-      ],
+  { role: "system", content: "Sos un psicoterapeuta experto en Eneagrama Transpersonal (Riso-Hudson)." },
+  { role: "user", content: prompt },
+],
+
       temperature: 0.7,
       max_tokens: 1600, // Aumentamos la longitud para que no se corte
     });

@@ -649,8 +649,8 @@
 
   // --- 4. MOTOR DEL QUIZ ---
   function startQuiz() {
-    user.name = document.getElementById('name').value;
-    if(!user.name) { alert("Por favor ingresa tu nombre"); return; }
+   user.name = (document.getElementById('name').value || "").trim();
+   if(!user.name) { alert("Por favor ingresa tu nombre"); return; }
     nav('view-quiz');
     renderQ();
   }
@@ -792,7 +792,7 @@
           console.error(e);
           btn.innerText = "OBTENER MIS RESULTADOS";
           btn.style.pointerEvents = "auto";
-          alert("Error al iniciar el pago. Abrí F12 > Console y mandame el error.");
+          alert("Error al iniciar el pago. Pagaste OK, pero el reporte tardó en cargar. Tocá 'Reintentar'");
         }
       };
 

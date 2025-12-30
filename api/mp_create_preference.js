@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     const mpAccessToken = process.env.MP_ACCESS_TOKEN;
     if (!mpAccessToken) return res.status(500).json({ error: "Falta MP_ACCESS_TOKEN en Vercel" });
 
-    const baseUrl = "https://www.mieneatipo.ar";
+    const baseUrl = process.env.BASE_URL || "https://www.mieneatipo.ar";
     const amount = Number(price || 4800);
 
     const preferenceBody = {
