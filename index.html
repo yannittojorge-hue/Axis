@@ -819,6 +819,26 @@ async function finish() {
 
   // DETECTAR PAGO
 window.addEventListener("load", async () => {
+  const safeShowError = (text) => {
+    try {
+      nav("view-result");
+      const gate = document.getElementById("payment-gate");
+      const report = document.getElementById("actual-report");
+      const msg = document.getElementById("error-msg");
+      if (gate) gate.classList.remove("hidden");
+      if (report) report.classList.add("hidden");
+      if (msg) {
+        msg.style.display = "block";
+        msg.style.color = "red";
+        msg.innerText = text;
+      } else {
+        alert(text);
+      }
+    } catch (e) {
+      alert(text);
+    }
+  };
+
   try {
     const p = new URLSearchParams(window.location.search);
 
@@ -826,16 +846,18 @@ window.addEventListener("load", async () => {
     const mpSuccess = (p.get("mp_status") || "").toLowerCase() === "success";
 
     const paymentId = p.get("payment_id") || p.get("collection_id");
-    const tokenFromUrl = p.get("token") || p.get("external_reference");
+    const tokenFromUrl = p.get("token");
     const token = tokenFromUrl || localStorage.getItem("eneagrama_token");
 
-    // Si no es un regreso aprobado, no hacemos nada (queda home normal)
-    if (!token || !paymentId || (!mpSuccess && mpStatus !== "approved")) return;
+    console.log("[RETURN]", { mpStatus, mpSuccess, paymentId, hasToken: !!token });
 
-    // Mostrar loading sí o sí
+    if (!token || !paymentId || (!mpSuccess && mpStatus !== "approved")) {
+      console.log("[RETURN] No es un regreso de pago aprobado. No hago nada.");
+      return;
+    }
+
     nav("view-loading");
 
-    // Traemos datos básicos para completar tarjetas (si existen)
     const basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
 
     const r = await fetch("/api/mp_verify_and_report", {
@@ -844,36 +866,45 @@ window.addEventListener("load", async () => {
       body: JSON.stringify({ token, payment_id: paymentId }),
     });
 
-    const j = await r.json();
+    const j = await r.json().catch(() => ({}));
+    console.log("[VERIFY] status:", r.status, "keys:", Object.keys(j || {}), "len:", (j?.reporte || "").length);
 
     if (!r.ok || !j.reporte) {
-      throw new Error(j.error || "Error verificando/generando reporte");
+      throw new Error(j.error || "La API no devolvió reporte.");
     }
 
-    document.getElementById("r-name").innerText = basic.name || "";
-    document.getElementById("r-type").innerText = basic.type ? ("Tipo " + basic.type) : "";
-    document.getElementById("r-wing").innerText = basic.wing || "";
-    document.getElementById("r-instinct").innerText = basic.instinct || "";
-    document.getElementById("ai-content").innerHTML = j.reporte;
+    // Validaciones de DOM (si falta algo, lo vemos claro)
+    const elName = document.getElementById("r-name");
+    const elType = document.getElementById("r-type");
+    const elWing = document.getElementById("r-wing");
+    const elInst = document.getElementById("r-instinct");
+    const elAI = document.getElementById("ai-content");
+    const gate = document.getElementById("payment-gate");
+    const report = document.getElementById("actual-report");
+
+    if (!elAI || !gate || !report) {
+      throw new Error("Faltan elementos en el HTML (ai-content / payment-gate / actual-report).");
+    }
+
+    elName && (elName.innerText = basic.name || "");
+    elType && (elType.innerText = basic.type ? ("Tipo " + basic.type) : "");
+    elWing && (elWing.innerText = basic.wing || "");
+    elInst && (elInst.innerText = basic.instinct || "");
+
+    elAI.innerHTML = j.reporte;
 
     nav("view-result");
-    document.getElementById("payment-gate").classList.add("hidden");
-    document.getElementById("actual-report").classList.remove("hidden");
+    gate.classList.add("hidden");
+    report.classList.remove("hidden");
+
+    console.log("[DONE] Reporte mostrado OK");
 
   } catch (e) {
-    console.error(e);
-
-    // Si falla, al menos mostramos algo (no blanco)
-    nav("view-result");
-    document.getElementById("payment-gate").classList.remove("hidden");
-    document.getElementById("actual-report").classList.add("hidden");
-
-    const msg = document.getElementById("error-msg");
-    msg.style.display = "block";
-    msg.style.color = "red";
-    msg.innerText =
-      "Pago aprobado, pero falló la generación del reporte. Probá recargar la página. " +
-      "Si sigue, mandame el error de Vercel (mp_verify_and_report).";
+    console.error("[ERROR RETURN FLOW]", e);
+    safeShowError(
+      "Pago aprobado, pero falló la visualización del reporte. " +
+      "Abrí F12 > Console y mandame el error rojo que aparece."
+    );
   }
 });
 
