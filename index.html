@@ -796,19 +796,24 @@ async function finish() {
       const r = await fetch("/api/mp_create_preference", {
         method: "POST",
         headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ token, price: 4800 })
+        body: JSON.stringify({ token, payment_id: paymentId })
+
       });
       const j = await r.json();
       if (!j.init_point) throw new Error("No pude crear el link de pago");
       window.location.href = j.init_point;
     };
 
-  } catch (e) {
-    console.error(e);
-    document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
-    document.getElementById('error-msg').style.display = 'block';
-    nav('view-result');
-  }
+} catch (e) {
+  console.error(e);
+  nav('view-result');
+  document.getElementById('payment-gate').classList.remove('hidden');
+  document.getElementById('actual-report').classList.add('hidden');
+  const msg = document.getElementById('error-msg');
+  msg.innerText = "Pago aprobado, pero falló la generación del reporte. Probá recargar la página. Si sigue, avisame y lo revisamos.";
+  msg.style.display = 'block';
+}
+
 }
 
 
@@ -817,7 +822,8 @@ async function finish() {
   const p = new URLSearchParams(window.location.search);
 
   const mpStatus = (p.get("collection_status") || p.get("status") || "").toLowerCase();
-  const token = p.get("token") || localStorage.getItem("eneagrama_token");
+ const rawToken = p.get("token") || localStorage.getItem("eneagrama_token");
+ const token = rawToken ? decodeURIComponent(rawToken) : null;
 
   const paymentId = p.get("payment_id") || p.get("collection_id");
 

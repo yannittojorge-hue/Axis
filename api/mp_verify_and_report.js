@@ -42,9 +42,13 @@ export default async function handler(req, res) {
     }
 
     // 3) Validamos que el pago corresponde a este token
-    if (payData.external_reference !== token) {
-      return res.status(403).json({ error: "external_reference no coincide" });
-    }
+   const extRef = payData.external_reference ? decodeURIComponent(payData.external_reference) : "";
+   const tok = token ? decodeURIComponent(token) : "";
+
+   if (extRef !== tok) {
+     return res.status(403).json({ error: "external_reference no coincide", extRef, tok });
+}
+
 
     // 4) Generamos reporte (OpenAI)
     const { nombre, eneatipo, ala, instinto } = decodeToken(token);
