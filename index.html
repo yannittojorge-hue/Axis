@@ -818,50 +818,65 @@ async function finish() {
 
 
   // DETECTAR PAGO
- window.onload = async function() {
-  const p = new URLSearchParams(window.location.search);
+window.addEventListener("load", async () => {
+  try {
+    const p = new URLSearchParams(window.location.search);
 
-  const mpStatus = (p.get("collection_status") || p.get("status") || "").toLowerCase();
- const rawToken = p.get("token") || localStorage.getItem("eneagrama_token");
- const token = rawToken ? decodeURIComponent(rawToken) : null;
+    const mpStatus = (p.get("collection_status") || p.get("status") || "").toLowerCase();
+    const mpSuccess = (p.get("mp_status") || "").toLowerCase() === "success";
 
-  const paymentId = p.get("payment_id") || p.get("collection_id");
+    const paymentId = p.get("payment_id") || p.get("collection_id");
+    const tokenFromUrl = p.get("token"); // URLSearchParams YA lo devuelve decodificado
+    const token = tokenFromUrl || localStorage.getItem("eneagrama_token");
 
-  // Si volvió aprobado
-  if ((mpStatus === "approved" || p.get("mp_status") === "success") && token && paymentId) {
-    try {
-      nav("view-loading");
+    // Si no es un regreso aprobado, no hacemos nada (queda home normal)
+    if (!token || !paymentId || (!mpSuccess && mpStatus !== "approved")) return;
 
-      const basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
+    // Mostrar loading sí o sí
+    nav("view-loading");
 
-      // Pedimos al servidor: verifica pago + genera reporte
-      const r = await fetch("/api/mp_verify_and_report", {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ token, payment_id: paymentId })
-      });
+    // Traemos datos básicos para completar tarjetas (si existen)
+    const basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
 
-      const j = await r.json();
-      if (!r.ok || !j.reporte) throw new Error(j.error || "Error");
+    const r = await fetch("/api/mp_verify_and_report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, payment_id: paymentId }),
+    });
 
-      document.getElementById('r-name').innerText = basic.name || "";
-      document.getElementById('r-type').innerText = basic.type ? ("Tipo " + basic.type) : "";
-      document.getElementById('r-wing').innerText = basic.wing || "";
-      document.getElementById('r-instinct').innerText = basic.instinct || "";
-      document.getElementById('ai-content').innerHTML = j.reporte;
+    const j = await r.json();
 
-      nav('view-result');
-      document.getElementById('payment-gate').classList.add('hidden');
-      document.getElementById('actual-report').classList.remove('hidden');
-
-    } catch (e) {
-      console.error(e);
-      nav('view-result');
-      document.getElementById('error-msg').innerText = "Pago aprobado, pero no pude generar el reporte. Escribinos y lo resolvemos.";
-      document.getElementById('error-msg').style.display = 'block';
+    if (!r.ok || !j.reporte) {
+      throw new Error(j.error || "Error verificando/generando reporte");
     }
+
+    document.getElementById("r-name").innerText = basic.name || "";
+    document.getElementById("r-type").innerText = basic.type ? ("Tipo " + basic.type) : "";
+    document.getElementById("r-wing").innerText = basic.wing || "";
+    document.getElementById("r-instinct").innerText = basic.instinct || "";
+    document.getElementById("ai-content").innerHTML = j.reporte;
+
+    nav("view-result");
+    document.getElementById("payment-gate").classList.add("hidden");
+    document.getElementById("actual-report").classList.remove("hidden");
+
+  } catch (e) {
+    console.error(e);
+
+    // Si falla, al menos mostramos algo (no blanco)
+    nav("view-result");
+    document.getElementById("payment-gate").classList.remove("hidden");
+    document.getElementById("actual-report").classList.add("hidden");
+
+    const msg = document.getElementById("error-msg");
+    msg.style.display = "block";
+    msg.style.color = "red";
+    msg.innerText =
+      "Pago aprobado, pero falló la generación del reporte. Probá recargar la página. " +
+      "Si sigue, mandame el error de Vercel (mp_verify_and_report).";
   }
-};
+});
+
 
 
   // --- LÓGICA DEL SLIDER ---
