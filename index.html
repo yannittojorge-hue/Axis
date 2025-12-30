@@ -796,9 +796,9 @@ async function finish() {
       const r = await fetch("/api/mp_create_preference", {
         method: "POST",
         headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ token, payment_id: paymentId })
+        body: JSON.stringify({ token })
+    });
 
-      });
       const j = await r.json();
       if (!j.init_point) throw new Error("No pude crear el link de pago");
       window.location.href = j.init_point;
@@ -826,7 +826,7 @@ window.addEventListener("load", async () => {
     const mpSuccess = (p.get("mp_status") || "").toLowerCase() === "success";
 
     const paymentId = p.get("payment_id") || p.get("collection_id");
-    const tokenFromUrl = p.get("token"); // URLSearchParams YA lo devuelve decodificado
+    const tokenFromUrl = p.get("token") || p.get("external_reference");
     const token = tokenFromUrl || localStorage.getItem("eneagrama_token");
 
     // Si no es un regreso aprobado, no hacemos nada (queda home normal)
