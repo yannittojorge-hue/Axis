@@ -484,7 +484,9 @@
           <span>Reporte Premium + Guía</span>
           <span style="color:var(--green);">$4.800</span>
         </div>
-        <a href="https://mpago.la/2X3TnFY" class="btn" style="width:100%; display:block; text-decoration:none; font-size:1.1rem; padding: 20px;">OBTENER MIS RESULTADOS</a>
+       <button id="mp-pay-btn" class="btn" style="width:100%; font-size:1.1rem; padding: 20px;">
+          OBTENER MIS RESULTADOS
+       </button>
         <div style="font-size:0.75rem; color:#999; margin-top:10px; display:flex; justify-content:center; gap:15px;">
           <span>🔒 Pago 100% Seguro</span>
           <span>⚡ Acceso Inmediato</span>
@@ -755,65 +757,106 @@
   }
 
   // --- 6. FINALIZAR ---
-  async function finish() {
-    nav('view-loading');
-    
-    try {
-        const resultado = calcularResultadoEneagrama(userResponses);
-        let type = resultado.eneatipo;
-        let tInt = parseInt(type);
-        let prev = tInt===1?9:tInt-1;
-        let next = tInt===9?1:tInt+1;
-        let alaText = "";
+async function finish() {
+  nav('view-loading');
 
-        if (resultado.ala === "Ala A") alaText = "Ala " + prev;
-        else if (resultado.ala === "Ala B") alaText = "Ala " + next;
-        else alaText = "Alas Balanceadas";
+  try {
+    const resultado = calcularResultadoEneagrama(userResponses);
+    let type = resultado.eneatipo;
+    let tInt = parseInt(type);
+    let prev = tInt===1?9:tInt-1;
+    let next = tInt===9?1:tInt+1;
+    let alaText = "";
 
-        // Llamada API
-        const res = await fetch('/api/reporte', {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ nombre: user.name, eneatipo: type, ala: alaText, instinto: resultado.instinto })
-        });
-        const data = await res.json();
-        if(data.error) throw new Error(data.error);
+    if (resultado.ala === "Ala A") alaText = "Ala " + prev;
+    else if (resultado.ala === "Ala B") alaText = "Ala " + next;
+    else alaText = "Alas Balanceadas";
 
-        // Guardar y mostrar PAGO
-        localStorage.setItem('eneagrama_result', JSON.stringify({
-          name: user.name, type: type, wing: alaText, instinct: resultado.instinto, report: data.reporte
-        }));
+    // Creamos un token simple con lo necesario (base64)
+    const payload = { nombre: user.name, eneatipo: type, ala: alaText, instinto: resultado.instinto };
+    const token = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
 
-        nav('view-result');
-        document.getElementById('payment-gate').classList.remove('hidden');
-        document.getElementById('actual-report').classList.add('hidden');
-        
-    } catch(e) {
-        document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
-        document.getElementById('error-msg').style.display = 'block';
-        nav('view-result');
-    }
+    // Guardamos SOLO lo básico para mostrar luego
+    localStorage.setItem('eneagrama_token', token);
+    localStorage.setItem('eneagrama_basic', JSON.stringify({
+      name: user.name, type: type, wing: alaText, instinct: resultado.instinto
+    }));
+
+    // Mostrar pantalla de pago
+    nav('view-result');
+    document.getElementById('payment-gate').classList.remove('hidden');
+    document.getElementById('actual-report').classList.add('hidden');
+
+    // Cambiamos el link del botón: ahora dispara el checkout dinámico
+    const btn = document.getElementById("mp-pay-btn");
+    btn.onclick = async () => {
+      btn.innerText = "Redirigiendo...";
+      btn.style.pointerEvents = "none";
+
+      const r = await fetch("/api/mp_create_preference", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ token, price: 4800 })
+      });
+      const j = await r.json();
+      if (!j.init_point) throw new Error("No pude crear el link de pago");
+      window.location.href = j.init_point;
+    };
+
+  } catch (e) {
+    console.error(e);
+    document.getElementById('error-msg').innerText = "Hubo un error técnico. Intenta recargar.";
+    document.getElementById('error-msg').style.display = 'block';
+    nav('view-result');
   }
+}
+
 
   // DETECTAR PAGO
-  window.onload = function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('status') && urlParams.get('status') === 'approved') {
-      const savedData = localStorage.getItem('eneagrama_result');
-      if (savedData) {
-        const data = JSON.parse(savedData);
-        document.getElementById('r-name').innerText = data.name;
-        document.getElementById('r-type').innerText = "Tipo " + data.type;
-        document.getElementById('r-wing').innerText = data.wing;
-        document.getElementById('r-instinct').innerText = data.instinct;
-        document.getElementById('ai-content').innerHTML = data.report;
+ window.onload = async function() {
+  const p = new URLSearchParams(window.location.search);
 
-        nav('view-result');
-        document.getElementById('payment-gate').classList.add('hidden');
-        document.getElementById('actual-report').classList.remove('hidden');
-      }
+  const mpStatus = (p.get("collection_status") || p.get("status") || "").toLowerCase();
+  const token = p.get("token") || localStorage.getItem("eneagrama_token");
+
+  const paymentId = p.get("payment_id") || p.get("collection_id");
+
+  // Si volvió aprobado
+  if ((mpStatus === "approved" || p.get("mp_status") === "success") && token && paymentId) {
+    try {
+      nav("view-loading");
+
+      const basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
+
+      // Pedimos al servidor: verifica pago + genera reporte
+      const r = await fetch("/api/mp_verify_and_report", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ token, payment_id: paymentId })
+      });
+
+      const j = await r.json();
+      if (!r.ok || !j.reporte) throw new Error(j.error || "Error");
+
+      document.getElementById('r-name').innerText = basic.name || "";
+      document.getElementById('r-type').innerText = basic.type ? ("Tipo " + basic.type) : "";
+      document.getElementById('r-wing').innerText = basic.wing || "";
+      document.getElementById('r-instinct').innerText = basic.instinct || "";
+      document.getElementById('ai-content').innerHTML = j.reporte;
+
+      nav('view-result');
+      document.getElementById('payment-gate').classList.add('hidden');
+      document.getElementById('actual-report').classList.remove('hidden');
+
+    } catch (e) {
+      console.error(e);
+      nav('view-result');
+      document.getElementById('error-msg').innerText = "Pago aprobado, pero no pude generar el reporte. Escribinos y lo resolvemos.";
+      document.getElementById('error-msg').style.display = 'block';
     }
-  };
+  }
+};
+
 
   // --- LÓGICA DEL SLIDER ---
   let slideIndex = 0;
