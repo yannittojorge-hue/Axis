@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17840964061">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17840964061');
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mi Eneatipo | Eneagrama Profesional</title>
@@ -865,10 +876,19 @@ window.addEventListener("load", async () => {
 
     const j = await r.json().catch(() => ({}));
     console.log("[VERIFY] status:", r.status, "keys:", Object.keys(j || {}), "len:", (j?.reporte || "").length);
-
+ 
     if (!r.ok || !j.reporte) {
-      throw new Error(j.error || "La API no devolvió reporte.");
-    }
+    throw new Error(j.error || "La API no devolvió reporte.");
+   }
+
+    const convKey = "ads_conv_sent_" + paymentId;
+    if (!sessionStorage.getItem(convKey) && typeof gtag === "function") {
+    gtag('event', 'conversion', {
+    'send_to': 'AW-17840964061/JWjrCN-ysNobEN2DnrtC',
+    'transaction_id': paymentId
+  });
+  sessionStorage.setItem(convKey, "1");
+}
 
     // Validaciones de DOM (si falta algo, lo vemos claro)
     const elName = document.getElementById("r-name");
