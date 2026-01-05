@@ -50,11 +50,14 @@ export default async function handler(req, res) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: email,
-        subject,
-        html,
-      }),
+       from: process.env.FROM_EMAIL,
+       to: email,
+       subject: "Tu reporte Mi Eneatipo",
+       html,
+       reply_to: "yannittojorge@gmail.com"
+     }),
+
+
     });
 
     const sendData = await sendResp.json();
