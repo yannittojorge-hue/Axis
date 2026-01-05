@@ -521,7 +521,7 @@
     <div id="actual-report" class="hidden">
       <div class="result-header">
         <span class="badge" style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">✓ REPORTE DESBLOQUEADO</span>
-        <h2 style="margin-top:15px;">Tu Mapa Mi Eneatipo</h2>
+        <h2 style="margin-top:15px;">Tu Mapa Interno</h2>
         <p>Hola <strong id="r-name"></strong>, este es tu diseño único.</p>
       </div>
       <div class="result-grid">
@@ -852,7 +852,9 @@ window.addEventListener("load", async () => {
     const mpSuccess = (p.get("mp_status") || "").toLowerCase() === "success";
 
     const paymentId = p.get("payment_id") || p.get("collection_id");
-    const token = localStorage.getItem("eneagrama_token") || p.get("token");
+    const token = p.get("token") || localStorage.getItem("eneagrama_token");
+    if (token) localStorage.setItem("eneagrama_token", token);
+
 
     console.log("mp_status:", p.get("mp_status"));
     console.log("merchant_account_id:", p.get("merchant_account_id"));
@@ -866,7 +868,13 @@ window.addEventListener("load", async () => {
 
     nav("view-loading");
 
-    const basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
+    let basic = {};
+    try {
+      basic = JSON.parse(decodeURIComponent(escape(atob(token))));
+    } catch (e) {
+      basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
+    }
+
 
     const r = await fetch("/api/mp_verify_and_report", {
       method: "POST",
@@ -903,10 +911,26 @@ window.addEventListener("load", async () => {
       throw new Error("Faltan elementos en el HTML (ai-content / payment-gate / actual-report).");
     }
 
-    elName && (elName.innerText = basic.name || "");
-    elType && (elType.innerText = basic.type ? ("Tipo " + basic.type) : "");
-    elWing && (elWing.innerText = basic.wing || "");
-    elInst && (elInst.innerText = basic.instinct || "");
+   elName && (elName.innerText = basic.name ? basic.name + "," : "");
+
+   elType && (
+     elType.innerText = basic.type
+       ? "Eneatipo " + basic.type
+       : "-"
+   );
+
+   elWing && (
+     elWing.innerText = basic.wing
+       ? basic.wing
+       : "Alas balanceadas"
+   );
+
+   elInst && (
+     elInst.innerText = basic.instinct
+       ? basic.instinct
+       : "No predominante"
+   );
+
 
     elAI.innerHTML = j.reporte;
 
