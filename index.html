@@ -31,6 +31,8 @@
   <link rel="icon" href="/logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon-512.png">
 
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
 
   <style>
 
@@ -539,8 +541,29 @@
         </div>
       </div>
       <div class="report-box">
-        <div id="ai-content" class="ai-text"></div>
+  <!-- ACCIONES -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:18px;">
+        <input
+          id="email-input"
+          type="email"
+          placeholder="Tu email para recibir el informe"
+          style="flex:1; min-width:220px; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:1rem; background:#FAF8F3;"
+        />
+        <button class="btn" id="btn-send-email" onclick="sendReportByEmail()" style="padding:14px 18px;">
+      ENVIAR POR MAIL
+        </button>
+        <button class="btn" onclick="downloadPDF()" style="padding:14px 18px;">
+      DESCARGAR PDF
+        </button>
       </div>
+
+      <!-- MENSAJES -->
+      <div id="actions-msg" style="display:none; margin-bottom:18px; font-weight:600;"></div>
+
+      <!-- CONTENIDO -->
+      <div id="ai-content" class="ai-text"></div>
+    </div>
+
     </div>
     <div id="error-msg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
   </div>
@@ -852,6 +875,7 @@ window.addEventListener("load", async () => {
     const mpSuccess = (p.get("mp_status") || "").toLowerCase() === "success";
 
     const paymentId = p.get("payment_id") || p.get("collection_id");
+    if (paymentId) localStorage.setItem("last_payment_id", paymentId);
     const token = p.get("token") || localStorage.getItem("eneagrama_token");
     if (token) localStorage.setItem("eneagrama_token", token);
 
@@ -987,6 +1011,98 @@ window.addEventListener("load", async () => {
   }
 
   startAutoSlide();
+
+async function downloadPDF() {
+  const msg = document.getElementById("actions-msg");
+  const reportEl = document.getElementById("actual-report");
+  const name = (document.getElementById("r-name")?.innerText || "reporte").replace(/[^a-zA-Z0-9_-]/g, "");
+
+  try {
+    msg.style.display = "block";
+    msg.style.color = "#274E55";
+    msg.innerText = "Generando PDF...";
+
+    const opt = {
+      margin: 10,
+      filename: `MiEneatipo_${name || "reporte"}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    };
+
+    await html2pdf().set(opt).from(reportEl).save();
+
+    msg.style.color = "#2E5941";
+    msg.innerText = "PDF descargado ✅";
+    setTimeout(() => (msg.style.display = "none"), 2500);
+  } catch (e) {
+    console.error(e);
+    msg.style.color = "red";
+    msg.innerText = "No se pudo generar el PDF. Probá desde Chrome.";
+  }
+}
+
+async function sendReportByEmail() {
+  const email = (document.getElementById("email-input").value || "").trim();
+  const msg = document.getElementById("actions-msg");
+  const btn = document.getElementById("btn-send-email");
+
+  if (!email || !email.includes("@")) {
+    msg.style.display = "block";
+    msg.style.color = "red";
+    msg.innerText = "Ingresá un email válido.";
+    return;
+  }
+
+  const payment_id = localStorage.getItem("last_payment_id");
+  const reporte_html = document.getElementById("ai-content")?.innerHTML || "";
+  const basic = {
+    name: document.getElementById("r-name")?.innerText?.replace(",", "") || "",
+    type: document.getElementById("r-type")?.innerText || "",
+    wing: document.getElementById("r-wing")?.innerText || "",
+    instinct: document.getElementById("r-instinct")?.innerText || ""
+  };
+
+  if (!payment_id) {
+    msg.style.display = "block";
+    msg.style.color = "red";
+    msg.innerText = "No encuentro el payment_id. Probá recargar la página desde el link de Mercado Pago.";
+    return;
+  }
+
+  try {
+    btn.innerText = "Enviando...";
+    btn.style.pointerEvents = "none";
+
+    msg.style.display = "block";
+    msg.style.color = "#274E55";
+    msg.innerText = "Enviando mail...";
+
+    const r = await fetch("/api/send_report_email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, payment_id, reporte_html, basic })
+    });
+
+    const j = await r.json().catch(() => ({}));
+
+    if (!r.ok) throw new Error(j.error || "Error enviando email");
+
+    msg.style.color = "#2E5941";
+    msg.innerText = "Listo ✅ Te enviamos el informe por mail.";
+    btn.innerText = "ENVIAR POR MAIL";
+    btn.style.pointerEvents = "auto";
+  } catch (e) {
+    console.error(e);
+    msg.style.color = "red";
+    msg.innerText = "No se pudo enviar el mail. Probá de nuevo en 30 segundos.";
+    btn.innerText = "ENVIAR POR MAIL";
+    btn.style.pointerEvents = "auto";
+  }
+}
+
+
+
 </script>
 
 </body>
