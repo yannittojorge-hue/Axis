@@ -19,27 +19,26 @@ export default async function handler(req, res) {
     const baseUrl = process.env.BASE_URL || "https://www.mieneatipo.ar";
     const amount = Number(price || 4800);
 
-    const preferenceBody = {
-      items: [
-        {
-          title: "Reporte Mi Eneatipo (Premium)",
-          quantity: 1,
-          currency_id: "ARS",
-          unit_price: amount,
-        },
-      ],
-      // Esto es clave: el “token” viaja como referencia
-      external_reference: token,
+const preferenceBody = {
+  items: [
+    {
+      title: "Reporte Mi Eneatipo (Premium)",
+      quantity: 1,
+      currency_id: "ARS",
+      unit_price: amount,
+    },
+  ],
+  external_reference: token,
 
-      back_urls: {
-        success: `${baseUrl}/?mp_status=success&token=${encodeURIComponent(token)}`,
-        failure: `${baseUrl}/?mp_status=failure`,
-        pending: `${baseUrl}/?mp_status=pending`,
-      },
+  back_urls: {
+    success: `${baseUrl}/?mp_return=1`,
+    failure: `${baseUrl}/?mp_return=1`,
+    pending: `${baseUrl}/?mp_return=1`
+  },
 
-      // Esto intenta redirección automática cuando está aprobado
-      auto_return: "approved",
-    };
+  auto_return: "approved",
+};
+
 
     const mpRes = await fetch("https://api.mercadopago.com/checkout/preferences", {
       method: "POST",
