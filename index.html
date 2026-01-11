@@ -32,7 +32,10 @@
   <link rel="icon" href="/logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon-512.png">
 
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script> 
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 
   <style>
@@ -298,6 +301,7 @@
 #pdf-area, #pdf-area * {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+  padding:10px
 }
 
 .result-card, .report-box {
@@ -305,10 +309,14 @@
   break-inside: avoid;
 }
 
+
+
   </style>
 </head>
 <body>
-
+<button class="btn" onclick="debugShowReport()" style="position:fixed;bottom:20px;right:20px;z-index:9999;">
+  DEBUG PDF
+</button>
 <div class="bg-gradient"></div>
 
 <div class="container">
@@ -667,9 +675,7 @@
 
   <!-- Esto queda AFUERA del PDF -->
   <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:18px 0;">
-    <button class="btn" onclick="downloadPDF()" style="padding:14px 18px;">
-      DESCARGAR PDF
-    </button>
+    <button  class="btn" onclick="downloadPdf('pdf-area')" style="padding:14px 18px;">Descargar PDF</button>
   </div>
 
   <div id="actions-msg" style="display:none; margin-bottom:18px; font-weight:600;"></div>
@@ -1211,38 +1217,97 @@ window.addEventListener("load", async () => {
 
   startAutoSlide();
 
-async function downloadPDF() {
+
+ 
+
+
+async function downloadPdf(containerId) {
   const msg = document.getElementById("actions-msg");
   if (!msg) return alert("Falta el mensaje actions-msg en el HTML");
-  const reportEl = document.getElementById("pdf-area");
+
+  const reportEl = document.getElementById(containerId);
   const rawName = (document.getElementById("r-name")?.innerText || "reporte");
   const cleanName = rawName.replace(",", "").trim().replace(/[^a-zA-Z0-9_-]/g, "");
 
-
-  try {
+  if (!reportEl) return alert("No existe contenedor: " + containerId);
+ 
     msg.style.display = "block";
     msg.style.color = "#274E55";
     msg.innerText = "Generando PDF...";
 
-    const opt = {
-      margin: 10,
-      filename: `MiEneatipo_${cleanName || "reporte"}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-    };
+  const canvas = await html2canvas(reportEl, { scale: 2, useCORS: true, backgroundColor: "#fff" });
+  const imgData = canvas.toDataURL("image/jpeg", 0.98);
 
-    await html2pdf().set(opt).from(reportEl).save();
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "mm", "a4");
 
-    msg.style.color = "#2E5941";
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const imgWidth = pageWidth;
+  const imgHeight = canvas.height * imgWidth / canvas.width;
+
+  let position = 0;
+  let heightLeft = imgHeight;
+
+  pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+  heightLeft -= pageHeight;
+
+  while (heightLeft > 0) {
+    position = heightLeft - imgHeight;
+    pdf.addPage();
+    pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+  }
+
+  pdf.save(`MiEneatipo_${cleanName || "reporte"}.pdf`);
+
+  msg.style.color = "#2E5941";
     msg.innerText = "PDF descargado ✅";
     setTimeout(() => (msg.style.display = "none"), 2500);
-  } catch (e) {
-    console.error(e);
-    msg.style.color = "red";
-    msg.innerText = "No se pudo generar el PDF. Probá desde Chrome.";
-  }
+ 
 }
+function debugShowReport() {
+  // Mostrar vista resultados
+  nav("view-result");
+
+  // Ocultar paywall y mostrar reporte
+  const gate = document.getElementById("payment-gate");
+  const report = document.getElementById("actual-report");
+  if (gate) gate.classList.add("hidden");
+  if (report) report.classList.remove("hidden");
+
+  // Rellenar datos fake
+  const elName = document.getElementById("r-name");
+  const elType = document.getElementById("r-type");
+  const elWing = document.getElementById("r-wing");
+  const elInst = document.getElementById("r-instinct");
+  const elAI = document.getElementById("ai-content");
+
+  if (elName) elName.innerText = "Ezequiel,";
+  if (elType) elType.innerText = "Eneatipo 7";
+  if (elWing) elWing.innerText = "Ala 6";
+  if (elInst) elInst.innerText = "Social";
+
+  if (elAI) {
+    elAI.innerHTML = `
+      <h3>Resumen</h3>
+      <p>Esto es un texto de prueba para validar que el PDF no salga con páginas en blanco ni cortado.</p>
+      <h3>Fortalezas</h3>
+      <ul>
+        <li>Creatividad</li>
+        <li>Rapidez mental</li>
+        <li>Optimismo</li>
+      </ul>
+      <h3>Riesgos</h3>
+      <p>Texto largo de prueba... Texto largo de prueba... Texto largo de prueba...</p>
+      <p>Texto largo de prueba... Texto largo de prueba... Texto largo de prueba...</p>
+    `;
+  }
+
+  window.scrollTo(0, 0);
+}
+
 
 
 </script>
