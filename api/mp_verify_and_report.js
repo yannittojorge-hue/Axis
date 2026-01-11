@@ -106,7 +106,11 @@ TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
       return res.status(500).json({ error: "OpenAI no devolvió reporte" });
     }
 
-    return res.status(200).json({ reporte });
+    return res.status(200).json({
+     reporte,
+     perfil: { nombre, eneatipo, ala, instinto }
+   });
+
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: "Error interno", detail: String(e) });

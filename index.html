@@ -294,6 +294,17 @@
   .scale-label { font-size: 0.6rem !important; margin-top: 4px !important; }
     
   }
+
+#pdf-area, #pdf-area * {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.result-card, .report-box {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
   </style>
 </head>
 <body>
@@ -619,55 +630,52 @@
     </div>
 
    </div>
+ </div>
+<div id="actual-report" class="hidden">
 
-    <div id="actual-report" class="hidden">
-      <div class="result-header">
-        <span class="badge" style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">✓ REPORTE DESBLOQUEADO</span>
-        <h2 style="margin-top:15px;">Tu Mapa Interno</h2>
-        <p>Hola <strong id="r-name"></strong>, este es tu diseño único.</p>
-      </div>
-      <div class="result-grid">
-        <div class="result-card" style="background:var(--blue);">
-          <span class="card-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span>
-          <div class="card-val" style="color:white;" id="r-type">...</div>
-        </div>
-        <div class="result-card">
-          <span class="card-label">ALA DOMINANTE</span>
-          <div class="card-val" id="r-wing">...</div>
-        </div>
-        <div class="result-card">
-          <span class="card-label">INSTINTO</span>
-          <div class="card-val" id="r-instinct">...</div>
-        </div>
-      </div>
-      <div class="report-box">
-  <!-- ACCIONES -->
-      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:18px;">
-        <input
-          id="email-input"
-          type="email"
-          placeholder="Tu email para recibir el informe"
-          style="flex:1; min-width:220px; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:1rem; background:#FAF8F3;"
-        />
-        <button class="btn" id="btn-send-email" onclick="sendReportByEmail()" style="padding:14px 18px;">
-      ENVIAR POR MAIL
-        </button>
-        <button class="btn" onclick="downloadPDF()" style="padding:14px 18px;">
-      DESCARGAR PDF
-        </button>
-      </div>
+  <!-- TODO lo que va adentro de este div va a salir en el PDF -->
+  <div id="pdf-area">
 
-      <!-- MENSAJES -->
-      <div id="actions-msg" style="display:none; margin-bottom:18px; font-weight:600;"></div>
+    <div class="result-header">
+      <span class="badge" style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">
+        ✓ REPORTE DESBLOQUEADO
+      </span>
+      <h2 style="margin-top:15px;">Tu Mapa Interno</h2>
+      <p>Hola <strong id="r-name"></strong>, este es tu diseño único.</p>
+    </div>
 
-      <!-- CONTENIDO -->
+    <div class="result-grid">
+      <div class="result-card" style="background:var(--blue);">
+        <span class="card-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span>
+        <div class="card-val" style="color:white;" id="r-type">...</div>
+      </div>
+      <div class="result-card">
+        <span class="card-label">ALA DOMINANTE</span>
+        <div class="card-val" id="r-wing">...</div>
+      </div>
+      <div class="result-card">
+        <span class="card-label">INSTINTO</span>
+        <div class="card-val" id="r-instinct">...</div>
+      </div>
+    </div>
+
+    <div class="report-box">
       <div id="ai-content" class="ai-text"></div>
     </div>
 
-    </div>
-    <div id="error-msg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
+  </div> <!-- /pdf-area -->
+
+  <!-- Esto queda AFUERA del PDF -->
+  <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:18px 0;">
+    <button class="btn" onclick="downloadPDF()" style="padding:14px 18px;">
+      DESCARGAR PDF
+    </button>
   </div>
-</div>
+
+  <div id="actions-msg" style="display:none; margin-bottom:18px; font-weight:600;"></div>
+
+</div> <!-- /actual-report -->
+
 
 <script>
   // --- 1. FUNCIONES UI ---
@@ -1126,20 +1134,27 @@ window.addEventListener("load", async () => {
     const elAI = document.getElementById("ai-content");
     const gate = document.getElementById("payment-gate");
     const report = document.getElementById("actual-report");
-
-    if (!elAI || !gate || !report) {
-      throw new Error("Faltan elementos en el HTML (ai-content / payment-gate / actual-report).");
-    }
-
     const elName = document.getElementById("r-name");
     const elType = document.getElementById("r-type");
     const elWing = document.getElementById("r-wing");
     const elInst = document.getElementById("r-instinct");
 
-    if (elName) elName.innerText = basic.name ? basic.name + "," : "";
-    if (elType) elType.innerText = basic.type ? "Eneatipo " + basic.type : "-";
-    if (elWing) elWing.innerText = basic.wing ? basic.wing : "Alas balanceadas";
-    if (elInst) elInst.innerText = basic.instinct ? basic.instinct : "No predominante";
+
+    if (!elAI || !gate || !report) {
+      throw new Error("Faltan elementos en el HTML (ai-content / payment-gate / actual-report).");
+    }
+
+    const perfil = j?.perfil || {};
+    const nombreUI = perfil.nombre || basic.name || "";
+    const eneatipoUI = perfil.eneatipo || basic.type || "";
+    const alaUI = perfil.ala || basic.wing || "";
+    const instUI = perfil.instinto || basic.instinct || "";
+
+    if (elName) elName.innerText = nombreUI ? (nombreUI + ",") : "";
+    if (elType) elType.innerText = eneatipoUI ? ("Eneatipo " + eneatipoUI) : "-";
+    if (elWing) elWing.innerText = alaUI ? alaUI : "-";
+    if (elInst) elInst.innerText = instUI ? instUI : "-";
+
 
     elAI.innerHTML = j.reporte;
 
@@ -1198,8 +1213,11 @@ window.addEventListener("load", async () => {
 
 async function downloadPDF() {
   const msg = document.getElementById("actions-msg");
-  const reportEl = document.getElementById("actual-report");
-  const name = (document.getElementById("r-name")?.innerText || "reporte").replace(/[^a-zA-Z0-9_-]/g, "");
+  if (!msg) return alert("Falta el mensaje actions-msg en el HTML");
+  const reportEl = document.getElementById("pdf-area");
+  const rawName = (document.getElementById("r-name")?.innerText || "reporte");
+  const cleanName = rawName.replace(",", "").trim().replace(/[^a-zA-Z0-9_-]/g, "");
+
 
   try {
     msg.style.display = "block";
@@ -1208,7 +1226,7 @@ async function downloadPDF() {
 
     const opt = {
       margin: 10,
-      filename: `MiEneatipo_${name || "reporte"}.pdf`,
+      filename: `MiEneatipo_${cleanName || "reporte"}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
@@ -1225,66 +1243,6 @@ async function downloadPDF() {
     msg.innerText = "No se pudo generar el PDF. Probá desde Chrome.";
   }
 }
-
-async function sendReportByEmail() {
-  const email = (document.getElementById("email-input").value || "").trim();
-  const msg = document.getElementById("actions-msg");
-  const btn = document.getElementById("btn-send-email");
-
-  if (!email || !email.includes("@")) {
-    msg.style.display = "block";
-    msg.style.color = "red";
-    msg.innerText = "Ingresá un email válido.";
-    return;
-  }
-
-  const payment_id = localStorage.getItem("last_payment_id");
-  const reporte_html = document.getElementById("ai-content")?.innerHTML || "";
-  const basic = {
-    name: document.getElementById("r-name")?.innerText?.replace(",", "") || "",
-    type: document.getElementById("r-type")?.innerText || "",
-    wing: document.getElementById("r-wing")?.innerText || "",
-    instinct: document.getElementById("r-instinct")?.innerText || ""
-  };
-
-  if (!payment_id) {
-    msg.style.display = "block";
-    msg.style.color = "red";
-    msg.innerText = "No encuentro el payment_id. Probá recargar la página desde el link de Mercado Pago.";
-    return;
-  }
-
-  try {
-    btn.innerText = "Enviando...";
-    btn.style.pointerEvents = "none";
-
-    msg.style.display = "block";
-    msg.style.color = "#274E55";
-    msg.innerText = "Enviando mail...";
-
-    const r = await fetch("/api/send_report_email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, payment_id, reporte_html, basic })
-    });
-
-    const j = await r.json().catch(() => ({}));
-
-    if (!r.ok) throw new Error(j.error || "Error enviando email");
-
-    msg.style.color = "#2E5941";
-    msg.innerText = "Listo ✅ Te enviamos el informe por mail.";
-    btn.innerText = "ENVIAR POR MAIL";
-    btn.style.pointerEvents = "auto";
-  } catch (e) {
-    console.error(e);
-    msg.style.color = "red";
-    msg.innerText = "No se pudo enviar el mail. Probá de nuevo en 30 segundos.";
-    btn.innerText = "ENVIAR POR MAIL";
-    btn.style.pointerEvents = "auto";
-  }
-}
-
 
 
 </script>
