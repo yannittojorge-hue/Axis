@@ -397,7 +397,7 @@
     <div style="text-align:center; padding: 10px;">
       <div style="width:42px;height:42px;border-radius:50%;background:#eef2ff;color:var(--blue);font-weight:800;display:inline-flex;align-items:center;justify-content:center;">3</div>
       <div style="font-weight:800; margin-top:10px; color:var(--blue);">Recibís tu reporte</div>
-      <div style="font-size:0.95rem; color:#666; margin-top:6px;">Eneatipo, ala, subtipo y guía práctica de integración.</div>
+      <div style="font-size:0.95rem; color:#666; margin-top:6px;">Luego de confirmar tu pago, accedés al informe completo con: Eneatipo, ala, subtipo y guía práctica de integración.</div>
     </div>
   </div>
 </div>
@@ -726,100 +726,112 @@ function beginTest() {
 
   // --- 3. PREGUNTAS ---
 const questions = [
+
   // =========================
   // 45 PREGUNTAS ENEATIPO (5 x tipo)
   // =========================
 
   // Tipo 1
-  { kind: "type", t: 1, q: "Busco hacer las cosas correctamente porque siento una presión interna por cumplir con lo que considero correcto." },
-  { kind: "type", t: 1, q: "Me cuesta relajarme porque siempre percibo que algo podría hacerse mejor." },
-  { kind: "type", t: 1, q: "Me critico con dureza porque siento que no debería cometer errores." },
-  { kind: "type", t: 1, q: "Siento incomodidad o culpa porque no logro cumplir con mis propios ideales." },
-  { kind: "type", t: 1, q: "Contengo mi enojo porque creo que expresarlo sería inapropiado o injusto." },
+  { kind: "type", t: 1, q: "Siento que tengo una voz interna que me juzga constantemente y me exige hacerlo todo como corresponde." },
+  { kind: "type", t: 1, q: "Me doy cuenta de que el esfuerzo por ser perfecto me genera mucha tensión interna." },
+  { kind: "type", t: 1, q: "Me molesta ver que otras personas sean flexibles con lo que para mí son principios básicos." },
+  { kind: "type", t: 1, q: "Los errores me inquietan mucho y por eso soy muy exigente con los detalles." },
+  { kind: "type", t: 1, q: "Me cuesta aceptar que algo esté lo suficientemente bien; siento que debería estar mejor." },
 
   // Tipo 2
-  { kind: "type", t: 2, q: "Estoy atento a las necesidades de los demás porque temo no ser querido si no soy necesario." },
-  { kind: "type", t: 2, q: "Me cuesta reconocer mis propias necesidades porque priorizo el bienestar de los demás." },
-  { kind: "type", t: 2, q: "Ofrezco ayuda incluso sin que me la pidan porque temo ser dejado de lado." },
-  { kind: "type", t: 2, q: "Me esfuerzo por agradar porque temo perder el afecto de las personas importantes." },
-  { kind: "type", t: 2, q: "Busco cercanía afectiva porque necesito sentir que soy valioso para otros." },
+  { kind: "type", t: 2, q: "Me involucro mucho con los demás porque necesito sentir que soy importante para ellos." },
+  { kind: "type", t: 2, q: "Suelo dar más de lo que debería y dejar mis propias necesidades en segundo plano." },
+  { kind: "type", t: 2, q: "Cuando alguien se muestra distante, me esfuerzo especialmente por ganarme su afecto." },
+  { kind: "type", t: 2, q: "Estoy muy atento a lo que les pasa emocionalmente a las personas que quiero." },
+  { kind: "type", t: 2, q: "Me realizo haciendo que otros se sientan queridos, cuidados y valorados." },
 
   // Tipo 3
-  { kind: "type", t: 3, q: "Me esfuerzo por lograr objetivos porque necesito sentir que valgo por lo que hago." },
-  { kind: "type", t: 3, q: "Busco ser eficiente porque temo fracasar y perder reconocimiento." },
-  { kind: "type", t: 3, q: "Evito mostrar debilidades porque temo parecer incompetente." },
-  { kind: "type", t: 3, q: "Me enfoco en resultados porque siento que el valor personal depende del rendimiento." },
-  { kind: "type", t: 3, q: "Me esfuerzo por mantener una imagen exitosa porque así siento que tengo identidad." },
+  { kind: "type", t: 3, q: "Me esfuerzo por ser eficiente porque siento que mi valor depende de lo que logro." },
+  { kind: "type", t: 3, q: "Me preocupo mucho por la imagen que proyecto y por cómo me perciben los demás." },
+  { kind: "type", t: 3, q: "Necesito destacar; si no puedo hacerlo, pierdo interés." },
+  { kind: "type", t: 3, q: "Me afecta cuando mi trabajo no es reconocido o valorado." },
+  { kind: "type", t: 3, q: "Vivo orientado a metas y objetivos, y me cuesta parar si no estoy produciendo." },
 
   // Tipo 4
-  { kind: "type", t: 4, q: "Me siento diferente a los demás porque percibo que me falta algo esencial." },
-  { kind: "type", t: 4, q: "Busco profundidad emocional porque temo vivir una vida vacía o superficial." },
-  { kind: "type", t: 4, q: "Me comparo con otros porque siento que ellos tienen algo que yo no tengo." },
-  { kind: "type", t: 4, q: "Busco una identidad propia porque temo no tener un lugar claro." },
-  { kind: "type", t: 4, q: "Idealizo lo que no tengo porque me conecta con el anhelo." },
+  { kind: "type", t: 4, q: "Siento que soy diferente a los demás y necesito expresar una identidad única." },
+  { kind: "type", t: 4, q: "Aun estando con otros, a veces experimento una sensación interna de vacío o soledad." },
+  { kind: "type", t: 4, q: "Necesito poner mi sello personal en lo que hago, aunque vaya contra lo esperado." },
+  { kind: "type", t: 4, q: "Vivo mis emociones con mucha intensidad y profundidad." },
+  { kind: "type", t: 4, q: "Busco comprender quién soy realmente y ser fiel a mi mundo emocional." },
 
   // Tipo 5
-  { kind: "type", t: 5, q: "Me distancio emocionalmente porque temo quedarme sin recursos internos." },
-  { kind: "type", t: 5, q: "Busco comprender antes de actuar porque necesito sentirme preparado." },
-  { kind: "type", t: 5, q: "Protejo mi tiempo y energía porque temo sentirme invadido." },
-  { kind: "type", t: 5, q: "Me retiro del contacto social porque necesito conservar mi autonomía." },
-  { kind: "type", t: 5, q: "Acumulo conocimiento porque siento que así puedo manejar el mundo." },
+  { kind: "type", t: 5, q: "Necesito entender a fondo las cosas antes de sentirme tranquilo o preparado." },
+  { kind: "type", t: 5, q: "Protejo mucho mi espacio interno y no dejo entrar fácilmente a las personas." },
+  { kind: "type", t: 5, q: "Prefiero observar y analizar antes que involucrarme emocionalmente." },
+  { kind: "type", t: 5, q: "Me siento más seguro resolviendo los problemas por mi cuenta." },
+  { kind: "type", t: 5, q: "El conocimiento es una de mis principales fuentes de identidad y seguridad." },
 
   // Tipo 6
-  { kind: "type", t: 6, q: "Busco seguridad porque temo que algo salga mal." },
-  { kind: "type", t: 6, q: "Me mantengo alerta porque necesito anticipar riesgos." },
-  { kind: "type", t: 6, q: "Dudo de mis decisiones porque temo equivocarme." },
-  { kind: "type", t: 6, q: "Busco apoyo externo porque necesito sentir respaldo." },
-  { kind: "type", t: 6, q: "Desconfío inicialmente porque temo ser traicionado." },
+  { kind: "type", t: 6, q: "Siento una mezcla constante entre confiar en figuras de autoridad y desconfiar de ellas." },
+  { kind: "type", t: 6, q: "Suelo anticipar críticas o problemas incluso antes de que ocurran." },
+  { kind: "type", t: 6, q: "Necesito referentes fuertes en quienes apoyarme para sentirme seguro." },
+  { kind: "type", t: 6, q: "Mi mente tiende a dudar y evaluar intenciones ocultas para protegerse." },
+  { kind: "type", t: 6, q: "La ansiedad y la alerta forman parte de mi estado interno habitual." },
 
   // Tipo 7
-  { kind: "type", t: 7, q: "Busco nuevas experiencias porque temo sentirme limitado o atrapado." },
-  { kind: "type", t: 7, q: "Evito el dolor porque quiero mantenerme bien." },
-  { kind: "type", t: 7, q: "Cambio de intereses porque temo aburrirme o perder opciones." },
-  { kind: "type", t: 7, q: "Me distraigo fácilmente porque evito quedarme en lo incómodo." },
-  { kind: "type", t: 7, q: "Busco satisfacción constante porque necesito evitar el vacío." },
+  { kind: "type", t: 7, q: "Busco experiencias nuevas y estimulantes porque necesito sentirme vivo y en movimiento." },
+  { kind: "type", t: 7, q: "Prefiero la emoción y la variedad antes que la rutina o la seguridad." },
+  { kind: "type", t: 7, q: "Mi mente va muy rápido, salta de una idea a otra y siempre imagina nuevas posibilidades." },
+  { kind: "type", t: 7, q: "Evito el aburrimiento y el malestar llenándome de planes, estímulos y proyectos." },
+  { kind: "type", t: 7, q: "Me cuesta sostener una sola cosa mucho tiempo porque me disperso con facilidad." },
 
   // Tipo 8
-  { kind: "type", t: 8, q: "Me muestro fuerte porque temo ser controlado o dañado." },
-  { kind: "type", t: 8, q: "Tomo el control porque necesito protegerme." },
-  { kind: "type", t: 8, q: "Actúo de forma directa porque no quiero mostrar vulnerabilidad." },
-  { kind: "type", t: 8, q: "Me enfrento a los conflictos porque necesito sentirme en control." },
-  { kind: "type", t: 8, q: "Busco autonomía total porque necesito sentir que nadie me controla." },
+  { kind: "type", t: 8, q: "Soy muy independiente y me cuesta depender de otros; necesito sentir que tengo el control de mi vida." },
+  { kind: "type", t: 8, q: "Cuando alguien es de los míos, siento un fuerte impulso de protegerlo y defenderlo." },
+  { kind: "type", t: 8, q: "Me molesta la debilidad o la indecisión porque siento que vuelven vulnerables a las personas." },
+  { kind: "type", t: 8, q: "Tengo una voluntad intensa y enfrento los obstáculos sin echarme atrás fácilmente." },
+  { kind: "type", t: 8, q: "Suelo desafiar a los demás para que saquen su fuerza y den más de lo que creen posible." },
 
   // Tipo 9
-  { kind: "type", t: 9, q: "Evito el conflicto porque temo perder la conexión con los demás." },
-  { kind: "type", t: 9, q: "Me adapto a otros porque quiero mantener la armonía." },
-  { kind: "type", t: 9, q: "Minimizo mis propias necesidades porque temo generar tensión." },
-  { kind: "type", t: 9, q: "Postergó decisiones porque quiero evitar el malestar." },
-  { kind: "type", t: 9, q: "Busco estabilidad y paz porque necesito sentirme en equilibrio." },
+  { kind: "type", t: 9, q: "Las personas suelen sentirse tranquilas y seguras a mi lado." },
+  { kind: "type", t: 9, q: "Prefiero evitar el conflicto y ceder antes que generar tensión." },
+  { kind: "type", t: 9, q: "Me adapto con facilidad y suelo conformarme con lo que hay." },
+  { kind: "type", t: 9, q: "Me mantengo más sereno que la mayoría, incluso cuando otros se alteran." },
+  { kind: "type", t: 9, q: "Entiendo muchos puntos de vista y me cuesta posicionarme en contra." },
 
-  // =========================
-  // 15 PREGUNTAS INSTINTOS (5 + 5 + 5)
-  // =========================
+// =========================
+// 15 PREGUNTAS INSTINTOS (5 + 5 + 5)
+// =========================
 
-  // SP - Autoconservación
-  { kind: "instinct", inst: "sp", q: "Me preocupa tener estabilidad material (dinero/recursos) para estar tranquilo." },
-  { kind: "instinct", inst: "sp", q: "Priorizo descansar y mantener mi energía para rendir bien en el día a día." },
-  { kind: "instinct", inst: "sp", q: "Me importa sentir comodidad física y evitar situaciones que me desgasten demasiado." },
-  { kind: "instinct", inst: "sp", q: "Me enfoco en cuidar mi salud y prevenir problemas antes de que aparezcan." },
-  { kind: "instinct", inst: "sp", q: "Me gusta planificar para asegurarme de que no falte lo necesario." },
+// SP - Autoconservación
+{ kind: "instinct", inst: "sp", q: "Pienso en mi estabilidad económica y en tener recursos suficientes para sentirme tranquilo." },
+{ kind: "instinct", inst: "sp", q: "Priorizo descansar y cuidar mi nivel de energía para poder rendir bien." },
+{ kind: "instinct", inst: "sp", q: "Busco comodidad física y evito situaciones que puedan desgastarme demasiado." },
+{ kind: "instinct", inst: "sp", q: "Presto atención a mi salud y trato de prevenir problemas antes de que aparezcan." },
+{ kind: "instinct", inst: "sp", q: "Planifico para asegurarme de que no falte lo necesario en mi vida cotidiana." },
 
-  // SX - Sexual / Uno a uno
-  { kind: "instinct", inst: "sx", q: "Busco vínculos intensos y sentir una conexión especial con alguien." },
-  { kind: "instinct", inst: "sx", q: "La química y la intensidad emocional influyen mucho en mis decisiones." },
-  { kind: "instinct", inst: "sx", q: "Prefiero relaciones profundas antes que muchos vínculos superficiales." },
-  { kind: "instinct", inst: "sx", q: "Me importa ser significativo para alguien y sentirme elegido." },
-  { kind: "instinct", inst: "sx", q: "Me energiza lo apasionante y lo que me hace sentir muy vivo." },
+// SX - Sexual / Uno a uno
+{ kind: "instinct", inst: "sx", q: "Busco relaciones intensas y una conexión especial con una persona en particular." },
+{ kind: "instinct", inst: "sx", q: "La química y la intensidad emocional influyen mucho en mis decisiones." },
+{ kind: "instinct", inst: "sx", q: "Prefiero vínculos profundos e intensos antes que muchas relaciones superficiales." },
+{ kind: "instinct", inst: "sx", q: "Necesito sentirme especialmente importante o elegido por alguien." },
+{ kind: "instinct", inst: "sx", q: "Me atraen situaciones, personas o experiencias que me hagan sentir muy vivo y apasionado." },
 
-  // SO - Social
-  { kind: "instinct", inst: "so", q: "Me importa entender mi lugar en los grupos y cómo encajo socialmente." },
-  { kind: "instinct", inst: "so", q: "Me interesa pertenecer, aportar y sentir comunidad." },
-  { kind: "instinct", inst: "so", q: "Suelo estar atento a dinámicas sociales, normas y reputación." },
-  { kind: "instinct", inst: "so", q: "Me motiva generar redes y conexiones útiles." },
-  { kind: "instinct", inst: "so", q: "Me importa contribuir a algo más grande que yo (grupo/proyecto/causa)." }
+// SO - Social
+{ kind: "instinct", inst: "so", q: "Pienso en mi lugar dentro de los grupos y en cómo encajo socialmente." },
+{ kind: "instinct", inst: "so", q: "Busco pertenecer a grupos y sentir que formo parte de una comunidad." },
+{ kind: "instinct", inst: "so", q: "Presto atención a las normas sociales, la reputación y cómo soy visto por los demás." },
+{ kind: "instinct", inst: "so", q: "Me interesa crear y mantener redes de contacto y vínculos sociales." },
+{ kind: "instinct", inst: "so", q: "Me motiva participar en proyectos, causas o grupos que van más allá de lo personal." }
+
+
+
 ];
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
+// Mezclar preguntas al iniciar
+shuffleArray(questions);
 
   function renderQ() {
     if (qIdx >= questions.length) { finish(); return; }
@@ -1057,16 +1069,35 @@ window.addEventListener("load", async () => {
 
     // 3) Obtener paymentId (MP puede volver con diferentes nombres)
     const paymentId =
-      p.get("payment_id") ||
-      p.get("collection_id") ||
-      p.get("paymentId") ||
-      "";
+  p.get("payment_id") ||
+  p.get("collection_id") ||
+  p.get("paymentId") ||
+  p.get("merchant_order_id") ||
+  p.get("preference_id") ||
+  "";
+
 
     // Si no es un return aprobado o faltan datos, no hacemos nada
     if (!approved || !token || !paymentId) {
       console.log("[RETURN] No es un regreso de pago aprobado (o faltan token/paymentId).");
       return;
     }
+
+    // --- GOOGLE ADS: compra aprobada ---
+    try {
+      const convKey = "ads_conv_sent_" + paymentId;
+  
+     if (!localStorage.getItem(convKey)) {
+         gtag('event', 'conversion', {
+         'send_to': 'AW-17840964061/JWjrCN-ysNobEN2DnrtC',
+         'transaction_id': paymentId
+       });
+       localStorage.setItem(convKey, "1");
+     }
+   } catch (e) {
+     console.warn("Ads conversion tracking failed:", e);
+   }
+
 
     // 4) Guardar paymentId para enviar email después
     localStorage.setItem("last_payment_id", paymentId);
