@@ -32,10 +32,7 @@
   <link rel="icon" href="/logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon-512.png">
 
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script> 
-
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
 
   <style>
@@ -232,14 +229,21 @@
       justify-content: center;
     }
 
-    .slide-img-box { 
-      flex-shrink: 0; 
-      width: 110px; height: 110px; 
-      border-radius: 50%; 
-      overflow: hidden; 
-      border: 4px solid #e6f4ea; 
+        .slide-avatar {
+      flex-shrink: 0;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      background: var(--green);
     }
-    .slide-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+ 
     .slide-content { text-align: left; flex: 1; }
     .stars { color: #FFC107; letter-spacing: 2px; margin-bottom: 10px; font-size: 1rem; }
     .quote-text { font-size: 0.95rem; color: #555; font-style: italic; line-height: 1.5; margin-bottom: 15px; display: block; }
@@ -270,7 +274,6 @@
       .slider-wrapper { padding: 0; }
       .slide { flex-direction: column; text-align: center; padding: 40px 20px 60px 20px; }
       .slide-content { text-align: center; }
-      .slide-img-box { width: 90px; height: 90px; margin-bottom: 15px; }
       /* Flechas abajo en celular */
       .slider-btn { top: auto; bottom: 10px; width: 35px; height: 35px; }
       .prev-btn { left: 30%; transform: translateX(-50%); }
@@ -301,7 +304,6 @@
 #pdf-area, #pdf-area * {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
-  padding:10px
 }
 
 .result-card, .report-box {
@@ -309,14 +311,10 @@
   break-inside: avoid;
 }
 
-
-
   </style>
 </head>
 <body>
-<!-- <button class="btn" onclick="debugShowReport()" style="position:fixed;bottom:20px;right:20px;z-index:9999;">
-  DEBUG PDF
-</button> -->
+
 <div class="bg-gradient"></div>
 
 <div class="container">
@@ -422,106 +420,92 @@
 </div>
 
       
-      <div class="slider-container">
-        <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
-        
-        <div class="slider-wrapper">
-            <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
-            
-        <div class="slider-window">
-  <div class="slider-track">
+<div class="slider-container">
+  <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
 
-    <div class="slide">
-      <div class="slide-img-box">
-        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200">
-      </div>
-      <div class="slide-content">
-        <div class="stars">★★★★★</div>
-        <span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span>
-        <span class="author-name">Martina Sánchez</span>
-        <span class="author-type">34 años, Córdoba</span>
+  <div class="slider-wrapper">
+    <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
+
+    <div class="slider-window">
+      <div class="slider-track">
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#2E5941;">M</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span>
+            <span class="author-name">Martina Sánchez</span>
+            <span class="author-type">34 años, Córdoba</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#FF7F66;">J</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona, me vino muy bien"</span>
+            <span class="author-name">Julián Mendez</span>
+            <span class="author-type">31 años, Buenos Aires</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#5C7AEA;">C</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span>
+            <span class="author-name">Clara Fernández</span>
+            <span class="author-type">29 años, Buenos Aires</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#6B8F71;">F</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Soy escéptico, pero la precisión del análisis de riesgo me sorprendió. Una herramienta muy útil."</span>
+            <span class="author-name">Federico López</span>
+            <span class="author-type">40 años, Mendoza</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#2E5941;">G</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span>
+            <span class="author-name">Gonzalo Duarte</span>
+            <span class="author-type">54 años, Rosario</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#FF7F66;">V</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Me la pasaba desviviendome por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span>
+            <span class="author-name">Valentina Ricci</span>
+            <span class="author-type">28 años, Buenos Aires</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#5C7AEA;">E</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span>
+            <span class="author-name">Esteban K.</span>
+            <span class="author-type">32 años, Rosario</span>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="slide">
-      <div class="slide-img-box">
-        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200">
-      </div>
-      <div class="slide-content">
-        <div class="stars">★★★★★</div>
-        <span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona, me vino muy bien"</span>
-        <span class="author-name">Julián Mendez</span>
-        <span class="author-type">31 años, Buenos Aires</span>
-      </div>
-    </div>
-
-    <div class="slide">
-      <div class="slide-img-box">
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200">
-      </div>
-      <div class="slide-content">
-        <div class="stars">★★★★★</div>
-        <span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span>
-        <span class="author-name">Clara Fernández</span>
-        <span class="author-type">29 años, Buenos Aires</span>
-      </div>
-    </div>
-
-    <div class="slide">
-      <div class="slide-img-box">
-        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200">
-      </div>
-      <div class="slide-content">
-        <div class="stars">★★★★★</div>
-        <span class="quote-text">"Soy escéptico, pero la precisión del análisis de riesgo me sorprendió. Una herramienta muy útil."</span>
-        <span class="author-name">Federico López</span>
-        <span class="author-type">40 años, Mendoza</span>
-      </div>
-    </div>
-
-    <div class="slide">
-      <div class="slide-img-box">
-        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200">
-      </div>
-      <div class="slide-content">
-        <div class="stars">★★★★★</div>
-        <span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span>
-        <span class="author-name">Gonzalo Duarte</span>
-        <span class="author-type">54 años, Rosario</span>
-      </div>
-    </div>
-
-    <div class="slide">
-      <div class="slide-img-box">
-        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200">
-      </div>
-      <div class="slide-content">
-        <div class="stars">★★★★★</div>
-        <span class="quote-text">"Me la pasaba desviviendome por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span>
-        <span class="author-name">Valentina Ricci</span>
-        <span class="author-type">28 años, Buenos Aires</span>
-      </div>
-    </div>
-
-    <div class="slide">
-      <div class="slide-img-box">
-        <img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=200&h=200">
-      </div>
-      <div class="slide-content">
-        <div class="stars">★★★★★</div>
-        <span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span>
-        <span class="author-name">Esteban K.</span>
-        <span class="author-type">32 años, Rosario</span>
-      </div>
-    </div>
-
+    <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
   </div>
 </div>
 
-            
-            <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
-        </div>
-    </div>
     
     <button class="btn" onclick="beginTest()" style="padding: 20px 50px; font-size: 1.1rem; margin-top: 20px;">
         EMPEZAR TEST
@@ -581,6 +565,10 @@
   </div>
 
   <div id="view-result" class="hidden fade-in">
+
+  <div id="error-msg" style="display:none; background:#fff3ef; color:#E06550; padding:12px 14px; border-radius:12px; font-weight:700; margin: 20px auto; max-width: 700px;">
+  </div>
+
     
     <div id="payment-gate" class="pay-gate">
       <div class="social-proof">🔥 +8.250 de personas en Argentina ya hicieron el test</div>
@@ -623,15 +611,75 @@
             
             <div class="slider-window">
               <div class="slider-track">
-                <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span><span class="author-name">Martina Sánchez</span><span class="author-type">Eneatipo 3 (El Triunfador)</span></div></div>
-                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona, me vino muy bien"</span><span class="author-name">Julián Mendez</span><span class="author-type">Eneatipo 7 (El Entusiasta)</span></div></div>
-                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">Eneatipo 9 (El Pacificador)</span></div></div>
-                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Soy escéptico, pero la precisión del análisis de riesgo me sorprendió. Una herramienta muy útil."</span><span class="author-name">Federico López</span><span class="author-type">Eneatipo 6 (El Leal)</span></div></div>
-                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span><span class="author-name">Gonzalo Duarte</span><span class="author-type">Eneatipo 1 (El Reformador)</span></div></div>
-                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me la pasaba desviviendome por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span><span class="author-name">Valentina Ricci</span><span class="author-type">Eneatipo 2 (El Ayudador)</span></div></div>
-                 <div class="slide"><div class="slide-img-box"><img src="https://images.unsplash.com/photo-1583195764036-6dc248ac07d9?auto=format&fit=crop&w=200&h=200"></div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span><span class="author-name">Esteban K.</span><span class="author-type">Eneatipo 8 (El Desafiador)</span></div></div>
-              </div>
-            </div>
+             <div class="slide">
+          <div class="slide-avatar" style="background:#2E5941;">M</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span>
+            <span class="author-name">Martina Sánchez</span>
+            <span class="author-type">34 años, Córdoba</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#FF7F66;">J</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona, me vino muy bien"</span>
+            <span class="author-name">Julián Mendez</span>
+            <span class="author-type">31 años, Buenos Aires</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#5C7AEA;">C</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span>
+            <span class="author-name">Clara Fernández</span>
+            <span class="author-type">29 años, Buenos Aires</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#6B8F71;">F</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Soy escéptico, pero la precisión del análisis de riesgo me sorprendió. Una herramienta muy útil."</span>
+            <span class="author-name">Federico López</span>
+            <span class="author-type">40 años, Mendoza</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#2E5941;">G</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span>
+            <span class="author-name">Gonzalo Duarte</span>
+            <span class="author-type">54 años, Rosario</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#FF7F66;">V</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Me la pasaba desviviendome por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span>
+            <span class="author-name">Valentina Ricci</span>
+            <span class="author-type">28 años, Buenos Aires</span>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-avatar" style="background:#5C7AEA;">E</div>
+          <div class="slide-content">
+            <div class="stars">★★★★★</div>
+            <span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span>
+            <span class="author-name">Esteban K.</span>
+            <span class="author-type">32 años, Rosario</span>
+          </div>
+        </div>
             
             <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
         </div>
@@ -675,7 +723,9 @@
 
   <!-- Esto queda AFUERA del PDF -->
   <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:18px 0;">
-    <button  class="btn" onclick="downloadPdf('pdf-area')" style="padding:14px 18px;">Descargar PDF</button>
+    <button class="btn" onclick="downloadPDF()" style="padding:14px 18px;">
+      DESCARGAR PDF
+    </button>
   </div>
 
   <div id="actions-msg" style="display:none; margin-bottom:18px; font-weight:600;"></div>
@@ -1217,97 +1267,38 @@ window.addEventListener("load", async () => {
 
   startAutoSlide();
 
-
- 
-
-
-async function downloadPdf(containerId) {
+async function downloadPDF() {
   const msg = document.getElementById("actions-msg");
   if (!msg) return alert("Falta el mensaje actions-msg en el HTML");
-
-  const reportEl = document.getElementById(containerId);
+  const reportEl = document.getElementById("pdf-area");
   const rawName = (document.getElementById("r-name")?.innerText || "reporte");
   const cleanName = rawName.replace(",", "").trim().replace(/[^a-zA-Z0-9_-]/g, "");
 
-  if (!reportEl) return alert("No existe contenedor: " + containerId);
- 
+
+  try {
     msg.style.display = "block";
     msg.style.color = "#274E55";
     msg.innerText = "Generando PDF...";
 
-  const canvas = await html2canvas(reportEl, { scale: 2, useCORS: true, backgroundColor: "#fff" });
-  const imgData = canvas.toDataURL("image/jpeg", 0.98);
+    const opt = {
+      margin: 10,
+      filename: `MiEneatipo_${cleanName || "reporte"}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    };
 
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF("p", "mm", "a4");
+    await html2pdf().set(opt).from(reportEl).save();
 
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-
-  const imgWidth = pageWidth;
-  const imgHeight = canvas.height * imgWidth / canvas.width;
-
-  let position = 0;
-  let heightLeft = imgHeight;
-
-  pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
-  heightLeft -= pageHeight;
-
-  while (heightLeft > 0) {
-    position = heightLeft - imgHeight;
-    pdf.addPage();
-    pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-  }
-
-  pdf.save(`MiEneatipo_${cleanName || "reporte"}.pdf`);
-
-  msg.style.color = "#2E5941";
+    msg.style.color = "#2E5941";
     msg.innerText = "PDF descargado ✅";
     setTimeout(() => (msg.style.display = "none"), 2500);
- 
-}
-function debugShowReport() {
-  // Mostrar vista resultados
-  nav("view-result");
-
-  // Ocultar paywall y mostrar reporte
-  const gate = document.getElementById("payment-gate");
-  const report = document.getElementById("actual-report");
-  if (gate) gate.classList.add("hidden");
-  if (report) report.classList.remove("hidden");
-
-  // Rellenar datos fake
-  const elName = document.getElementById("r-name");
-  const elType = document.getElementById("r-type");
-  const elWing = document.getElementById("r-wing");
-  const elInst = document.getElementById("r-instinct");
-  const elAI = document.getElementById("ai-content");
-
-  if (elName) elName.innerText = "Ezequiel,";
-  if (elType) elType.innerText = "Eneatipo 7";
-  if (elWing) elWing.innerText = "Ala 6";
-  if (elInst) elInst.innerText = "Social";
-
-  if (elAI) {
-    elAI.innerHTML = `
-      <h3>Resumen</h3>
-      <p>Esto es un texto de prueba para validar que el PDF no salga con páginas en blanco ni cortado.</p>
-      <h3>Fortalezas</h3>
-      <ul>
-        <li>Creatividad</li>
-        <li>Rapidez mental</li>
-        <li>Optimismo</li>
-      </ul>
-      <h3>Riesgos</h3>
-      <p>Texto largo de prueba... Texto largo de prueba... Texto largo de prueba...</p>
-      <p>Texto largo de prueba... Texto largo de prueba... Texto largo de prueba...</p>
-    `;
+  } catch (e) {
+    console.error(e);
+    msg.style.color = "red";
+    msg.innerText = "No se pudo generar el PDF. Probá desde Chrome.";
   }
-
-  window.scrollTo(0, 0);
 }
-
 
 
 </script>
