@@ -2,16 +2,43 @@
 <html lang="es">
 
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17840964061">
-</script>
+<!-- Google tag (gtag.js) - GA4 + Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HFJ5SD2YRX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
 
-  gtag('config', 'AW-17840964061');
+  // GA4
+  gtag('config', 'G-HFJ5SD2YRX', {
+    linker: { domains: ['mieneatipo.ar', 'mercadopago.com', 'mercadopago.com.ar', 'mp.com'] }
+  });
+
+  // Google Ads
+  gtag('config', 'AW-17840964061', {
+    linker: { domains: ['mieneatipo.ar', 'mercadopago.com', 'mercadopago.com.ar', 'mp.com'] }
+  });
 </script>
+
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '765185889538517');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=765185889538517&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mi Eneatipo | Eneagrama Profesional</title>
@@ -780,8 +807,26 @@ function safeShowError(text) {
 
 
 function track(evt, params = {}) {
-  try { if (typeof gtag === "function") gtag("event", evt, params); } catch {}
+  gaEvent(evt, params);
 }
+
+
+// ---------- TRACKING HELPERS (GA4 + ADS + META) ----------
+function gaEvent(name, params = {}) {
+  try { if (typeof gtag === "function") gtag("event", name, params); } catch {}
+}
+
+function fbEvent(name, params = {}) {
+  try { if (typeof fbq === "function") fbq("track", name, params); } catch {}
+}
+
+// Deduplicación simple por clave
+function once(key) {
+  if (localStorage.getItem(key)) return false;
+  localStorage.setItem(key, "1");
+  return true;
+}
+
 
 function beginTest() {
   track("begin_test");
@@ -1170,20 +1215,48 @@ window.addEventListener("load", async () => {
       return;
     }
 
-    // --- GOOGLE ADS: compra aprobada ---
-    try {
-      const convKey = "ads_conv_sent_" + paymentId;
-  
-     if (!localStorage.getItem(convKey)) {
-         gtag('event', 'conversion', {
-         'send_to': 'AW-17840964061/JWjrCN-ysNobEN2DnrtC',
-         'transaction_id': paymentId
-       });
-       localStorage.setItem(convKey, "1");
-     }
-   } catch (e) {
-     console.warn("Ads conversion tracking failed:", e);
-   }
+// ---------- TRACKING: PAGO APROBADO (UNA SOLA VEZ) ----------
+const price = 4800;
+const currency = "ARS";
+
+// 1) GA4: purchase (recomendado con transaction_id)
+if (once("ga4_purchase_" + paymentId)) {
+  gaEvent("purchase", {
+  transaction_id: paymentId,
+  value: price,
+  currency: currency,
+  items: [{
+    item_id: "reporte_premium",
+    item_name: "Reporte Premium + Guía",
+    price: price,
+    quantity: 1
+  }]
+});
+
+
+  // Si querés mantenerlo como “hito” custom:
+  gaEvent("test_completed");
+}
+
+// 2) Google Ads: conversión (UNA vez)
+// OJO: el send_to ya lo tenés (AW.../LABEL). Bien.
+if (once("ads_conv_" + paymentId)) {
+  gaEvent("conversion", {
+    send_to: "AW-17840964061/JWjrCN-ysNobEN2DnrtC",
+    transaction_id: paymentId,
+    value: price,
+    currency: currency
+  });
+}
+
+// 3) Meta Pixel: Purchase (UNA vez)
+if (once("fb_purchase_" + paymentId)) {
+  fbEvent("Purchase", { value: price, currency: currency });
+
+  // Si tu embudo usa este evento como “completó test”:
+  fbEvent("CompleteRegistration");
+}
+
 
 
     // 4) Guardar paymentId para enviar email después
