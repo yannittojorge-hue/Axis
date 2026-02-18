@@ -1363,38 +1363,54 @@ if (once("fb_purchase_" + paymentId)) {
 
   startAutoSlide();
 
-async function downloadPDF() {
+
+  async function downloadPdf(containerId) {
   const msg = document.getElementById("actions-msg");
   if (!msg) return alert("Falta el mensaje actions-msg en el HTML");
-  const reportEl = document.getElementById("pdf-area");
+
+  const reportEl = document.getElementById(containerId);
   const rawName = (document.getElementById("r-name")?.innerText || "reporte");
   const cleanName = rawName.replace(",", "").trim().replace(/[^a-zA-Z0-9_-]/g, "");
 
-
-  try {
+  if (!reportEl) return alert("No existe contenedor: " + containerId);
+ 
     msg.style.display = "block";
     msg.style.color = "#274E55";
     msg.innerText = "Generando PDF...";
 
-    const opt = {
-      margin: 10,
-      filename: `MiEneatipo_${cleanName || "reporte"}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-    };
+  const canvas = await html2canvas(reportEl, { scale: 2, useCORS: true, backgroundColor: "#fff" });
+  const imgData = canvas.toDataURL("image/jpeg", 0.98);
 
-    await html2pdf().set(opt).from(reportEl).save();
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "mm", "a4");
 
-    msg.style.color = "#2E5941";
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const imgWidth = pageWidth;
+  const imgHeight = canvas.height * imgWidth / canvas.width;
+
+  let position = 0;
+  let heightLeft = imgHeight;
+
+  pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+  heightLeft -= pageHeight;
+
+  while (heightLeft > 0) {
+    position = heightLeft - imgHeight;
+    pdf.addPage();
+    pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+  }
+
+  pdf.save(`MiEneatipo_${cleanName || "reporte"}.pdf`);
+
+  msg.style.color = "#2E5941";
     msg.innerText = "PDF descargado ✅";
     setTimeout(() => (msg.style.display = "none"), 2500);
-  } catch (e) {
-    console.error(e);
-    msg.style.color = "red";
-    msg.innerText = "No se pudo generar el PDF. Probá desde Chrome.";
-  }
+ 
 }
+
 
 
 </script>
