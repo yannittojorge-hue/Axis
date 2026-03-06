@@ -937,6 +937,23 @@
       break-inside: avoid;
     }
 
+    /* NUEVO: bloques protegidos para el paginado del PDF */
+    #pdf-area .result-header,
+    #pdf-area .result-grid,
+    #pdf-area .result-card,
+    #pdf-area .report-box,
+    #pdf-area .ai-text h1,
+    #pdf-area .ai-text h2,
+    #pdf-area .ai-text h3,
+    #pdf-area .ai-text p,
+    #pdf-area .ai-text ul,
+    #pdf-area .ai-text ol,
+    #pdf-area .ai-text li,
+    #pdf-area .pdf-block {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
     .site-footer {
       margin-top: 60px;
       padding: 18px 0;
@@ -1377,7 +1394,7 @@
 
       <div id="actual-report" class="hidden">
         <div id="pdf-area">
-          <div class="result-header">
+          <div class="result-header pdf-block">
             <span class="badge"
               style="background:#E6F4EA; color:#1E8E3E; padding:5px 15px; border-radius:15px; font-weight:700;">
               ✓ REPORTE DESBLOQUEADO
@@ -1386,22 +1403,22 @@
             <p>Hola <strong id="r-name"></strong> este es tu diseño único.</p>
           </div>
 
-          <div class="result-grid">
-            <div class="result-card" style="background:var(--blue);">
+          <div class="result-grid pdf-block">
+            <div class="result-card pdf-block" style="background:var(--blue);">
               <span class="card-label" style="color:rgba(255,255,255,0.7)">ENEATIPO</span>
               <div class="card-val" style="color:white;" id="r-type">...</div>
             </div>
-            <div class="result-card">
+            <div class="result-card pdf-block">
               <span class="card-label">ALA DOMINANTE</span>
               <div class="card-val" id="r-wing">...</div>
             </div>
-            <div class="result-card">
+            <div class="result-card pdf-block">
               <span class="card-label">INSTINTO</span>
               <div class="card-val" id="r-instinct">...</div>
             </div>
           </div>
 
-          <div class="report-box">
+          <div class="report-box pdf-block">
             <div id="ai-content" class="ai-text"></div>
           </div>
         </div>
@@ -1912,6 +1929,28 @@
 
     startAutoSlide();
 
+    function markPdfBlocks(root) {
+      if (!root) return;
+      const selectors = [
+        '.result-header',
+        '.result-grid',
+        '.result-card',
+        '.report-box',
+        '.ai-text h1',
+        '.ai-text h2',
+        '.ai-text h3',
+        '.ai-text p',
+        '.ai-text ul',
+        '.ai-text ol',
+        '.ai-text li',
+        '.ai-text blockquote'
+      ];
+
+      root.querySelectorAll(selectors.join(',')).forEach(el => {
+        el.classList.add('pdf-block');
+      });
+    }
+
     async function downloadPdf(containerId) {
       const msg = document.getElementById("actions-msg");
       const reportEl = document.getElementById(containerId);
@@ -1928,6 +1967,8 @@
         return;
       }
 
+      let tempWrapper = null;
+
       try {
         msg.style.display = "block";
         msg.style.color = "#274E55";
@@ -1943,7 +1984,7 @@
         const usableWidthMm = pageWidthMm - marginMm * 2;
         const usableHeightMm = pageHeightMm - marginMm * 2;
 
-        const tempWrapper = document.createElement("div");
+        tempWrapper = document.createElement("div");
         tempWrapper.style.position = "fixed";
         tempWrapper.style.left = "-100000px";
         tempWrapper.style.top = "0";
@@ -1962,13 +2003,17 @@
         clone.style.background = "#ffffff";
         clone.style.overflow = "visible";
 
+        markPdfBlocks(clone);
+
         tempWrapper.appendChild(clone);
         document.body.appendChild(tempWrapper);
 
-        await new Promise(resolve => setTimeout(resolve, 120));
+        await new Promise(resolve => setTimeout(resolve, 250));
+
+        const scale = 2;
 
         const fullCanvas = await html2canvas(tempWrapper, {
-          scale: 2,
+          scale: scale,
           useCORS: true,
           backgroundColor: "#ffffff",
           logging: false,
@@ -1977,19 +2022,68 @@
           windowWidth: 794
         });
 
-        document.body.removeChild(tempWrapper);
-
         const fullWidthPx = fullCanvas.width;
         const fullHeightPx = fullCanvas.height;
 
         const pxPerMm = fullWidthPx / usableWidthMm;
         const pageHeightPx = Math.floor(usableHeightMm * pxPerMm);
 
+        const wrapperRect = tempWrapper.getBoundingClientRect();
+
+        const protectedBlocks = Array.from(
+          clone.querySelectorAll('.pdf-block')
+        )
+          .map(el => {
+            const rect = el.getBoundingClientRect();
+            const top = Math.round((rect.top - wrapperRect.top) * scale);
+            const bottom = Math.round((rect.bottom - wrapperRect.top) * scale);
+            return { top, bottom, height: bottom - top };
+          })
+          .filter(block => block.height > 0)
+          .sort((a, b) => a.top - b.top);
+
+        function getSafeBreak(startPx, idealBreakPx, maxPx) {
+          if (idealBreakPx >= maxPx) return maxPx;
+
+          let safeBreak = idealBreakPx;
+
+          for (const block of protectedBlocks) {
+            if (block.bottom <= startPx + 40) continue;
+
+            const crossesBreak = block.top < idealBreakPx && block.bottom > idealBreakPx;
+            if (crossesBreak) {
+              const beforeBlock = block.top;
+
+              if (beforeBlock - startPx > pageHeightPx * 0.55) {
+                safeBreak = beforeBlock;
+              } else {
+                safeBreak = idealBreakPx;
+              }
+              return Math.min(Math.max(safeBreak, startPx + 100), maxPx);
+            }
+          }
+
+          let lastGoodBottom = null;
+          for (const block of protectedBlocks) {
+            if (block.bottom > startPx + 40 && block.bottom <= idealBreakPx) {
+              lastGoodBottom = block.bottom;
+            }
+          }
+
+          if (lastGoodBottom && (lastGoodBottom - startPx > pageHeightPx * 0.45)) {
+            safeBreak = lastGoodBottom;
+          }
+
+          return Math.min(Math.max(safeBreak, startPx + 100), maxPx);
+        }
+
         let renderedHeightPx = 0;
         let firstPage = true;
 
         while (renderedHeightPx < fullHeightPx) {
-          const sliceHeightPx = Math.min(pageHeightPx, fullHeightPx - renderedHeightPx);
+          const idealBreakPx = Math.min(renderedHeightPx + pageHeightPx, fullHeightPx);
+          const breakPx = getSafeBreak(renderedHeightPx, idealBreakPx, fullHeightPx);
+          const sliceHeightPx = breakPx - renderedHeightPx;
 
           const pageCanvas = document.createElement("canvas");
           pageCanvas.width = fullWidthPx;
@@ -2013,7 +2107,7 @@
           if (!firstPage) pdf.addPage();
           pdf.addImage(imgData, "JPEG", marginMm, marginMm, imgWidthMm, imgHeightMm);
 
-          renderedHeightPx += sliceHeightPx;
+          renderedHeightPx = breakPx;
           firstPage = false;
         }
 
@@ -2030,6 +2124,10 @@
         msg.style.display = "block";
         msg.style.color = "#b00020";
         msg.innerText = "Error al generar el PDF";
+      } finally {
+        if (tempWrapper && tempWrapper.parentNode) {
+          tempWrapper.parentNode.removeChild(tempWrapper);
+        }
       }
     }
 
