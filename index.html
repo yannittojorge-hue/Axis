@@ -988,6 +988,8 @@
       document.getElementById('payment-gate').classList.remove('hidden');
       document.getElementById('actual-report').classList.add('hidden');
       gaEvent("checkout_view");
+        slideIndex = 0;
+      showSlides();
       startCountdown();
       setupPayButton();
     }
