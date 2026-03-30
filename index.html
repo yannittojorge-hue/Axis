@@ -465,7 +465,39 @@
             <div style="text-align:center; padding: 10px;">
               <div style="width:42px;height:42px;border-radius:50%;background:#eef2ff;color:var(--blue);font-weight:800;display:inline-flex;align-items:center;justify-content:center;">3</div>
               <div style="font-weight:800; margin-top:10px; color:var(--blue);">Recibís tu reporte</div>
-              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Accedés al informe completo con tu Eneatipo, ala, instinto y guía de integración.</div>
+              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Recibís tu reporte completo con tu Eneatipo, ala, instinto y guía de integración personalizada.</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div style="background:white; padding:40px 30px; border-radius:20px; text-align:left; border: 1px solid rgba(0,0,0,0.05); max-width: 700px; margin: 0 auto 40px auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
+          <h3 style="font-size:1.4rem; margin-bottom:25px; color:var(--blue); font-weight:700; text-align:center;">
+            Esto es para vos si...</h3>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#fff3ef; color:#E06550; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">→</div>
+              <div style="font-size:0.95rem; color:#555; line-height:1.5;">Repetís los mismos patrones en tus relaciones y no entendés por qué.</div>
+            </div>
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#fff3ef; color:#E06550; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">→</div>
+              <div style="font-size:0.95rem; color:#555; line-height:1.5;">Reaccionás antes de pensar y después te arrepentís.</div>
+            </div>
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#fff3ef; color:#E06550; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">→</div>
+              <div style="font-size:0.95rem; color:#555; line-height:1.5;">Querés entenderte mejor sin años de terapia.</div>
+            </div>
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#fff3ef; color:#E06550; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">→</div>
+              <div style="font-size:0.95rem; color:#555; line-height:1.5;">Sentís que algo en vos no encaja, pero no sabés qué es.</div>
+            </div>
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#fff3ef; color:#E06550; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">→</div>
+              <div style="font-size:0.95rem; color:#555; line-height:1.5;">Te cuesta decir que no, o al contrario, alejas a las personas sin querer.</div>
+            </div>
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#fff3ef; color:#E06550; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">→</div>
+              <div style="font-size:0.95rem; color:#555; line-height:1.5;">Querés crecer, pero sin perder quién sos.</div>
             </div>
           </div>
         </div>
@@ -684,6 +716,10 @@
   </div><!-- /container -->
 
   <script>
+    // ─── BREVO API KEY ───────────────────────────────────────────────────────
+    // IMPORTANTE: Reemplazá el texto entre comillas por tu API Key de Brevo
+    const BREVO_API_KEY = "TU_API_KEY_DE_BREVO_AQUI";
+    // ────────────────────────────────────────────────────────────────────────
 
     const eneatipoData = {
       1: { nombre: "El Reformador", teaser: "Sos parte del grupo de personas que percibe el mundo a través del prisma de lo correcto y lo incorrecto. Tu búsqueda de perfección es genuina y profunda." },
@@ -949,28 +985,35 @@
 
       // Enviar a Brevo
       try {
-  const tipo = calculatedResult ? calculatedResult.eneatipo : (basic.type || "");
-  const ala  = calculatedResult ? calculatedResult.ala      : (basic.wing || "");
-  const inst = calculatedResult ? calculatedResult.instinto : (basic.instinct || "");
+        const tipo = calculatedResult ? calculatedResult.eneatipo : (basic.type || "");
+        const ala  = calculatedResult ? calculatedResult.ala     : (basic.wing || "");
+        const inst = calculatedResult ? calculatedResult.instinto : (basic.instinct || "");
 
-  await fetch("/api/save_lead", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email: emailVal,
-      nombre: nameVal,
-      eneatipo: String(tipo),
-      ala: ala,
-      instinto: inst
-    })
-  });
+        await fetch("https://api.brevo.com/v3/contacts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": BREVO_API_KEY
+          },
+          body: JSON.stringify({
+            email: emailVal,
+            firstName: nameVal,
+            updateEnabled: true,
+            attributes: {
+              ENEATIPO: String(tipo),
+              ALA: ala,
+              INSTINTO: inst
+            }
+          })
+        });
 
-  gaEvent("lead_captured", { eneatipo: tipo });
-  fbEvent("CompleteRegistration", { value: 0, currency: "ARS" });
+        gaEvent("lead_captured", { eneatipo: tipo });
+        fbEvent("CompleteRegistration", { value: 0, currency: "ARS" });
 
-} catch(e) {
-  console.warn("Error guardando lead (no crítico):", e);
-}
+      } catch(e) {
+        console.warn("Brevo error (no crítico):", e);
+        // Si falla Brevo igual seguimos — no bloqueamos la experiencia del usuario
+      }
 
       // Ir a la pantalla de pago
       showPaymentGate();
@@ -988,8 +1031,6 @@
       document.getElementById('payment-gate').classList.remove('hidden');
       document.getElementById('actual-report').classList.add('hidden');
       gaEvent("checkout_view");
-        slideIndex = 0;
-      showSlides();
       startCountdown();
       setupPayButton();
     }
