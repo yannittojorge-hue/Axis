@@ -914,6 +914,7 @@
       try {
         const r = await fetch('/api/contador', { cache: 'no-store' });
         if (r.ok) mostrarContador((await r.json()).total);
+        else if (r.status === 503) clearInterval(contadorInterval); // todavía sin base de datos
       } catch (e) {}
     }
     async function sumarAlContador() {
@@ -926,7 +927,7 @@
     }
     leerContador();
     // Se actualiza cada 20 segundos mientras la página está a la vista
-    setInterval(() => { if (!document.hidden) leerContador(); }, 20000);
+    const contadorInterval = setInterval(() => { if (!document.hidden) leerContador(); }, 20000);
 
     // ─── FINISH: muestra la pantalla A (reveal) ──────────────────────────────
     async function finish() {
@@ -1134,6 +1135,8 @@
         report.classList.remove('hidden');
       } catch(e) {
         console.error("[ERROR RETURN FLOW]", e);
+        const gateEl = document.getElementById("payment-gate");
+        if (gateEl) gateEl.classList.add("hidden");
         safeShowError("Recibimos tu pago, pero no pudimos mostrar tu reporte en este momento. Escribinos a yannittojorge@gmail.com con tu número de operación de Mercado Pago" + (localStorage.getItem("last_payment_id") ? " (" + localStorage.getItem("last_payment_id") + ")" : "") + " y te lo enviamos a la brevedad.");
       }
     });
@@ -1145,10 +1148,13 @@
     function showSlides() {
       const tracks = document.querySelectorAll('.slider-track');
       if (tracks.length === 0) return;
-      const totalSlides = tracks[0].getElementsByClassName('slide').length;
-      if (slideIndex >= totalSlides) slideIndex = 0;
-      if (slideIndex < 0) slideIndex = totalSlides - 1;
-      tracks.forEach(track => { track.style.transform = `translateX(-${slideIndex * 100}%)`; });
+      // Cada carrusel usa su propia cantidad de testimonios (inicio: 6, pantalla de pago: 3)
+      tracks.forEach(track => {
+        const n = track.getElementsByClassName('slide').length;
+        if (!n) return;
+        const i = ((slideIndex % n) + n) % n;
+        track.style.transform = `translateX(-${i * 100}%)`;
+      });
     }
 
     function moveSlide(n) { slideIndex += n; showSlides(); resetAutoSlide(); }
