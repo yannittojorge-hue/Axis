@@ -38,6 +38,12 @@ const preferenceBody = {
   },
 
   auto_return: "approved",
+
+  // Sin efectivo (Pago Fácil / Rapipago / cajeros): esos pagos se acreditan días después
+  // y el comprador no vuelve a la página, así que no recibiría su reporte.
+  payment_methods: {
+    excluded_payment_types: [{ id: "ticket" }, { id: "atm" }],
+  },
 };
 
 
