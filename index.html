@@ -153,6 +153,7 @@
     .slider-track { display: flex; transition: transform 0.5s ease-in-out; width: 100%; margin: 0; padding: 0; }
     .slide { flex: 0 0 100%; width: 100%; box-sizing: border-box; padding: 40px; display: flex; align-items: center; gap: 30px; justify-content: center; }
     .slide-avatar { flex-shrink: 0; width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: white; background: var(--green); }
+    img.slide-avatar { object-fit: cover; display: block; }
     .slide-content { text-align: left; flex: 1; }
     .stars { color: #FFC107; letter-spacing: 2px; margin-bottom: 10px; font-size: 1rem; }
     .quote-text { font-size: 0.95rem; color: #555; font-style: italic; line-height: 1.5; margin-bottom: 15px; display: block; }
@@ -390,7 +391,7 @@
 
     <div style="text-align:center; margin: 10px 0 25px 0;">
       <div class="social-proof" style="background:#fff3ef; color:#E06550;">
-        🔥 +10.000 personas en Argentina ya hicieron el test
+        🔥 +<span id="contador-personas">10.000</span> personas en Argentina ya hicieron el test
       </div>
     </div>
 
@@ -476,13 +477,13 @@
             <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
             <div class="slider-window">
               <div class="slider-track" id="track-home">
-                <div class="slide"><div class="slide-avatar" style="background:#2E5941;">M</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span><span class="author-name">Martina Sánchez</span><span class="author-type">34 años, Córdoba</span></div></div>
-                <div class="slide"><div class="slide-avatar" style="background:#FF7F66;">J</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona, me vino muy bien"</span><span class="author-name">Julián Mendez</span><span class="author-type">31 años, Buenos Aires</span></div></div>
-                <div class="slide"><div class="slide-avatar" style="background:#5C7AEA;">C</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">29 años, Buenos Aires</span></div></div>
-                <div class="slide"><div class="slide-avatar" style="background:#6B8F71;">F</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Soy escéptico, pero la precisión del análisis me sorprendió. Una herramienta muy útil."</span><span class="author-name">Federico López</span><span class="author-type">40 años, Mendoza</span></div></div>
-                <div class="slide"><div class="slide-avatar" style="background:#2E5941;">G</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span><span class="author-name">Gonzalo Duarte</span><span class="author-type">54 años, Rosario</span></div></div>
-                <div class="slide"><div class="slide-avatar" style="background:#FF7F66;">V</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me la pasaba desviviéndome por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span><span class="author-name">Valentina Ricci</span><span class="author-type">28 años, Buenos Aires</span></div></div>
-                <div class="slide"><div class="slide-avatar" style="background:#5C7AEA;">E</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span><span class="author-name">Esteban K.</span><span class="author-type">32 años, Rosario</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/martina.jpg" alt="Martina Sánchez" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad. Descubrí que buscaba validación constante."</span><span class="author-name">Martina Sánchez</span><span class="author-type">34 años, Córdoba</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/julian.jpg" alt="Julián Mendez" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me costaba horrores comprometerme. Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona, me vino muy bien"</span><span class="author-name">Julián Mendez</span><span class="author-type">31 años, Buenos Aires</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/clara.jpg" alt="Clara Fernández" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual: me guardo todo para no discutir y termino explotando. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">29 años, Buenos Aires</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/federico.jpg" alt="Federico López" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Soy escéptico, pero la precisión del análisis me sorprendió. Una herramienta muy útil."</span><span class="author-name">Federico López</span><span class="author-type">40 años, Mendoza</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/gonzalo.jpg" alt="Gonzalo Duarte" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Era insoportable con los detalles. Entender a mi 'crítico interno' me dio paz mental."</span><span class="author-name">Gonzalo Duarte</span><span class="author-type">54 años, Rosario</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/valentina.jpg" alt="Valentina Ricci" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me la pasaba desviviéndome por los demás. El reporte me cantó la justa: tengo que aprender a decir que no."</span><span class="author-name">Valentina Ricci</span><span class="author-type">28 años, Buenos Aires</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/esteban.jpg" alt="Esteban K." width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Descubrí que mi eneatipo busca control para no ser herido. Me ayudó a bajar un cambio."</span><span class="author-name">Esteban K.</span><span class="author-type">32 años, Rosario</span></div></div>
               </div>
             </div>
             <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
@@ -638,9 +639,9 @@
             <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
             <div class="slider-window">
               <div class="slider-track" id="track-result">
-                <div class="slide"><div class="slide-avatar" style="background:#2E5941;">M</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad."</span><span class="author-name">Martina Sánchez</span><span class="author-type">34 años, Córdoba</span></div></div>
-                <div class="slide"><div class="slide-avatar" style="background:#FF7F66;">J</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona."</span><span class="author-name">Julián Mendez</span><span class="author-type">31 años, Buenos Aires</span></div></div>
-                <div class="slide"><div class="slide-avatar" style="background:#5C7AEA;">C</div><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">29 años, Buenos Aires</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/martina.jpg" alt="Martina Sánchez" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad."</span><span class="author-name">Martina Sánchez</span><span class="author-type">34 años, Córdoba</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/julian.jpg" alt="Julián Mendez" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona."</span><span class="author-name">Julián Mendez</span><span class="author-type">31 años, Buenos Aires</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/clara.jpg" alt="Clara Fernández" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">29 años, Buenos Aires</span></div></div>
               </div>
             </div>
             <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
@@ -903,6 +904,31 @@
       return { eneatipo: core, ala: alaText, instinto: inst };
     }
 
+    // ─── CONTADOR REAL DE PERSONAS ───────────────────────────────────────────
+    // Muestra el total real (base histórica + tests terminados). Si el servidor no
+    // responde, queda el texto original "10.000".
+    function mostrarContador(total) {
+      const el = document.getElementById('contador-personas');
+      if (el && Number(total) > 0) el.innerText = Number(total).toLocaleString('es-AR');
+    }
+    async function leerContador() {
+      try {
+        const r = await fetch('/api/contador', { cache: 'no-store' });
+        if (r.ok) mostrarContador((await r.json()).total);
+      } catch (e) {}
+    }
+    async function sumarAlContador() {
+      try {
+        if (sessionStorage.getItem('contador_sumado')) return;
+        sessionStorage.setItem('contador_sumado', '1');
+        const r = await fetch('/api/contador', { method: 'POST' });
+        if (r.ok) mostrarContador((await r.json()).total);
+      } catch (e) {}
+    }
+    leerContador();
+    // Se actualiza cada 20 segundos mientras la página está a la vista
+    setInterval(() => { if (!document.hidden) leerContador(); }, 20000);
+
     // ─── FINISH: muestra la pantalla A (reveal) ──────────────────────────────
     async function finish() {
       nav('view-loading');
@@ -927,6 +953,7 @@
 
         gaEvent("quiz_complete", { eneatipo: tipo });
         fbEvent("Lead"); // evento de Meta cuando completan el quiz
+        sumarAlContador();
 
         nav('view-reveal');
 
@@ -1129,6 +1156,18 @@
     function startAutoSlide() { autoSlideInterval = setInterval(() => { slideIndex++; showSlides(); }, 4000); }
     function resetAutoSlide() { clearInterval(autoSlideInterval); startAutoSlide(); }
     startAutoSlide();
+
+    // Deslizar con el dedo en el celular
+    document.querySelectorAll('.slider-track').forEach(track => {
+      let x0 = null;
+      track.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', e => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) moveSlide(dx < 0 ? 1 : -1);
+        x0 = null;
+      }, { passive: true });
+    });
 
     // ─── PDF ─────────────────────────────────────────────────────────────────
     function markPdfBlocks(root) {
