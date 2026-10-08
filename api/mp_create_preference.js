@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   try {
-    const { token, price } = req.body;
+    const { token } = req.body;
 
     if (!token) return res.status(400).json({ error: "Falta token" });
 
@@ -17,7 +17,8 @@ export default async function handler(req, res) {
     if (!mpAccessToken) return res.status(500).json({ error: "Falta MP_ACCESS_TOKEN en Vercel" });
 
     const baseUrl = process.env.BASE_URL || "https://www.mieneatipo.ar";
-    const amount = Number(price || 4800);
+    // El precio lo fija el servidor. Nunca se toma del navegador.
+    const amount = 4800;
 
 const preferenceBody = {
   items: [

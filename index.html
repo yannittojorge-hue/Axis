@@ -541,7 +541,7 @@
         </p>
 
         <div class="blur-preview">
-          <div class="blur-preview-text">
+          <div class="blur-preview-text" id="reveal-locked">
             Tu Herida de Origen está ligada a la sensación de ser fundamentalmente diferente o deficiente. Tu mecanismo de defensa principal es la introyección — la tendencia a internalizar las experiencias externas y colorearlas con tu mundo emocional. Tu ruta de crecimiento implica desarrollar la ecuanimidad sin perder tu profundidad...
           </div>
           <div class="blur-overlay">
@@ -695,6 +695,19 @@
       7: { nombre: "El Entusiasta", teaser: "Sos parte del grupo de personas que tiene una orientación natural hacia las posibilidades y las experiencias. Tu energía y tu visión expansiva del mundo son únicas." },
       8: { nombre: "El Desafiador", teaser: "Sos parte del grupo de personas que tiene una presencia natural y una orientación hacia la fuerza. Tu capacidad de proteger lo que valorás es poderosa." },
       9: { nombre: "El Pacificador", teaser: "Sos parte del grupo de personas que tiene una profunda orientación hacia la armonía y la paz. Tu capacidad de ver múltiples perspectivas es un don." }
+    };
+
+    // Texto del adelanto bloqueado (difuminado) según el eneatipo
+    const bloqueadoData = {
+      1: "Tu Herida de Origen está ligada al miedo a ser malo, a equivocarte o a no estar a la altura. Tu Deseo Básico es ser íntegro y hacer lo correcto. Tu mecanismo de defensa principal es la formación reactiva — mostrar lo opuesto a lo que sentís cuando eso que sentís no te parece aceptable...",
+      2: "Tu Herida de Origen está ligada al miedo a no ser querido o a no ser necesario. Tu Deseo Básico es sentirte amado. Tu mecanismo de defensa principal es la represión — dejar de lado tus propias necesidades para concentrarte en las de los demás...",
+      3: "Tu Herida de Origen está ligada al miedo a no valer nada sin tus logros. Tu Deseo Básico es sentirte valioso. Tu mecanismo de defensa principal es la identificación — fundirte con la imagen que creés que los demás esperan de vos...",
+      4: "Tu Herida de Origen está ligada a la sensación de ser fundamentalmente diferente o deficiente. Tu Deseo Básico es encontrar tu identidad y tu significado. Tu mecanismo de defensa principal es la introyección — la tendencia a internalizar las experiencias externas y colorearlas con tu mundo emocional...",
+      5: "Tu Herida de Origen está ligada al miedo a ser incapaz o a quedar desbordado. Tu Deseo Básico es ser competente y entender el mundo. Tu mecanismo de defensa principal es el aislamiento — separar las emociones del pensamiento para no sentirte invadido...",
+      6: "Tu Herida de Origen está ligada al miedo a quedarte sin apoyo ni guía. Tu Deseo Básico es sentirte seguro y respaldado. Tu mecanismo de defensa principal es la proyección — ver afuera los miedos y dudas que en realidad nacen adentro...",
+      7: "Tu Herida de Origen está ligada al miedo a quedar atrapado en el dolor o la privación. Tu Deseo Básico es sentirte pleno y satisfecho. Tu mecanismo de defensa principal es la racionalización — encontrar siempre una explicación positiva para no tocar lo que duele...",
+      8: "Tu Herida de Origen está ligada al miedo a ser controlado o lastimado por otros. Tu Deseo Básico es protegerte y ser dueño de tu vida. Tu mecanismo de defensa principal es la negación — no registrar tu propia vulnerabilidad para no sentirte débil...",
+      9: "Tu Herida de Origen está ligada al miedo a la pérdida y a la separación. Tu Deseo Básico es la paz interior y la armonía. Tu mecanismo de defensa principal es la narcotización — adormecerte con rutinas y distracciones para no entrar en conflicto..."
     };
 
     function nav(id) {
@@ -908,6 +921,8 @@
         document.getElementById('reveal-number').innerText = tipo;
         document.getElementById('reveal-name').innerText = info.nombre;
         document.getElementById('reveal-teaser').innerText = info.teaser;
+        const lockedEl = document.getElementById('reveal-locked');
+        if (lockedEl && bloqueadoData[tipo]) lockedEl.innerText = bloqueadoData[tipo];
         document.getElementById('email-eneatipo-hint').innerText = tipo;
 
         gaEvent("quiz_complete", { eneatipo: tipo });
@@ -1029,7 +1044,7 @@
           const r = await fetch("/api/mp_create_preference", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({ token, price:4800 })
+            body: JSON.stringify({ token })
           });
           const j = await r.json();
           if (!r.ok || !j.init_point) throw new Error(j.error || "No se pudo crear preferencia");
@@ -1052,9 +1067,21 @@
         const mpSuccess = (p.get("mp_status") || "").toLowerCase() === "success";
         const approved = mpSuccess || mpStatus === "approved";
         const token = p.get("token") || p.get("state") || localStorage.getItem("eneagrama_token") || "";
-        const paymentId = p.get("payment_id") || p.get("collection_id") || p.get("paymentId") || p.get("merchant_order_id") || p.get("preference_id") || "";
+        const paymentId = p.get("payment_id") || p.get("collection_id") || "";
         if (!approved || !token || !paymentId) { console.log("[RETURN] No es un regreso de pago aprobado."); return; }
         const price = 4800; const currency = "ARS";
+        localStorage.setItem("last_payment_id", paymentId);
+        nav("view-loading");
+        let basic = {};
+        try { basic = JSON.parse(decodeURIComponent(escape(atob(token)))); } catch(e) { basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}"); }
+        const r = await fetch("/api/mp_verify_and_report", {
+          method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({ token, payment_id:paymentId })
+        });
+        const j = await r.json().catch(()=>({}));
+        if (!r.ok || !j.reporte) throw new Error(j.error || "La API no devolvió reporte.");
+
+        // Pago verificado por el servidor: recién ahora contamos la conversión
         if (once("ga4_purchase_" + paymentId)) {
           gaEvent("purchase", { transaction_id:paymentId, value:price, currency, items:[{item_id:"reporte_premium",item_name:"Reporte Premium + Guía",price,quantity:1}] });
           gaEvent("test_completed");
@@ -1066,16 +1093,6 @@
           fbEvent("Purchase", { value:price, currency });
           fbEvent("CompleteRegistration");
         }
-        localStorage.setItem("last_payment_id", paymentId);
-        nav("view-loading");
-        let basic = {};
-        try { basic = JSON.parse(decodeURIComponent(escape(atob(token)))); } catch(e) { basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}"); }
-        const r = await fetch("/api/mp_verify_and_report", {
-          method:"POST", headers:{"Content-Type":"application/json"},
-          body: JSON.stringify({ token, payment_id:paymentId })
-        });
-        const j = await r.json().catch(()=>({}));
-        if (!r.ok || !j.reporte) throw new Error(j.error || "La API no devolvió reporte.");
         const elAI = document.getElementById("ai-content");
         const gate = document.getElementById("payment-gate");
         const report = document.getElementById("actual-report");
@@ -1091,7 +1108,7 @@
         report.classList.remove('hidden');
       } catch(e) {
         console.error("[ERROR RETURN FLOW]", e);
-        safeShowError("Pago aprobado, pero falló la visualización del reporte. Abrí la consola y mandame el error rojo exacto.");
+        safeShowError("Recibimos tu pago, pero no pudimos mostrar tu reporte en este momento. Escribinos a yannittojorge@gmail.com con tu número de operación de Mercado Pago" + (localStorage.getItem("last_payment_id") ? " (" + localStorage.getItem("last_payment_id") + ")" : "") + " y te lo enviamos a la brevedad.");
       }
     });
 

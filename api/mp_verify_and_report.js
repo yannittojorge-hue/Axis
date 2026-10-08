@@ -33,6 +33,12 @@ export default async function handler(req, res) {
       return res.status(402).json({ error: "Pago no aprobado", status: mpData.status });
     }
 
+    // 2b) Validar que se haya pagado el precio completo
+    const PRECIO = 4800;
+    if (mpData.currency_id !== "ARS" || Number(mpData.transaction_amount) < PRECIO) {
+      return res.status(402).json({ error: "Monto pagado incorrecto" });
+    }
+
     // 3) Tomar token desde external_reference (este es el punto clave)
     const extRefRaw = mpData.external_reference || "";
     const tok = extRefRaw ? decodeURIComponent(extRefRaw) : "";
