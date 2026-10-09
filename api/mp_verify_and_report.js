@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     }
 
     // 2b) Validar que se haya pagado el precio completo
-    const PRECIO = 4800;
+    const PRECIO = 4500;
     if (mpData.currency_id !== "ARS" || Number(mpData.transaction_amount) < PRECIO) {
       return res.status(402).json({ error: "Monto pagado incorrecto" });
     }

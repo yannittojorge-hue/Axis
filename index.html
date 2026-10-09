@@ -333,6 +333,15 @@
       margin-top: 15px;
     }
 
+    /* Muestra del reporte en la pantalla de pago */
+    .muestra-reporte { margin: 0 auto 30px auto; max-width: 520px; text-align: left; }
+    .muestra-titulo { text-align: center; font-weight: 700; color: var(--blue, #274E55); margin-bottom: 12px; }
+    .muestra-hoja { position: relative; background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 22px 22px 0 22px; max-height: 330px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.06); font-size: 0.92rem; line-height: 1.55; }
+    .muestra-hoja h3 { font-size: 0.95rem; margin: 0 0 8px 0; color: #274E55; }
+    .muestra-hoja p { margin: 0 0 10px 0; color: #444; }
+    .muestra-hoja::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: linear-gradient(rgba(255,255,255,0), #fff 85%); }
+    .muestra-pie { font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px; }
+
     /* Urgencia / countdown */
     .urgencia-banner {
       background: #fff3ef;
@@ -599,15 +608,15 @@
         <h2 style="margin-bottom:10px; line-height:1.2;">Tu reporte completo está listo</h2>
         <p style="margin-bottom:20px; color:#666;">Desbloqueá tu análisis y empezá tu camino de crecimiento.</p>
 
-        <!-- Banner de urgencia con countdown -->
-        <div class="urgencia-banner">
-          ⏰ Precio de lanzamiento — válido por <span id="countdown">15:00</span>
+        <!-- Garantía arriba del precio (reemplaza el contador de 15 minutos) -->
+        <div class="urgencia-banner" style="background:#E6F4EA; border-color:rgba(30,142,62,0.25); color:#1E6B3A;">
+          🛡️ Garantía de 7 días: si no te aporta valor, te devolvemos el 100%
         </div>
 
         <div class="checkout-box">
           <div class="price-tag">
             <span>Reporte Premium + Guía</span>
-            <span style="color:var(--green);">$4.800</span>
+            <span style="text-align:right; line-height:1.1;"><small style="display:block; font-size:0.7rem; font-weight:600; color:#999; text-transform:uppercase; letter-spacing:0.5px;">Precio especial</small><span style="color:var(--green);">$4.500</span></span>
           </div>
 
           <div class="input-group" style="max-width:420px; margin: 0 auto 15px auto;">
@@ -625,9 +634,18 @@
           </div>
         </div>
 
-        <!-- Garantía -->
-        <div style="text-align:center; margin-bottom:20px;">
-          <span class="garantia-badge">🛡️ Garantía de 7 días — si no te aporta valor, te devolvemos el 100%</span>
+        <!-- Muestra del reporte -->
+        <div class="muestra-reporte">
+          <p class="muestra-titulo">Así es el reporte por dentro</p>
+          <div class="muestra-hoja ai-text">
+            <h3>TU PERFIL NUCLEAR (Eneatipo 4 con Ala 5)</h3>
+            <p>Tu estructura se organiza alrededor de una pregunta que te acompaña desde siempre: <strong>¿quién soy realmente?</strong> Como Eneatipo 4, tu atención se dirige de forma automática hacia lo que falta, hacia aquello que hace que tu experiencia sea distinta a la de los demás. Esa sensibilidad te permite percibir matices emocionales que otros pasan por alto, pero también alimenta la sensación de que a vos te falta algo esencial que el resto sí tiene.</p>
+            <p>El <strong>Ala 5</strong> le suma a tu tipo una cualidad más introspectiva y reservada. Tendés a procesar lo que sentís en soledad antes de compartirlo, y buscás comprender tu mundo interno con una profundidad casi intelectual. Eso te da originalidad y capacidad creativa, aunque también puede llevarte a retirarte cuando te sentís incomprendido.</p>
+            <p><strong>Deseo fundamental:</strong> encontrar tu identidad y tu significado personal.<br><strong>Miedo básico:</strong> no tener una identidad ni una importancia propias.</p>
+            <h3>TU SUBTIPO INSTINTIVO (Social)</h3>
+            <p>En el subtipo Social, la búsqueda de identidad se juega frente al grupo: comparás tu lugar con el de los demás y registrás con mucha precisión dónde no encajás. Esa comparación constante puede convertirse en</p>
+          </div>
+          <p class="muestra-pie">Ejemplo de reporte para un perfil Tipo 4 · Ala 5 · Social. El tuyo se arma con tu propio resultado e incluye además <strong>La Sombra</strong>, <strong>La Luz: tu camino de integración</strong> y <strong>Prácticas de maestría</strong>.</p>
         </div>
 
         <div class="feature-list">
@@ -1036,7 +1054,6 @@
       document.getElementById('payment-gate').classList.remove('hidden');
       document.getElementById('actual-report').classList.add('hidden');
       gaEvent("checkout_view");
-      startCountdown();
       setupPayButton();
     }
 
@@ -1136,7 +1153,7 @@
         const token = p.get("token") || p.get("state") || localStorage.getItem("eneagrama_token") || "";
         const paymentId = p.get("payment_id") || p.get("collection_id") || "";
         if (!approved || !token || !paymentId) { console.log("[RETURN] No es un regreso de pago aprobado."); return; }
-        const price = 4800; const currency = "ARS";
+        const price = 4500; const currency = "ARS";
         localStorage.setItem("last_payment_id", paymentId);
         nav("view-loading");
         let basic = {};

@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     const baseUrl = process.env.BASE_URL || "https://www.mieneatipo.ar";
     // El precio lo fija el servidor. Nunca se toma del navegador.
-    const amount = 4800;
+    const amount = 4500;
 
 const preferenceBody = {
   items: [
