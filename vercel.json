@@ -1,0 +1,5 @@
+{
+  "functions": {
+    "api/mp_verify_and_report.js": { "maxDuration": 60 }
+  }
+}

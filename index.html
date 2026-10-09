@@ -426,6 +426,10 @@
       .puntaje-barra span { transition: none; }
     }
 
+    /* Avisos debajo del reporte desbloqueado */
+    .aviso-reporte { font-size: 0.88rem; color: #666; line-height: 1.5; margin: 0 0 10px 0; }
+    #email-copia { color: var(--green); font-weight: 600; }
+
     /* Urgencia / countdown */
     .urgencia-banner {
       background: #fff3ef;
@@ -837,6 +841,8 @@
           <button class="btn" onclick="downloadPdf('pdf-area')" style="padding:14px 18px;">DESCARGAR PDF</button>
         </div>
         <div id="actions-msg" style="display:none; margin-bottom:18px; font-weight:600;"></div>
+        <p id="email-copia" class="aviso-reporte" hidden></p>
+        <p class="aviso-reporte">Si el botón no descarga (a veces pasa dentro de Instagram o Facebook), abrí esta página en Chrome o Safari.</p>
       </div>
     </div>
 
@@ -1339,7 +1345,7 @@
         const mpStatus = (p.get("collection_status") || p.get("status") || p.get("payment_status") || "").toLowerCase();
         const mpSuccess = (p.get("mp_status") || "").toLowerCase() === "success";
         const approved = mpSuccess || mpStatus === "approved";
-        const token = p.get("token") || p.get("state") || localStorage.getItem("eneagrama_token") || "";
+        const token = p.get("token") || p.get("state") || p.get("external_reference") || localStorage.getItem("eneagrama_token") || "";
         const paymentId = p.get("payment_id") || p.get("collection_id") || "";
         if (!approved || !token || !paymentId) { console.log("[RETURN] No es un regreso de pago aprobado."); return; }
         const price = 4500; const currency = "ARS";
@@ -1349,7 +1355,7 @@
         try { basic = JSON.parse(decodeURIComponent(escape(atob(token)))); } catch(e) { basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}"); }
         const r = await fetch("/api/mp_verify_and_report", {
           method:"POST", headers:{"Content-Type":"application/json"},
-          body: JSON.stringify({ token, payment_id:paymentId })
+          body: JSON.stringify({ token, payment_id:paymentId, enviar_email: !localStorage.getItem("reporte_email_" + paymentId) })
         });
         const j = await r.json().catch(()=>({}));
         if (!r.ok || !j.reporte) throw new Error(j.error || "La API no devolvió reporte.");
@@ -1376,6 +1382,14 @@
         if (document.getElementById("r-wing")) document.getElementById("r-wing").innerText = perfil.ala || basic.wing || "-";
         if (document.getElementById("r-instinct")) document.getElementById("r-instinct").innerText = perfil.instinto || basic.instinct || "-";
         elAI.innerHTML = j.reporte;
+        // Aviso de la copia enviada por email (se recuerda por si recarga la página)
+        if (j.email_copia) localStorage.setItem("reporte_email_" + paymentId, j.email_copia);
+        const copia = j.email_copia || localStorage.getItem("reporte_email_" + paymentId);
+        const avisoCopia = document.getElementById("email-copia");
+        if (avisoCopia && copia) {
+          avisoCopia.innerText = "📩 Te enviamos una copia de este reporte a " + copia + ". Si no la ves, revisá Spam o Promociones.";
+          avisoCopia.hidden = false;
+        }
         nav("view-result");
         gate.classList.add('hidden');
         report.classList.remove('hidden');
@@ -1448,12 +1462,44 @@
         document.body.appendChild(tempWrapper);
         await new Promise(resolve => setTimeout(resolve, 250));
         const scale=2;
-        const fullCanvas = await html2canvas(tempWrapper, { scale, useCORS:true, backgroundColor:"#ffffff", logging:false, scrollX:0, scrollY:0, windowWidth:794 });
+        // Dónde se puede cortar cada página: en el espacio entre bloques, nunca en
+        // medio de un párrafo, y cada título pegado al bloque que le sigue.
+        // Se mide en la copia que dibuja html2canvas (ancho 794), que es la que va al PDF.
+        tempWrapper.id = "pdf-temp";
+        let cortes = [];
+        const calcularCortes = (wrap) => {
+          const base = wrap.getBoundingClientRect();
+          const posPx = el => { const r = el.getBoundingClientRect(); return { top: Math.round((r.top - base.top) * scale), bottom: Math.round((r.bottom - base.top) * scale) }; };
+          const piezas = [...wrap.querySelectorAll('.result-header, .result-grid')];
+          const cuerpo = wrap.querySelector('#ai-content');
+          if (cuerpo) [...cuerpo.children].forEach(el => { if (el.tagName === 'UL' || el.tagName === 'OL') piezas.push(...el.children); else piezas.push(el); });
+          const unidades = [];
+          let titulo = null;
+          for (const el of piezas) {
+            const u = posPx(el);
+            if (u.bottom <= u.top) continue;
+            if (titulo) { u.top = Math.min(u.top, titulo.top); titulo = null; }
+            if (/^H[1-6]$/.test(el.tagName)) { titulo = u; continue; }
+            unidades.push(u);
+          }
+          if (titulo) unidades.push(titulo);
+          unidades.sort((a, b) => a.top - b.top);
+          const res = [];
+          for (let k = 0; k < unidades.length - 1; k++) if (unidades[k + 1].top >= unidades[k].bottom) res.push(Math.round((unidades[k].bottom + unidades[k + 1].top) / 2));
+          return res;
+        };
+        const fullCanvas = await html2canvas(tempWrapper, { scale, useCORS:true, backgroundColor:"#ffffff", logging:false, scrollX:0, scrollY:0, windowWidth:794,
+          onclone: doc => { try { const w = doc.getElementById("pdf-temp"); if (w) cortes = calcularCortes(w); } catch (e) {} } });
         const fullWidthPx=fullCanvas.width, fullHeightPx=fullCanvas.height;
         const pxPerMm=fullWidthPx/usableWidthMm, pageHeightPx=Math.floor(usableHeightMm*pxPerMm);
         const wrapperRect=tempWrapper.getBoundingClientRect();
-        const protectedBlocks=Array.from(clone.querySelectorAll('.pdf-block')).map(el=>{const rect=el.getBoundingClientRect();const top=Math.round((rect.top-wrapperRect.top)*scale);const bottom=Math.round((rect.bottom-wrapperRect.top)*scale);return{top,bottom,height:bottom-top};}).filter(b=>b.height>0).sort((a,b)=>a.top-b.top);
-        function getSafeBreak(startPx,idealBreakPx,maxPx){if(idealBreakPx>=maxPx)return maxPx;let safeBreak=idealBreakPx;for(const block of protectedBlocks){if(block.bottom<=startPx+40)continue;const crossesBreak=block.top<idealBreakPx&&block.bottom>idealBreakPx;if(crossesBreak){const beforeBlock=block.top;if(beforeBlock-startPx>pageHeightPx*0.55){safeBreak=beforeBlock;}else{safeBreak=idealBreakPx;}return Math.min(Math.max(safeBreak,startPx+100),maxPx);}}let lastGoodBottom=null;for(const block of protectedBlocks){if(block.bottom>startPx+40&&block.bottom<=idealBreakPx){lastGoodBottom=block.bottom;}}if(lastGoodBottom&&(lastGoodBottom-startPx>pageHeightPx*0.45)){safeBreak=lastGoodBottom;}return Math.min(Math.max(safeBreak,startPx+100),maxPx);}
+        if (!cortes.length) cortes = calcularCortes(tempWrapper);
+        function getSafeBreak(startPx, idealBreakPx, maxPx) {
+          if (idealBreakPx >= maxPx) return maxPx;
+          let mejor = null;
+          for (const c of cortes) if (c > startPx + pageHeightPx * 0.3 && c <= idealBreakPx) mejor = c;
+          return mejor || idealBreakPx;
+        }
         let renderedHeightPx=0,firstPage=true;
         while(renderedHeightPx<fullHeightPx){const idealBreakPx=Math.min(renderedHeightPx+pageHeightPx,fullHeightPx);const breakPx=getSafeBreak(renderedHeightPx,idealBreakPx,fullHeightPx);const sliceHeightPx=breakPx-renderedHeightPx;const pageCanvas=document.createElement("canvas");pageCanvas.width=fullWidthPx;pageCanvas.height=sliceHeightPx;const ctx=pageCanvas.getContext("2d");ctx.fillStyle="#ffffff";ctx.fillRect(0,0,pageCanvas.width,pageCanvas.height);ctx.drawImage(fullCanvas,0,renderedHeightPx,fullWidthPx,sliceHeightPx,0,0,fullWidthPx,sliceHeightPx);const imgData=pageCanvas.toDataURL("image/jpeg",0.98);const imgWidthMm=usableWidthMm;const imgHeightMm=sliceHeightPx/pxPerMm;if(!firstPage)pdf.addPage();pdf.addImage(imgData,"JPEG",marginMm,marginMm,imgWidthMm,imgHeightMm);renderedHeightPx=breakPx;firstPage=false;}
         pdf.save(`MiEneatipo_${cleanName||"reporte"}.pdf`);
