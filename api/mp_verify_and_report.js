@@ -91,6 +91,12 @@ FORMATO EXTRA (respetalo exactamente):
 - En la sección 1, después del primer párrafo, incluí este bloque con el contenido de su tipo:
   <div class="clave"><p><strong>Deseo fundamental</strong>...</p><p><strong>Miedo básico</strong>...</p></div>
 - En cada sección incluí una sola frase clave, breve y memorable, dentro de <blockquote>...</blockquote>.
+CONTENIDO MÍNIMO POR SECCIÓN (el cliente pagó por esto, no lo omitas):
+- Sección 1: su herida de origen, su deseo fundamental, su miedo básico y cómo su ala modifica el tipo.
+- Sección 2: cómo su instinto dominante cambia la forma en que se expresa su tipo.
+- Sección 3: su mecanismo de defensa principal (nombralo) y cómo reacciona bajo estrés.
+- Sección 4: hacia dónde crece cuando está en su mejor versión.
+- Sección 5: al menos 4 prácticas concretas, en una lista <ul>.
 - No uses <h1>, <h2>, estilos en línea ni bloques de código.
 
 TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
@@ -109,7 +115,7 @@ TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
           { role: "user", content: prompt },
         ],
         temperature: 0.7,
-        max_tokens: 1600,
+        max_tokens: 2400,
       }),
     });
 
