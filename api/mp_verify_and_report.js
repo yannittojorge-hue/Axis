@@ -60,6 +60,11 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Token incompleto", payload });
     }
 
+    // 4b) Marcar en Brevo que esta persona ya compró (COMPRO = "SI"),
+    // para que la secuencia de emails no le siga ofreciendo el reporte.
+    // Nunca bloquea la entrega del reporte si falla.
+    await marcarComprador([payload.email, mpData.payer && mpData.payer.email]);
+
     // 5) Generar reporte con OpenAI
     const prompt = `
 Actúa como un Psicoterapeuta experto en Eneagrama Transpersonal (Escuela Riso-Hudson).
@@ -120,5 +125,33 @@ TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: "Error interno", detail: String(e) });
+  }
+}
+
+// Actualiza el atributo COMPRO de los contactos que ya existen en Brevo.
+// Usa PUT: si el email no está en Brevo, no crea un contacto nuevo.
+async function marcarComprador(emails) {
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) return;
+  const unicos = [...new Set(
+    (emails || []).filter(Boolean).map(e => String(e).trim().toLowerCase())
+  )];
+  for (const email of unicos) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 4000);
+      const r = await fetch(`https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "api-key": apiKey },
+        body: JSON.stringify({ attributes: { COMPRO: "SI" } }),
+        signal: ctrl.signal,
+      });
+      clearTimeout(t);
+      if (r.status !== 204 && r.status !== 404) {
+        console.error("Brevo no marcó comprador:", r.status, await r.text().catch(() => ""));
+      }
+    } catch (e) {
+      console.error("Error marcando comprador en Brevo:", e && e.message);
+    }
   }
 }

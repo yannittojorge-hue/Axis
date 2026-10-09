@@ -988,6 +988,7 @@
       // Guardar nombre en localStorage para la pantalla de pago
       const basic = JSON.parse(localStorage.getItem('eneagrama_basic') || '{}');
       basic.name = nameVal;
+      basic.email = emailVal;
       localStorage.setItem('eneagrama_basic', JSON.stringify(basic));
 
       // Pre-llenar el campo nombre en la pantalla de pago
@@ -1071,7 +1072,13 @@
           basic.name = nm;
           localStorage.setItem("eneagrama_basic", JSON.stringify(basic));
           const payload = { nombre:nm, eneatipo:basic.type, ala:basic.wing, instinto:basic.instinct };
-          const token = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+          let token = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+          // Sumamos el email (para marcar la compra en Brevo) solo si entra en
+          // el límite de 256 caracteres de Mercado Pago.
+          if (basic.email) {
+            const conEmail = btoa(unescape(encodeURIComponent(JSON.stringify({ ...payload, email: basic.email }))));
+            if (conEmail.length <= 250) token = conEmail;
+          }
           localStorage.setItem("eneagrama_token", token);
           const r = await fetch("/api/mp_create_preference", {
             method:"POST",

@@ -1,10 +1,12 @@
+// Guarda en Brevo a quien terminó el test y lo suma a la lista que dispara
+// la secuencia de emails (Automatización #1 en Brevo).
 export default async function handler(req, res) {
   // Solo acepta POST
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { email, nombre, eneatipo, ala, instinto } = req.body;
+  const { email, nombre, eneatipo, ala, instinto } = req.body || {};
 
   if (!email || !nombre) {
     return res.status(400).json({ error: "Faltan campos requeridos" });
@@ -17,6 +19,9 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "API key no configurada" });
   }
 
+  // Lista "Su primera lista" (#2): entrar a esta lista arranca la secuencia.
+  const listId = Number(process.env.BREVO_LIST_ID || 2);
+
   try {
     const response = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
@@ -25,13 +30,16 @@ export default async function handler(req, res) {
         "api-key": apiKey,
       },
       body: JSON.stringify({
-        email: email,
-        firstName: nombre,
+        email: String(email).trim().toLowerCase(),
         updateEnabled: true,
+        listIds: [listId],
+        // Los nombres de los campos tienen que coincidir con los atributos
+        // creados en Brevo (NOMBRE, ENEATIPO, ALA, INSTINTO).
         attributes: {
+          NOMBRE: String(nombre).trim().slice(0, 60),
           ENEATIPO: String(eneatipo || ""),
-          ALA: ala || "",
-          INSTINTO: instinto || "",
+          ALA: String(ala || ""),
+          INSTINTO: String(instinto || ""),
         },
       }),
     });
@@ -42,6 +50,8 @@ export default async function handler(req, res) {
     }
 
     const errorData = await response.json().catch(() => ({}));
+    // Queda registrado en los logs de Vercel para poder detectarlo
+    console.error("Brevo rechazó el contacto:", response.status, JSON.stringify(errorData));
     return res.status(200).json({ ok: false, brevo_error: errorData });
 
   } catch (err) {
