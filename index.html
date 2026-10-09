@@ -36,7 +36,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mi Eneatipo | Eneagrama Profesional</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@1,500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <meta name="description" content="El 60–70% de las personas se confunde de eneatipo cuando responde tests conductuales. Este modelo mide motivaciones, no solo comportamientos, según la escuela Riso-Hudson utilizada en psicoterapia y coaching ejecutivo." />
   <meta name="keywords" content="eneagrama, test eneatipo, personalidad, psicología, riso hudson, test eneagrama argentina, autoconocimiento" />
   <meta name="author" content="Mi Eneatipo" />
@@ -335,12 +335,34 @@
 
     /* Muestra del reporte en la pantalla de pago */
     .muestra-reporte { margin: 0 auto 30px auto; max-width: 520px; text-align: left; }
-    .muestra-titulo { text-align: center; font-weight: 700; color: var(--blue, #274E55); margin-bottom: 12px; }
-    .muestra-hoja { position: relative; background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 22px 22px 0 22px; max-height: 330px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.06); font-size: 0.92rem; line-height: 1.55; }
-    .muestra-hoja h3 { font-size: 0.95rem; margin: 0 0 8px 0; color: #274E55; }
-    .muestra-hoja p { margin: 0 0 10px 0; color: #444; }
-    .muestra-hoja::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: linear-gradient(rgba(255,255,255,0), #fff 85%); }
+    .muestra-titulo { text-align: center; font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--blue); margin-bottom: 14px; }
+    .muestra-hoja { position: relative; background: #fff; border-radius: 18px; overflow: hidden; max-height: 1090px; box-shadow: 0 14px 34px rgba(39,78,85,0.14); }
+    .hoja-cabecera { display: flex; gap: 14px; align-items: center; background: var(--blue); color: #fff; padding: 18px 22px; }
+    .hoja-simbolo { width: 44px; height: 44px; flex: none; color: #F4EFE9; }
+    .hoja-nombre { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.05rem; margin: 0 0 6px 0; color: #fff; }
+    .hoja-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .hoja-chips span { font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; background: rgba(255,255,255,0.14); color: #fff; }
+    .hoja-cuerpo { padding: 22px 22px 0 22px; font-size: 0.95rem !important; line-height: 1.65 !important; }
+    .muestra-hoja .ai-text h3 { font-size: 1.05rem; margin: 4px 0 12px 0; }
+    .muestra-hoja .ai-text h3:not(:first-child) { margin-top: 22px; }
+    .hoja-corte { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 18px; background: linear-gradient(rgba(255,255,255,0), #fff 70%); }
+    .hoja-corte span { font-size: 0.82rem; font-weight: 600; color: var(--blue); background: var(--bg-main); padding: 7px 14px; border-radius: 20px; }
     .muestra-pie { font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px; }
+
+    /* Detalles del reporte (sirven para la muestra y para el reporte real) */
+    .ai-text { counter-reset: seccion; }
+    .ai-text h3 { counter-increment: seccion; display: flex; align-items: center; gap: 12px; }
+    .ai-text h3::before { content: counter(seccion); flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--coral); color: #fff; font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center; }
+    .ai-text p.lead, .ai-text h3 + p { font-size: 1.08em; color: #333; }
+    .ai-text .clave { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0 18px 0; }
+    .ai-text .clave p { margin: 0; padding: 12px 14px; border-radius: 12px; font-size: 0.9em; line-height: 1.45; }
+    .ai-text .clave p:first-child { background: #E8F1EC; }
+    .ai-text .clave p:last-child { background: #FFF1EC; }
+    .ai-text .clave strong { display: block; margin-bottom: 4px; font-family: 'Poppins', sans-serif; font-size: 0.82em; }
+    .ai-text .clave p:first-child strong { color: var(--green); }
+    .ai-text .clave p:last-child strong { color: #C2513C; }
+    .ai-text blockquote { margin: 18px 0; padding: 4px 0 4px 16px; border-left: 3px solid var(--coral); font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.12em; line-height: 1.5; color: var(--blue); }
+    @media (max-width: 420px) { .ai-text .clave { grid-template-columns: 1fr; } }
 
     /* Urgencia / countdown */
     .urgencia-banner {
@@ -637,15 +659,29 @@
         <!-- Muestra del reporte -->
         <div class="muestra-reporte">
           <p class="muestra-titulo">Así es el reporte por dentro</p>
-          <div class="muestra-hoja ai-text">
-            <h3>TU PERFIL NUCLEAR (Eneatipo 4 con Ala 5)</h3>
-            <p>Tu estructura se organiza alrededor de una pregunta que te acompaña desde siempre: <strong>¿quién soy realmente?</strong> Como Eneatipo 4, tu atención se dirige de forma automática hacia lo que falta, hacia aquello que hace que tu experiencia sea distinta a la de los demás. Esa sensibilidad te permite percibir matices emocionales que otros pasan por alto, pero también alimenta la sensación de que a vos te falta algo esencial que el resto sí tiene.</p>
-            <p>El <strong>Ala 5</strong> le suma a tu tipo una cualidad más introspectiva y reservada. Tendés a procesar lo que sentís en soledad antes de compartirlo, y buscás comprender tu mundo interno con una profundidad casi intelectual. Eso te da originalidad y capacidad creativa, aunque también puede llevarte a retirarte cuando te sentís incomprendido.</p>
-            <p><strong>Deseo fundamental:</strong> encontrar tu identidad y tu significado personal.<br><strong>Miedo básico:</strong> no tener una identidad ni una importancia propias.</p>
-            <h3>TU SUBTIPO INSTINTIVO (Social)</h3>
-            <p>En el subtipo Social, la búsqueda de identidad se juega frente al grupo: comparás tu lugar con el de los demás y registrás con mucha precisión dónde no encajás. Esa comparación constante puede convertirse en</p>
+          <div class="muestra-hoja">
+            <div class="hoja-cabecera">
+              <svg class="hoja-simbolo" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><polygon points="20,4 33.9,28 6.1,28" fill="none" stroke="currentColor" stroke-width="1.2"/><polyline points="30.3,7.7 8.3,30.3 35.8,15.9 4.2,15.9 31.7,30.3 9.7,7.7" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/></svg>
+              <div>
+                <p class="hoja-nombre">Tu mapa interno</p>
+                <div class="hoja-chips"><span>Eneatipo 4</span><span>Ala 5</span><span>Instinto Social</span></div>
+              </div>
+            </div>
+            <div class="ai-text hoja-cuerpo">
+              <h3>Tu perfil nuclear</h3>
+              <p class="lead">Tu estructura se organiza alrededor de una pregunta que te acompaña desde siempre: <strong>¿quién soy realmente?</strong> Tu atención se dirige de forma automática hacia lo que falta, hacia aquello que hace que tu experiencia sea distinta a la de los demás.</p>
+              <div class="clave">
+                <p><strong>Deseo fundamental</strong>Encontrar tu identidad y tu significado personal.</p>
+                <p><strong>Miedo básico</strong>No tener una identidad ni una importancia propias.</p>
+              </div>
+              <p>El <strong>Ala 5</strong> le suma una cualidad más introspectiva: procesás lo que sentís en soledad antes de compartirlo, y eso te da originalidad, aunque también puede llevarte a retirarte cuando te sentís incomprendido.</p>
+              <blockquote>Lo que vivís como una carencia es, muchas veces, la puerta a tu mayor profundidad.</blockquote>
+              <h3>Tu subtipo instintivo</h3>
+              <p>En el subtipo Social, la búsqueda de identidad se juega frente al grupo: comparás tu lugar con el de los demás y registrás con mucha precisión dónde no encajás. Esa comparación constante puede convertirse en</p>
+            </div>
+            <div class="hoja-corte"><span>🔒 Sigue en tu reporte completo</span></div>
           </div>
-          <p class="muestra-pie">Ejemplo de reporte para un perfil Tipo 4 · Ala 5 · Social. El tuyo se arma con tu propio resultado e incluye además <strong>La Sombra</strong>, <strong>La Luz: tu camino de integración</strong> y <strong>Prácticas de maestría</strong>.</p>
+          <p class="muestra-pie">Ejemplo para un perfil Tipo 4 con Ala 5 e instinto Social. El tuyo se arma con tu propio resultado y suma tres secciones más: tu sombra, tu camino de integración y prácticas concretas.</p>
         </div>
 
         <div class="feature-list">

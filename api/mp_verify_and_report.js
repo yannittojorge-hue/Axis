@@ -87,6 +87,12 @@ ESTRUCTURA OBLIGATORIA (usa etiquetas HTML: <h3>, <p>, <ul>, <li>, <strong>):
 4. <h3>LA LUZ: TU CAMINO DE INTEGRACIÓN</h3>
 5. <h3>PRÁCTICAS DE MAESTRÍA</h3>
 
+FORMATO EXTRA (respetalo exactamente):
+- En la sección 1, después del primer párrafo, incluí este bloque con el contenido de su tipo:
+  <div class="clave"><p><strong>Deseo fundamental</strong>...</p><p><strong>Miedo básico</strong>...</p></div>
+- En cada sección incluí una sola frase clave, breve y memorable, dentro de <blockquote>...</blockquote>.
+- No uses <h1>, <h2>, estilos en línea ni bloques de código.
+
 TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
 `;
 
