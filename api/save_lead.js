@@ -22,6 +22,13 @@ export default async function handler(req, res) {
   // Lista "Su primera lista" (#2): entrar a esta lista arranca la secuencia.
   const listId = Number(process.env.BREVO_LIST_ID || 2);
 
+  // Link personal para los emails: lleva directo a la pantalla de pago con su
+  // resultado cargado, sin repetir el test.
+  const r = Buffer.from(JSON.stringify({
+    t: String(eneatipo || ""), a: String(ala || ""), i: String(instinto || ""),
+  }), "utf-8").toString("base64url");
+  const linkReporte = `https://www.mieneatipo.ar/?r=${r}&utm_source=brevo&utm_medium=email&utm_campaign=secuencia_test`;
+
   try {
     const response = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
@@ -40,6 +47,7 @@ export default async function handler(req, res) {
           ENEATIPO: String(eneatipo || ""),
           ALA: String(ala || ""),
           INSTINTO: String(instinto || ""),
+          LINK_REPORTE: linkReporte,
         },
       }),
     });

@@ -1098,6 +1098,34 @@
       };
     }
 
+    // ─── LINK DESDE LOS EMAILS: volver directo a la pantalla de pago ──────────
+    // Los emails de Brevo traen ?r=<resultado codificado>. Así la persona no
+    // tiene que repetir el test para comprar su reporte.
+    window.addEventListener("load", () => {
+      try {
+        const p = new URLSearchParams(window.location.search);
+        const r = p.get("r");
+        if (!r || p.get("payment_id") || p.get("collection_id")) return;
+        const b64 = r.replace(/-/g, "+").replace(/_/g, "/");
+        const datos = JSON.parse(decodeURIComponent(escape(atob(b64 + "===".slice((b64.length + 3) % 4)))));
+        const tipo = String(datos.t || "");
+        if (!/^[1-9]$/.test(tipo)) return;
+        const prev = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
+        localStorage.setItem("eneagrama_basic", JSON.stringify({
+          name: prev.name || "", email: prev.email || "",
+          type: tipo, wing: String(datos.a || ""), instinct: String(datos.i || "")
+        }));
+        const nameEl = document.getElementById("checkout-name");
+        if (nameEl && prev.name) nameEl.value = prev.name;
+        gaEvent("email_return", { eneatipo: tipo });
+        showPaymentGate();
+        // Limpia el parámetro de la barra de direcciones (deja los utm)
+        p.delete("r");
+        const q = p.toString();
+        history.replaceState(null, "", window.location.pathname + (q ? "?" + q : ""));
+      } catch (e) { console.warn("Link de email inválido", e); }
+    });
+
     // ─── RETORNO DESDE MERCADO PAGO ───────────────────────────────────────────
     window.addEventListener("load", async () => {
       try {
