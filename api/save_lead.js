@@ -26,6 +26,7 @@ export default async function handler(req, res) {
   // resultado cargado, sin repetir el test.
   const r = Buffer.from(JSON.stringify({
     t: String(eneatipo || ""), a: String(ala || ""), i: String(instinto || ""),
+    n: String(nombre || "").trim().slice(0, 40),
   }), "utf-8").toString("base64url");
   const linkReporte = `https://www.mieneatipo.ar/?r=${r}&utm_source=brevo&utm_medium=email&utm_campaign=secuencia_test`;
 

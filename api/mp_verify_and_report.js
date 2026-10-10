@@ -7,7 +7,12 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   try {
-    const { payment_id, enviar_email } = req.body || {};
+    const { payment_id, enviar_email, abiertas } = req.body || {};
+    // Respuestas abiertas del test (las manda el navegador; solo personalizan el texto)
+    const limpiarTxt = (s, n) => String(s || "").replace(/\s+/g, " ").replace(/[<>`]/g, "").trim().slice(0, n);
+    const respuestasAbiertas = (Array.isArray(abiertas) ? abiertas : []).slice(0, 4)
+      .map(x => ({ p: limpiarTxt(x && x.p, 160), r: limpiarTxt(x && x.r, 400) }))
+      .filter(x => x.r.length >= 2);
     if (!payment_id) {
       return res.status(400).json({ error: "Falta payment_id" });
     }
@@ -99,7 +104,10 @@ CONTENIDO MÍNIMO POR SECCIÓN (el cliente pagó por esto, no lo omitas):
 - Sección 5: al menos 4 prácticas concretas, en una lista <ul>.
 - No uses <h1>, <h2>, estilos en línea ni bloques de código.
 
-TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
+${respuestasAbiertas.length ? `LO QUE ${nombre} ESCRIBIÓ EN EL TEST (usalo para personalizar: retomá estas situaciones concretas en las secciones que correspondan, parafraseadas, sin citarlas textualmente ni de forma forzada):
+${respuestasAbiertas.map(x => `- ${x.p} → "${x.r}"`).join("\n")}
+
+` : ""}TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
 `;
 
     const oaiResp = await fetch("https://api.openai.com/v1/chat/completions", {

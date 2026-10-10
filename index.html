@@ -450,6 +450,40 @@
     .pago-centro { display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--green); background: #E8F1EC; padding: 6px 14px; border-radius: 20px; margin-bottom: 12px; }
     .puntajes-reporte { max-width: none; margin: 0 0 20px 0; }
 
+    /* Test: mensajes de avance y preguntas abiertas */
+    .progress-msg { font-size: 0.9rem; color: var(--green); font-weight: 600; margin: 10px 0 14px 0; min-height: 1.2em; }
+    .q-seccion { font-size: 0.85rem; color: var(--green); font-weight: 600; margin-bottom: 10px; }
+    .abierta-wrap { display: flex; flex-direction: column; gap: 12px; max-width: 520px; width: 100%; margin: 0 auto; }
+    .abierta-wrap textarea { width: 100%; font-family: inherit; font-size: 1rem; line-height: 1.5; padding: 14px 16px; border-radius: 12px; border: 2px solid #e0e0e0; resize: vertical; box-sizing: border-box; }
+    .abierta-wrap textarea:focus { outline: none; border-color: var(--green); }
+    .abierta-wrap .skip-link { margin-top: 2px; }
+    .test-ok { display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--green); background: #E8F1EC; padding: 6px 14px; border-radius: 20px; margin-bottom: 14px; }
+
+    /* Análisis gratis escrito por la IA */
+    .analisis-ia { max-width: 480px; margin: 0 auto 18px auto; padding: 22px 22px 8px 22px; border-radius: 16px; background: #fff; border: 1px solid #E4DDD3; text-align: left; }
+    .analisis-ia-titulo { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--blue); font-size: 1.05rem; margin-bottom: 10px; }
+    .analisis-ia p:not(.analisis-ia-titulo) { font-size: 1rem; line-height: 1.7; color: #3A3A3A; margin-bottom: 14px; }
+    .bloqueados { cursor: pointer; }
+
+    /* Pantalla de pago: oferta arriba */
+    .oferta-top { border: 2px solid var(--green); border-radius: 18px; padding: 26px 20px 22px 20px; margin-bottom: 30px; background: #fff; }
+    .oferta-badge { display: inline-block; font-size: 0.85rem; font-weight: 700; color: #C2513C; background: #FFF1EC; padding: 7px 14px; border-radius: 20px; margin-bottom: 14px; }
+    .oferta-titulo { font-size: 1.55rem; line-height: 1.2; margin-bottom: 8px; }
+    .oferta-sub { color: #666; margin-bottom: 16px; }
+    .oferta-precio { display: flex; align-items: baseline; justify-content: center; gap: 12px; margin-bottom: 18px; }
+    .oferta-precio s { font-size: 1.4rem; color: #999; font-weight: 600; }
+    .oferta-precio strong { font-family: 'Poppins', sans-serif; font-size: 2.6rem; color: var(--green); line-height: 1; }
+    .oferta-precio span { font-size: 0.85rem; color: #888; }
+    .btn-pagar { width: 100%; font-size: 1.1rem; padding: 20px; }
+    .oferta-confianza { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; margin-top: 12px; font-size: 0.8rem; color: #666; }
+    .oferta-letra { font-size: 0.75rem; color: #999; margin-top: 10px; }
+    .pago-seguro { max-width: 520px; margin: 0 auto 26px auto; text-align: left; background: var(--bg-alt); border-radius: 16px; padding: 20px 22px; }
+    .pago-seguro h3 { font-size: 1.05rem; margin-bottom: 8px; }
+    .pago-seguro p { font-size: 0.92rem; color: #555; line-height: 1.55; margin-bottom: 10px; }
+    .pago-seguro .pago-chips { justify-content: flex-start; }
+    .oferta-final { max-width: 520px; margin: 0 auto 30px auto; }
+    .oferta-final-titulo { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--blue); font-size: 1.15rem; margin-bottom: 12px; }
+
     /* Urgencia / countdown */
     .urgencia-banner {
       background: #fff3ef;
@@ -528,9 +562,9 @@
           EMPEZAR TEST
         </button>
         <div style="font-size: 0.8rem; color: #888; margin-bottom: 8px;">
-          ⏱ Toma sólo 5 minutos • 🔒 Tus datos están seguros y sin crear cuenta
+          ⏱ Toma entre 5 y 7 minutos • 🔒 Tus datos están seguros y sin crear cuenta
         </div>
-        <p class="aviso-precio" style="margin-bottom: 60px;">El test es gratis. Al terminar ves un adelanto de tu perfil; tu resultado completo con el reporte personalizado cuesta $4.500 (pago único).</p>
+        <p class="aviso-precio" style="margin-bottom: 60px;">El test es gratis. Al terminar recibís un análisis breve de tu perfil; tu resultado completo con el reporte personalizado cuesta $4.500 (pago único).</p>
 
         <div class="benefits-grid" style="margin-bottom: 60px;">
           <div class="benefit-card">
@@ -578,7 +612,7 @@
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px;">
             <div style="text-align:center; padding: 10px;">
               <div style="width:42px;height:42px;border-radius:50%;background:#fff3ef;color:#E06550;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">1</div>
-              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Respondé 60 preguntas</div>
+              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Respondé 64 preguntas</div>
               <div style="font-size:0.95rem; color:#666; margin-top:6px;">Toma 5 minutos desde el celular.</div>
             </div>
             <div style="text-align:center; padding: 10px;">
@@ -589,7 +623,7 @@
             <div style="text-align:center; padding: 10px;">
               <div style="width:42px;height:42px;border-radius:50%;background:#eef2ff;color:var(--blue);font-weight:800;display:inline-flex;align-items:center;justify-content:center;">3</div>
               <div style="font-weight:800; margin-top:10px; color:var(--blue);">Desbloqueás tu resultado</div>
-              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Ves un adelanto gratis. Tu eneatipo, ala, instinto y reporte completo: $4.500, pago único.</div>
+              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Recibís un análisis breve gratis. Tu eneatipo, ala, instinto y reporte completo: $4.500, pago único.</div>
             </div>
           </div>
         </div>
@@ -628,9 +662,16 @@
           <span id="progress-text">0%</span>
         </div>
         <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <p class="progress-msg" id="progress-msg">¡Buen comienzo! 🚀</p>
         <div class="question-card">
+          <p class="q-seccion" id="q-seccion" hidden>Para terminar, contanos un poco de vos</p>
           <div id="q-text" class="q-text">Cargando pregunta...</div>
-          <div class="scale-container">
+          <div class="abierta-wrap" id="abierta-wrap" hidden>
+            <textarea id="abierta-input" rows="4" maxlength="400" placeholder="Escribí lo primero que te salga. Una o dos frases alcanzan."></textarea>
+            <button class="btn" id="abierta-btn" onclick="responderAbierta(false)" style="width:100%; padding:16px;">Siguiente</button>
+            <span class="skip-link" onclick="responderAbierta(true)">Prefiero no responder esta</span>
+          </div>
+          <div class="scale-container" id="scale-container">
             <div class="scale-option" onclick="vote(1)"><div class="scale-circle">1</div><div class="scale-label">Nunca</div></div>
             <div class="scale-option" onclick="vote(2)"><div class="scale-circle">2</div><div class="scale-label">Casi nunca</div></div>
             <div class="scale-option" onclick="vote(3)"><div class="scale-circle">3</div><div class="scale-label">A veces</div></div>
@@ -658,10 +699,11 @@
         </svg>
         <h2>Analizando tus respuestas</h2>
         <ul class="analisis-pasos" id="analisis-pasos" aria-live="polite">
-          <li>Sumando tus 60 respuestas</li>
+          <li>Leyendo tus respuestas</li>
           <li>Comparando los 9 eneatipos</li>
           <li>Identificando tu ala</li>
           <li>Detectando tu instinto dominante</li>
+          <li data-espera>Escribiendo tu análisis personalizado</li>
         </ul>
       </div>
     </div>
@@ -678,7 +720,12 @@
     <div id="view-reveal" class="hidden fade-in">
       <div class="reveal-box">
         <p class="adelanto-etiqueta">Tu resultado está listo</p>
-        <h2 class="adelanto-titulo">Tu perfil ya está calculado</h2>
+        <h2 class="adelanto-titulo" id="adelanto-titulo">Tu perfil ya está calculado</h2>
+
+        <div class="analisis-ia" id="analisis-ia" hidden>
+          <p class="analisis-ia-titulo">Tu análisis de perfil</p>
+          <div id="analisis-ia-texto"></div>
+        </div>
 
         <div class="centro-card">
           <svg class="centro-rueda" id="centro-rueda" viewBox="0 0 120 120" aria-hidden="true"></svg>
@@ -687,7 +734,7 @@
           <p class="centro-pie">Dentro de este centro hay tres eneatipos con motivaciones muy distintas. Cuál es el tuyo ya está calculado.</p>
         </div>
 
-        <div class="bloqueados">
+        <div class="bloqueados" onclick="showPaymentGate()" role="button" tabindex="0" aria-label="Desbloquear eneatipo, ala e instinto">
           <div><span>Eneatipo</span><b>🔒</b></div>
           <div><span>Ala</span><b>🔒</b></div>
           <div><span>Instinto</span><b>🔒</b></div>
@@ -709,8 +756,8 @@
           </div>
         </div>
 
-        <button class="btn" onclick="nav('view-email')" style="width:100%; max-width:400px; padding:18px;">
-          VER MI RESULTADO COMPLETO
+        <button class="btn" onclick="showPaymentGate()" style="width:100%; max-width:400px; padding:18px;">
+          DESBLOQUEAR MI RESULTADO
         </button>
       </div>
       <footer class="site-footer">© 2026 Mi Eneatipo Argentina. Todos los derechos reservados.</footer>
@@ -719,10 +766,10 @@
     <!-- ==================== PANTALLA B: CAPTURA DE EMAIL ==================== -->
     <div id="view-email" class="hidden fade-in">
       <div class="email-capture-box">
-        <div style="font-size:2.5rem; margin-bottom:15px;">📩</div>
-        <h2>¿A dónde te guardamos<br>tu resultado?</h2>
+        <p class="test-ok">✓ Test completado</p>
+        <h2>¡Excelente trabajo!</h2>
         <p>
-          Te mandamos el link para volver a tu resultado cuando quieras, sin repetir el test.
+          Ingresá tu nombre y tu email para generar tu análisis personalizado. Queda guardado y te mandamos el acceso para que vuelvas cuando quieras.
         </p>
 
         <div class="email-input-wrap">
@@ -730,13 +777,11 @@
           <input type="email" id="lead-email" placeholder="Tu email" autocomplete="email" inputmode="email" />
           <div id="lead-err" style="display:none; color:#E06550; font-size:0.85rem; font-weight:600;"></div>
           <button class="btn" id="btn-send-email" onclick="submitLead()" style="width:100%; padding:18px;">
-            GUARDAR MI RESULTADO
+            GENERAR MI ANÁLISIS
           </button>
         </div>
 
         <p class="privacy-note">🔒 Sin spam. Solo te escribimos sobre tu Eneagrama.</p>
-        <br>
-        <span class="skip-link" onclick="skipEmail()">Prefiero verlo ahora</span>
       </div>
       <footer class="site-footer">© 2026 Mi Eneatipo Argentina. Todos los derechos reservados.</footer>
     </div>
@@ -746,36 +791,25 @@
       <div id="error-msg" style="display:none; background:#fff3ef; color:#E06550; padding:12px 14px; border-radius:12px; font-weight:700; margin: 20px auto; max-width: 700px;"></div>
 
       <div id="payment-gate" class="pay-gate">
-        <p class="pago-centro" id="pago-centro" hidden></p>
-        <h2 style="margin-bottom:10px; line-height:1.2;">Tu resultado completo está listo</h2>
-        <p style="margin-bottom:20px; color:#666;">Desbloqueá tu eneatipo, tu ala y tu instinto, junto con tu reporte personalizado.</p>
+        <!-- Arriba de todo: precio y botón, sin campos para completar -->
+        <div class="oferta-top">
+          <p class="oferta-badge">🔥 Precio de lanzamiento: 50% OFF hasta el 31 de octubre</p>
+          <p class="pago-centro" id="pago-centro" hidden></p>
+          <h2 class="oferta-titulo">Desbloqueá tu resultado completo</h2>
+          <p class="oferta-sub">Tu eneatipo, tu ala, tu instinto y tu reporte personalizado.</p>
+          <div class="oferta-precio"><s>$9.000</s><strong>$4.500</strong><span>ARS</span></div>
 
-        <!-- Garantía arriba del precio (reemplaza el contador de 15 minutos) -->
-        <div class="urgencia-banner" style="background:#E6F4EA; border-color:rgba(30,142,62,0.25); color:#1E6B3A;">
-          🛡️ Garantía de 7 días: si no te aporta valor, te devolvemos el 100%
-        </div>
-
-        <div class="checkout-box">
-          <div class="price-tag">
-            <span>Resultado completo + Reporte</span>
-            <span style="text-align:right; line-height:1.1;"><small style="display:block; font-size:0.72rem; font-weight:600; color:#999;">Pago único</small><span style="color:var(--green);">$4.500</span></span>
-          </div>
-
-          <div class="input-group" style="max-width:420px; margin: 0 auto 15px auto;">
+          <div class="input-group" id="checkout-name-group" style="max-width:420px; margin: 0 auto 15px auto;" hidden>
             <label for="checkout-name" style="text-align:left;">¿Cómo te gustaría que aparezca tu nombre en el reporte?</label>
             <input type="text" id="checkout-name" placeholder="Tu nombre" />
           </div>
           <div id="checkout-err" style="display:none; color:red; font-weight:600; margin-bottom:10px;"></div>
 
-          <button id="mp-pay-btn" class="btn" style="width:100%; font-size:1.1rem; padding: 20px;">
-            OBTENER MIS RESULTADOS
-          </button>
-          <div class="pago-confianza">
-            <p class="pago-unico">Sin suscripciones ni débitos automáticos.</p>
-            <span class="pago-mp"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="7" width="11" height="7.5" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Pago seguro con Mercado Pago</span>
-            <ul class="pago-chips"><li>Tarjeta de crédito</li><li>Tarjeta de débito</li><li>Dinero en Mercado Pago</li></ul>
-            <span>⚡ Tu reporte se genera apenas se acredita el pago</span>
+          <button id="mp-pay-btn" class="btn btn-pagar">DESBLOQUEAR — $4.500</button>
+          <div class="oferta-confianza">
+            <span>🔒 Pago con Mercado Pago</span><span>Pago único</span><span>🛡️ Garantía de 7 días</span>
           </div>
+          <p class="oferta-letra">Desde el 1 de noviembre el precio regular es $9.000.</p>
         </div>
 
         <!-- Qué incluye el reporte -->
@@ -818,6 +852,19 @@
             <div class="hoja-corte"><span>🔒 Sigue en tu reporte completo</span></div>
           </div>
           <p class="muestra-pie">Ejemplo para un perfil Tipo 4 con Ala 5 e instinto Social. El tuyo se arma con tu propio resultado y suma tres secciones más: tu sombra, tu camino de integración y prácticas concretas.</p>
+        </div>
+
+        <div class="pago-seguro">
+          <h3>Pago 100% seguro</h3>
+          <p>El pago se procesa en Mercado Pago: tus datos de tarjeta nunca pasan por nuestro sitio.</p>
+          <ul class="pago-chips"><li>Tarjeta de crédito</li><li>Tarjeta de débito</li><li>Dinero en Mercado Pago</li></ul>
+          <p>Pago único, sin suscripciones ni débitos automáticos. Si el reporte no te aporta valor, en los primeros 7 días te devolvemos el 100%.</p>
+        </div>
+
+        <div class="oferta-final">
+          <p class="oferta-final-titulo">¿Listo para conocerte de verdad?</p>
+          <button class="btn btn-pagar" onclick="document.getElementById('mp-pay-btn').click()">DESBLOQUEAR — $4.500</button>
+          <p class="oferta-letra">Precio de lanzamiento hasta el 31 de octubre. Desde el 1 de noviembre: $9.000.</p>
         </div>
 
         <div class="slider-container">
@@ -1008,22 +1055,49 @@
     }
     shuffleArray(questions);
 
+    // Preguntas abiertas al final: alimentan el análisis gratis y el reporte pago
+    const preguntasAbiertas = [
+      "¿Qué situación te genera más estrés o malestar últimamente?",
+      "¿Qué es lo que más te cuesta en tus vínculos (pareja, familia, amigos o trabajo)?",
+      "¿Qué te gustaría cambiar de vos?",
+      "¿Qué te hace sentir realmente bien, en paz o en tu mejor versión?",
+    ];
+    preguntasAbiertas.forEach((q, i) => questions.push({ kind: "open", key: i, q }));
+    let respuestasAbiertas = {};
+
     function beginTest() {
       gaEvent("begin_test");
       qIdx = 0;
       historyStack = [];
+      respuestasAbiertas = {};
       userResponses = { types:{1:{},2:{},3:{},4:{},5:{},6:{},7:{},8:{},9:{}}, instincts:{sp:{},sx:{},so:{}} };
       nav("view-quiz");
       gaEvent("quiz_start");
       renderQ();
     }
 
+    const mensajesAvance = [
+      [0, "¡Buen comienzo! 🚀"], [15, "¡Vas muy bien! 💪"], [35, "Cada respuesta cuenta 🎯"],
+      [55, "Ya pasaste la mitad 🌟"], [75, "¡Ya falta poco! 🏁"], [92, "Últimas preguntas ✨"],
+    ];
     function renderQ() {
       if (qIdx >= questions.length) { finish(); return; }
-      document.getElementById('q-text').innerText = questions[qIdx].q;
+      const q = questions[qIdx];
+      document.getElementById('q-text').innerText = q.q;
+      const abierta = q.kind === "open";
+      document.getElementById('scale-container').hidden = abierta;
+      document.getElementById('abierta-wrap').hidden = !abierta;
+      document.getElementById('q-seccion').hidden = !abierta;
+      if (abierta) {
+        const ta = document.getElementById('abierta-input');
+        ta.value = respuestasAbiertas[q.key] || "";
+        setTimeout(() => { try { ta.focus({ preventScroll: true }); } catch (e) {} }, 50);
+      }
       let pct = Math.round((qIdx / questions.length) * 100);
       document.getElementById('progress-fill').style.width = pct + "%";
       document.getElementById('progress-text').innerText = pct + "%";
+      const msg = mensajesAvance.filter(m => pct >= m[0]).pop();
+      document.getElementById('progress-msg').innerText = msg ? msg[1] : "";
       const btnBack = document.getElementById('btn-back');
       btnBack.style.visibility = qIdx > 0 ? 'visible' : 'hidden';
     }
@@ -1054,9 +1128,29 @@
       }, 200);
     }
 
+    // Respuesta a una pregunta abierta (o saltearla)
+    function responderAbierta(saltar) {
+      const q = questions[qIdx];
+      if (!q || q.kind !== "open") return;
+      const txt = (document.getElementById('abierta-input').value || "").trim();
+      if (!saltar && txt.length < 2) { document.getElementById('abierta-input').focus(); return; }
+      if (saltar || !txt) delete respuestasAbiertas[q.key]; else respuestasAbiertas[q.key] = txt.slice(0, 400);
+      historyStack.push({ qIdx, kind: "open", key: q.key });
+      qIdx++;
+      renderQ();
+    }
+    function abiertasParaEnviar() {
+      return preguntasAbiertas.map((p, i) => ({ p, r: respuestasAbiertas[i] || "" })).filter(x => x.r);
+    }
+
     function goBack() {
       if (historyStack.length === 0) return;
       let lastStep = historyStack.pop();
+      if (lastStep.kind === "open") {
+        qIdx = lastStep.qIdx;
+        renderQ();
+        return;
+      }
       if (lastStep.kind === "type") {
         if (userResponses.types[lastStep.t]) delete userResponses.types[lastStep.t][lastStep.key];
       } else if (lastStep.kind === "instinct") {
@@ -1189,7 +1283,8 @@
     function esperar(ms) { return new Promise(res => setTimeout(res, ms)); }
     async function animarAnalisis() {
       const caja = document.getElementById('analisis-box');
-      const pasos = [...document.querySelectorAll('#analisis-pasos li')];
+      const pasos = [...document.querySelectorAll('#analisis-pasos li:not([data-espera])')];
+      document.querySelectorAll('#analisis-pasos li[data-espera]').forEach(li => li.className = "");
       const rapido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const paso = rapido ? 250 : 850;
       pasos.forEach(li => li.className = "");
@@ -1230,7 +1325,6 @@
 
     // ─── FINISH: muestra la pantalla A (reveal) ──────────────────────────────
     async function finish() {
-      nav('view-analyzing');
       try {
         const resultado = calcularResultadoEneagrama(userResponses);
         calculatedResult = resultado;
@@ -1241,6 +1335,7 @@
         localStorage.setItem('eneagrama_basic', JSON.stringify({
           name: "", type: tipo, wing: resultado.ala, instinct: resultado.instinto
         }));
+        try { localStorage.setItem('eneagrama_abiertas', JSON.stringify(abiertasParaEnviar())); } catch (e) {}
 
         // Pantalla A: solo el adelanto (centro dominante y puntajes sin nombres)
         mostrarCentro(tipo);
@@ -1250,9 +1345,8 @@
         fbEvent("Lead"); // evento de Meta cuando completan el quiz
         sumarAlContador();
 
-        await animarAnalisis();
-        nav('view-reveal');
-        animarPuntajes();
+        // Ahora pide el email; el análisis se genera después
+        nav('view-email');
 
       } catch (e) {
         console.error(e);
@@ -1312,8 +1406,60 @@
   console.warn("Error guardando lead (no crítico):", e);
 }
 
-      // Ir a la pantalla de pago
-      showPaymentGate();
+      // Generar el análisis gratis mientras corre la animación
+      await mostrarAdelanto(nameVal);
+    }
+
+    // ─── ANÁLISIS GRATIS CON IA ──────────────────────────────────────────────
+    async function pedirAnalisis(nombre) {
+      const basic = JSON.parse(localStorage.getItem('eneagrama_basic') || '{}');
+      let abiertas = [];
+      try { abiertas = JSON.parse(localStorage.getItem('eneagrama_abiertas') || '[]'); } catch (e) {}
+      const ctrl = new AbortController();
+      const corte = setTimeout(() => ctrl.abort(), 25000);
+      try {
+        const r = await fetch('/api/analisis', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, eneatipo: String(basic.type || ''), ala: basic.wing || '', instinto: basic.instinct || '', abiertas }),
+          signal: ctrl.signal,
+        });
+        const j = await r.json().catch(() => ({}));
+        return r.ok && j.analisis ? j.analisis : null;
+      } catch (e) { return null; } finally { clearTimeout(corte); }
+    }
+    function pintarAnalisis(texto, nombre) {
+      const caja = document.getElementById('analisis-ia');
+      const cuerpo = document.getElementById('analisis-ia-texto');
+      if (!caja || !cuerpo || !texto) return;
+      cuerpo.innerHTML = "";
+      texto.split(/\n\s*\n/).map(s => s.trim()).filter(Boolean).forEach(par => {
+        const pEl = document.createElement('p'); pEl.textContent = par; cuerpo.appendChild(pEl);
+      });
+      const tit = document.getElementById('adelanto-titulo');
+      if (tit && nombre) tit.innerText = nombre.split(' ')[0] + ", este es tu análisis";
+      caja.hidden = false;
+    }
+    async function mostrarAdelanto(nombre) {
+      nav('view-analyzing');
+      const pedido = pedirAnalisis(nombre);
+      await animarAnalisis();
+      const ultimo = document.querySelector('#analisis-pasos li[data-espera]');
+      if (ultimo) ultimo.className = "activo";
+      const analisis = await pedido;
+      if (ultimo) ultimo.className = "hecho";
+      await esperar(300);
+      if (analisis) {
+        pintarAnalisis(analisis, nombre);
+        try {
+          const b = JSON.parse(localStorage.getItem('eneagrama_basic') || '{}');
+          b.analisis = analisis; localStorage.setItem('eneagrama_basic', JSON.stringify(b));
+        } catch (e) {}
+        gaEvent("analisis_generado");
+      } else {
+        gaEvent("analisis_fallo");
+      }
+      nav('view-reveal');
+      animarPuntajes();
     }
 
     // ─── SKIP: salta la captura de email y va directo al pago ────────────────
@@ -1329,7 +1475,11 @@
         const b = JSON.parse(localStorage.getItem('eneagrama_basic') || '{}');
         const centro = centroDeTipo(b.type);
         const chip = document.getElementById('pago-centro');
-        if (chip && centro) { chip.innerText = "Centro dominante: " + centro.nombre; chip.hidden = false; }
+        if (chip && centro) { chip.innerText = "Tu centro dominante: " + centro.nombre; chip.hidden = false; }
+        const nameIn = document.getElementById('checkout-name');
+        if (nameIn && b.name && !nameIn.value) nameIn.value = b.name;
+        const grupo = document.getElementById('checkout-name-group');
+        if (grupo) grupo.hidden = !!(nameIn && nameIn.value.trim());
       } catch (e) {}
       document.getElementById('payment-gate').classList.remove('hidden');
       document.getElementById('actual-report').classList.add('hidden');
@@ -1360,7 +1510,7 @@
       btn.onclick = async () => {
         const nm = (document.getElementById("checkout-name")?.value || "").trim();
         const err = document.getElementById("checkout-err");
-        if (!nm) { if(err){err.style.display="block"; err.innerText="Por favor ingresá tu nombre.";} return; }
+        if (!nm) { const g=document.getElementById("checkout-name-group"); if(g) g.hidden=false; if(err){err.style.display="block"; err.innerText="Por favor ingresá tu nombre.";} document.getElementById("checkout-name")?.focus(); return; }
         if (err) err.style.display = "none";
         try {
           btn.innerText = "Redirigiendo...";
@@ -1389,7 +1539,7 @@
           window.location.href = j.init_point;
         } catch(e) {
           console.error(e);
-          btn.innerText = "OBTENER MIS RESULTADOS";
+          btn.innerText = "DESBLOQUEAR — $4.500";
           btn.style.pointerEvents = "auto";
           const err = document.getElementById("checkout-err");
           if (err) { err.style.display="block"; err.innerText="Error iniciando el pago. Probá de nuevo."; }
@@ -1411,11 +1561,11 @@
         if (!/^[1-9]$/.test(tipo)) return;
         const prev = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
         localStorage.setItem("eneagrama_basic", JSON.stringify({
-          name: prev.name || "", email: prev.email || "",
+          name: prev.name || String(datos.n || "").slice(0, 60), email: prev.email || "",
           type: tipo, wing: String(datos.a || ""), instinct: String(datos.i || "")
         }));
         const nameEl = document.getElementById("checkout-name");
-        if (nameEl && prev.name) nameEl.value = prev.name;
+        if (nameEl && (prev.name || datos.n)) nameEl.value = prev.name || String(datos.n).slice(0, 60);
         gaEvent("email_return", { eneatipo: tipo });
         showPaymentGate();
         // Limpia el parámetro de la barra de direcciones (deja los utm)
@@ -1442,7 +1592,7 @@
         try { basic = JSON.parse(decodeURIComponent(escape(atob(token)))); } catch(e) { basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}"); }
         const r = await fetch("/api/mp_verify_and_report", {
           method:"POST", headers:{"Content-Type":"application/json"},
-          body: JSON.stringify({ token, payment_id:paymentId, enviar_email: !localStorage.getItem("reporte_email_" + paymentId) })
+          body: JSON.stringify({ token, payment_id:paymentId, enviar_email: !localStorage.getItem("reporte_email_" + paymentId), abiertas: (() => { try { return JSON.parse(localStorage.getItem("eneagrama_abiertas") || "[]"); } catch (e) { return []; } })() })
         });
         const j = await r.json().catch(()=>({}));
         if (!r.ok || !j.reporte) throw new Error(j.error || "La API no devolvió reporte.");
