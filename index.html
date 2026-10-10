@@ -1249,6 +1249,7 @@
       document.getElementById('payment-gate').classList.remove('hidden');
       document.getElementById('actual-report').classList.add('hidden');
       gaEvent("checkout_view");
+      if (once("fb_viewcontent_" + new Date().toDateString())) fbEvent("ViewContent", { content_name: "Pantalla de pago", value: 4500, currency: "ARS" });
       setupPayButton();
     }
 
@@ -1280,6 +1281,7 @@
           btn.innerText = "Redirigiendo...";
           btn.style.pointerEvents = "none";
           gaEvent("checkout_click_mp");
+          fbEvent("InitiateCheckout", { value: 4500, currency: "ARS", num_items: 1 }); // Meta: inició el pago
           const basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
           basic.name = nm;
           localStorage.setItem("eneagrama_basic", JSON.stringify(basic));
