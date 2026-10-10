@@ -430,6 +430,26 @@
     .aviso-reporte { font-size: 0.88rem; color: #666; line-height: 1.5; margin: 0 0 10px 0; }
     #email-copia { color: var(--green); font-weight: 600; }
 
+    /* Aviso de precio antes del test */
+    .aviso-precio { font-size: 0.85rem; color: #6B6B6B; max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+    /* Adelanto del resultado (sin revelar el tipo) */
+    .adelanto-etiqueta { font-size: 0.9rem; color: var(--green); font-weight: 600; margin-bottom: 4px; }
+    .adelanto-titulo { font-size: 1.6rem; margin-bottom: 22px; }
+    .centro-card { max-width: 480px; margin: 0 auto 18px auto; padding: 26px 22px 20px 22px; border-radius: 16px; background: var(--bg-alt); }
+    .centro-rueda { width: 112px; height: 112px; display: block; margin: 0 auto 14px auto; }
+    .centro-nombre { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.2rem; color: var(--blue); margin-bottom: 8px; }
+    .centro-texto { font-size: 1rem; color: #4A4A4A; line-height: 1.65; margin-bottom: 12px; }
+    .centro-pie { font-size: 0.88rem; color: #777; line-height: 1.5; }
+    .bloqueados { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 480px; margin: 0 auto 18px auto; }
+    .bloqueados div { border: 1px dashed #D9D2C8; border-radius: 12px; padding: 12px 6px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .bloqueados span { font-size: 0.8rem; color: #777; }
+    .bloqueados b { font-size: 1.1rem; }
+    .puntajes-claridad { font-size: 0.88rem; color: #555; margin: 2px 0 12px 0; line-height: 1.5; }
+    .puntaje-nombre.oculto { filter: blur(4px); user-select: none; }
+    .pago-centro { display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--green); background: #E8F1EC; padding: 6px 14px; border-radius: 20px; margin-bottom: 12px; }
+    .puntajes-reporte { max-width: none; margin: 0 0 20px 0; }
+
     /* Urgencia / countdown */
     .urgencia-banner {
       background: #fff3ef;
@@ -507,9 +527,10 @@
         <button class="btn" onclick="beginTest()" style="padding: 20px 50px; font-size: 1.1rem; margin-bottom: 20px;">
           EMPEZAR TEST
         </button>
-        <div style="font-size: 0.8rem; color: #888; margin-bottom: 60px;">
+        <div style="font-size: 0.8rem; color: #888; margin-bottom: 8px;">
           ⏱ Toma sólo 5 minutos • 🔒 Tus datos están seguros y sin crear cuenta
         </div>
+        <p class="aviso-precio" style="margin-bottom: 60px;">El test es gratis. Al terminar ves un adelanto de tu perfil; tu resultado completo con el reporte personalizado cuesta $4.500 (pago único).</p>
 
         <div class="benefits-grid" style="margin-bottom: 60px;">
           <div class="benefit-card">
@@ -567,8 +588,8 @@
             </div>
             <div style="text-align:center; padding: 10px;">
               <div style="width:42px;height:42px;border-radius:50%;background:#eef2ff;color:var(--blue);font-weight:800;display:inline-flex;align-items:center;justify-content:center;">3</div>
-              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Recibís tu reporte</div>
-              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Accedés al informe completo con tu Eneatipo, ala, instinto y guía de integración.</div>
+              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Desbloqueás tu resultado</div>
+              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Ves un adelanto gratis. Tu eneatipo, ala, instinto y reporte completo: $4.500, pago único.</div>
             </div>
           </div>
         </div>
@@ -594,6 +615,7 @@
         <button class="btn" onclick="beginTest()" style="padding: 20px 50px; font-size: 1.1rem; margin-top: 20px;">
           EMPEZAR TEST
         </button>
+        <p class="aviso-precio" style="margin-top: 12px;">Test gratis · Resultado completo y reporte: $4.500</p>
       </section>
       <footer class="site-footer">© 2026 Mi Eneatipo Argentina. Todos los derechos reservados.</footer>
     </div>
@@ -651,42 +673,44 @@
       <p>Esto puede tardar unos segundos.</p>
     </div>
 
-    <!-- ==================== PANTALLA A: REVEAL DEL ENEATIPO ==================== -->
+    <!-- ==================== PANTALLA A: ADELANTO DEL RESULTADO ==================== -->
+    <!-- No revela el eneatipo, el ala ni el instinto: eso se desbloquea con el pago. -->
     <div id="view-reveal" class="hidden fade-in">
       <div class="reveal-box">
-        <p style="font-size:0.9rem; color:#999; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Tu resultado</p>
-        <h2 style="font-size:1.5rem; margin-bottom:5px;">Tu Eneatipo dominante es el</h2>
-        <div class="eneatipo-number-big" id="reveal-number">4</div>
-        <div class="eneatipo-name-big" id="reveal-name">El Individualista</div>
-        <p class="eneatipo-teaser" id="reveal-teaser">
-          Sos parte del grupo de personas que experimenta el mundo con profundidad e intensidad emocional poco comunes. Tu manera de percibir la realidad es única.
-        </p>
+        <p class="adelanto-etiqueta">Tu resultado está listo</p>
+        <h2 class="adelanto-titulo">Tu perfil ya está calculado</h2>
+
+        <div class="centro-card">
+          <svg class="centro-rueda" id="centro-rueda" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <p class="centro-nombre" id="centro-nombre">Tu centro dominante es el emocional</p>
+          <p class="centro-texto" id="centro-texto"></p>
+          <p class="centro-pie">Dentro de este centro hay tres eneatipos con motivaciones muy distintas. Cuál es el tuyo ya está calculado.</p>
+        </div>
+
+        <div class="bloqueados">
+          <div><span>Eneatipo</span><b>🔒</b></div>
+          <div><span>Ala</span><b>🔒</b></div>
+          <div><span>Instinto</span><b>🔒</b></div>
+        </div>
 
         <div class="puntajes" id="puntajes" hidden>
           <p class="puntajes-titulo">Tu puntaje en los 9 eneatipos</p>
-          <div class="puntajes-leyenda">
-            <span><i style="background:var(--coral)"></i>Tu eneatipo</span>
-            <span id="leyenda-ala"><i style="background:var(--green)"></i>Tu ala</span>
-          </div>
+          <p class="puntajes-claridad" id="puntajes-claridad"></p>
           <div id="puntajes-lista"></div>
-          <p class="puntajes-nota">Tu eneatipo es el que más puntuó. Entre sus dos vecinos en el eneagrama, el de mayor puntaje marca tu ala.</p>
+          <p class="puntajes-nota">Los nombres de cada tipo se desbloquean con tu resultado completo.</p>
         </div>
 
         <div class="blur-preview">
-          <div class="blur-preview-text" id="reveal-locked">
-            Tu Herida de Origen está ligada a la sensación de ser fundamentalmente diferente o deficiente. Tu mecanismo de defensa principal es la introyección — la tendencia a internalizar las experiencias externas y colorearlas con tu mundo emocional. Tu ruta de crecimiento implica desarrollar la ecuanimidad sin perder tu profundidad...
+          <div class="blur-preview-text">
+            Tu herida de origen está ligada a una experiencia temprana que todavía hoy organiza tus decisiones. Tu deseo fundamental explica por qué ciertas situaciones te movilizan tanto, y tu mecanismo de defensa se activa justo cuando más necesitás claridad. Tu camino de integración empieza cuando...
           </div>
           <div class="blur-overlay">
             <span class="blur-label">🔒 En tu reporte completo</span>
           </div>
         </div>
 
-        <p style="font-size:0.95rem; color:#555; margin-bottom:25px; line-height:1.6;">
-          Esto es solo el comienzo. Tu reporte completo incluye tu <strong>Ala, Instinto, Herida de Origen, mecanismos de defensa</strong> y una <strong>guía de crecimiento personalizada</strong>.
-        </p>
-
         <button class="btn" onclick="nav('view-email')" style="width:100%; max-width:400px; padding:18px;">
-          VER MI ANÁLISIS COMPLETO →
+          VER MI RESULTADO COMPLETO
         </button>
       </div>
       <footer class="site-footer">© 2026 Mi Eneatipo Argentina. Todos los derechos reservados.</footer>
@@ -696,10 +720,9 @@
     <div id="view-email" class="hidden fade-in">
       <div class="email-capture-box">
         <div style="font-size:2.5rem; margin-bottom:15px;">📩</div>
-        <h2>¿A dónde te enviamos<br>tu resumen gratuito?</h2>
+        <h2>¿A dónde te guardamos<br>tu resultado?</h2>
         <p>
-          Te mandamos un resumen de tu Eneatipo <strong id="email-eneatipo-hint">4</strong> gratis por email.<br>
-          Y si querés profundizar, tu reporte completo te espera.
+          Te mandamos el link para volver a tu resultado cuando quieras, sin repetir el test.
         </p>
 
         <div class="email-input-wrap">
@@ -707,13 +730,13 @@
           <input type="email" id="lead-email" placeholder="Tu email" autocomplete="email" inputmode="email" />
           <div id="lead-err" style="display:none; color:#E06550; font-size:0.85rem; font-weight:600;"></div>
           <button class="btn" id="btn-send-email" onclick="submitLead()" style="width:100%; padding:18px;">
-            ENVIAR MI RESUMEN GRATIS
+            GUARDAR MI RESULTADO
           </button>
         </div>
 
         <p class="privacy-note">🔒 Sin spam. Solo te escribimos sobre tu Eneagrama.</p>
         <br>
-        <span class="skip-link" onclick="skipEmail()">Prefiero ir directo al reporte →</span>
+        <span class="skip-link" onclick="skipEmail()">Prefiero verlo ahora</span>
       </div>
       <footer class="site-footer">© 2026 Mi Eneatipo Argentina. Todos los derechos reservados.</footer>
     </div>
@@ -723,8 +746,9 @@
       <div id="error-msg" style="display:none; background:#fff3ef; color:#E06550; padding:12px 14px; border-radius:12px; font-weight:700; margin: 20px auto; max-width: 700px;"></div>
 
       <div id="payment-gate" class="pay-gate">
-        <h2 style="margin-bottom:10px; line-height:1.2;">Tu reporte completo está listo</h2>
-        <p style="margin-bottom:20px; color:#666;">Desbloqueá tu análisis y empezá tu camino de crecimiento.</p>
+        <p class="pago-centro" id="pago-centro" hidden></p>
+        <h2 style="margin-bottom:10px; line-height:1.2;">Tu resultado completo está listo</h2>
+        <p style="margin-bottom:20px; color:#666;">Desbloqueá tu eneatipo, tu ala y tu instinto, junto con tu reporte personalizado.</p>
 
         <!-- Garantía arriba del precio (reemplaza el contador de 15 minutos) -->
         <div class="urgencia-banner" style="background:#E6F4EA; border-color:rgba(30,142,62,0.25); color:#1E6B3A;">
@@ -733,7 +757,7 @@
 
         <div class="checkout-box">
           <div class="price-tag">
-            <span>Reporte Premium + Guía</span>
+            <span>Resultado completo + Reporte</span>
             <span style="text-align:right; line-height:1.1;"><small style="display:block; font-size:0.72rem; font-weight:600; color:#999;">Pago único</small><span style="color:var(--green);">$4.500</span></span>
           </div>
 
@@ -758,6 +782,7 @@
         <div class="incluye">
           <h3 class="incluye-titulo">Qué incluye tu reporte</h3>
           <ol class="incluye-lista">
+            <li><strong>Tu resultado exacto</strong><span>Tu eneatipo, tu ala y tu instinto, calculados con tus respuestas.</span></li>
             <li><strong>Tu perfil nuclear</strong><span>Tu eneatipo con su ala, tu herida de origen, tu deseo fundamental y tu miedo básico.</span></li>
             <li><strong>Tu subtipo instintivo</strong><span>Cómo tu instinto dominante cambia la forma en que se expresa tu tipo.</span></li>
             <li><strong>Tu sombra</strong><span>Tu mecanismo de defensa y cómo reaccionás bajo estrés.</span></li>
@@ -832,6 +857,10 @@
               <span class="card-label">INSTINTO</span>
               <div class="card-val" id="r-instinct">...</div>
             </div>
+          </div>
+          <div class="puntajes puntajes-reporte pdf-block" id="puntajes-reporte" hidden>
+            <p class="puntajes-titulo">Tu puntaje en los 9 eneatipos</p>
+            <div id="puntajes-reporte-lista"></div>
           </div>
           <div class="report-box pdf-block">
             <div id="ai-content" class="ai-text"></div>
@@ -1068,26 +1097,82 @@
       return { eneatipo: core, ala: alaText, instinto: inst, puntajes: scoresType, respondidas: responses.types };
     }
 
+    // ─── CENTROS DEL ENEAGRAMA (lo único que se muestra gratis) ────────────────
+    const centros = {
+      instintivo: { tipos: [8, 9, 1], desde: 210, nombre: "instintivo",
+        texto: "Procesás la vida desde el cuerpo y la acción: antes de pensarlo, ya sabés lo que sentís sobre algo. Tu tema de fondo es la autonomía, cuánto espacio ocupás en el mundo y cuánto dejás que otros ocupen el tuyo." },
+      emocional: { tipos: [2, 3, 4], desde: -30, nombre: "emocional",
+        texto: "Procesás la vida desde los vínculos y la imagen: registrás cómo te ven los demás con una precisión que pocos tienen. Tu tema de fondo es la identidad, quién sos realmente más allá de lo que mostrás." },
+      mental: { tipos: [5, 6, 7], desde: 90, nombre: "mental",
+        texto: "Procesás la vida desde la mente y la anticipación: analizás, planificás y buscás entender antes de actuar. Tu tema de fondo es la seguridad, cómo enfrentás la incertidumbre aunque no siempre lo llames así." },
+    };
+    function centroDeTipo(tipo) {
+      tipo = Number(tipo);
+      return Object.values(centros).find(c => c.tipos.includes(tipo)) || null;
+    }
+    // Rueda del eneagrama con el tercio del centro dominante resaltado (sin números)
+    function dibujarCentro(svg, centro) {
+      if (!svg || !centro) return;
+      const c = 60, r = 46, rad = g => g * Math.PI / 180;
+      const pt = g => [c + r * Math.cos(rad(g)), c + r * Math.sin(rad(g))].map(v => v.toFixed(1));
+      const [x1, y1] = pt(centro.desde), [x2, y2] = pt(centro.desde + 120);
+      let h = `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#E4DDD3" stroke-width="2"/>`;
+      h += `<path d="M${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2}" fill="none" stroke="#FF7F66" stroke-width="7" stroke-linecap="round"/>`;
+      for (let k = 1; k <= 9; k++) {
+        const [x, y] = pt(-90 + k * 40);
+        const activo = centro.tipos.includes(k);
+        h += `<circle cx="${x}" cy="${y}" r="${activo ? 5.5 : 4}" fill="${activo ? '#274E55' : '#CFC6BA'}"/>`;
+      }
+      svg.innerHTML = h;
+    }
+    function mostrarCentro(tipo) {
+      const centro = centroDeTipo(tipo);
+      if (!centro) return;
+      document.getElementById('centro-nombre').innerText = "Tu centro dominante es el " + centro.nombre;
+      document.getElementById('centro-texto').innerText = centro.texto;
+      dibujarCentro(document.getElementById('centro-rueda'), centro);
+    }
+
     // ─── GRÁFICO: PUNTAJE EN LOS 9 ENEATIPOS ─────────────────────────────────
     // Cada respuesta va de 1 a 5. Se pasa a 0–100 % según cuántas preguntas
     // de ese tipo respondió la persona.
+    function calcularPorcentajes(resultado) {
+      const lista = [];
+      for (let tp = 1; tp <= 9; tp++) {
+        const n = Object.keys((resultado.respondidas || {})[tp] || {}).length || 5;
+        lista.push({ tipo: tp, pct: Math.max(0, Math.min(100, Math.round(((resultado.puntajes[tp] || 0) - n) / (4 * n) * 100))) });
+      }
+      return lista;
+    }
+    function filaPuntaje(clase, nombreHtml, pct) {
+      return `<div class="puntaje-fila${clase}">${nombreHtml}<span class="puntaje-barra"><span data-pct="${pct}"></span></span><span class="puntaje-valor">${pct}%</span></div>`;
+    }
     function mostrarPuntajes(resultado) {
       const cont = document.getElementById('puntajes');
       const lista = document.getElementById('puntajes-lista');
       if (!cont || !lista || !resultado || !resultado.puntajes) return;
-      const m = /Ala (\d)/.exec(resultado.ala || "");
-      const ala = m ? Number(m[1]) : null;
-      const leyendaAla = document.getElementById('leyenda-ala');
-      if (leyendaAla) leyendaAla.style.display = ala ? "" : "none";
-      const filas = [];
-      for (let t = 1; t <= 9; t++) {
-        const n = Object.keys((resultado.respondidas || {})[t] || {}).length || 5;
-        const pct = Math.max(0, Math.min(100, Math.round(((resultado.puntajes[t] || 0) - n) / (4 * n) * 100)));
-        const clase = t === resultado.eneatipo ? " es-tipo" : (t === ala ? " es-ala" : "");
-        const nombre = (eneatipoData[t].nombre || "").replace(/^El /, "");
-        filas.push(`<div class="puntaje-fila${clase}"><span class="puntaje-nombre"><b>${t}</b>${nombre}</span><span class="puntaje-barra"><span data-pct="${pct}"></span></span><span class="puntaje-valor">${pct}%</span></div>`);
-      }
-      lista.innerHTML = filas.join("");
+      const orden = calcularPorcentajes(resultado).sort((a, b) => b.pct - a.pct);
+      // Sin el número ni el nombre de cada tipo: eso es parte del resultado pago
+      lista.innerHTML = orden.map((f, i) => filaPuntaje(i === 0 ? " es-tipo" : "", `<span class="puntaje-nombre oculto">Eneatipo</span>`, f.pct)).join("");
+      const dif = orden[0].pct - orden[1].pct;
+      document.getElementById('puntajes-claridad').innerText = dif >= 15
+        ? "Un tipo se destaca con claridad sobre los demás en tus respuestas."
+        : "Tus dos tipos principales quedaron muy parejos. Tu resultado completo te muestra cuál es el dominante.";
+      cont.hidden = false;
+      try { localStorage.setItem('eneagrama_puntajes', JSON.stringify(calcularPorcentajes(resultado))); } catch (e) {}
+    }
+    // En el reporte desbloqueado, el mismo gráfico con los nombres
+    function mostrarPuntajesReporte(tipo) {
+      const cont = document.getElementById('puntajes-reporte');
+      const lista = document.getElementById('puntajes-reporte-lista');
+      let datos = null;
+      try { datos = JSON.parse(localStorage.getItem('eneagrama_puntajes') || 'null'); } catch (e) {}
+      if (!cont || !lista || !Array.isArray(datos) || datos.length !== 9) return;
+      const top = datos.slice().sort((a, b) => b.pct - a.pct)[0];
+      if (String(top.tipo) !== String(tipo)) return; // por si son de otro test
+      lista.innerHTML = datos.map(f => filaPuntaje(f.tipo === top.tipo ? " es-tipo" : "",
+        `<span class="puntaje-nombre"><b>${f.tipo}</b>${(eneatipoData[f.tipo].nombre || "").replace(/^El /, "")}</span>`, f.pct)).join("");
+      lista.querySelectorAll('.puntaje-barra span').forEach(el => { el.style.width = el.dataset.pct + "%"; });
       cont.hidden = false;
     }
     function animarPuntajes() {
@@ -1157,14 +1242,8 @@
           name: "", type: tipo, wing: resultado.ala, instinct: resultado.instinto
         }));
 
-        // Llenar pantalla A
-        document.getElementById('reveal-number').innerText = tipo;
-        document.getElementById('reveal-name').innerText = info.nombre;
-        document.getElementById('reveal-teaser').innerText = info.teaser;
-        const lockedEl = document.getElementById('reveal-locked');
-        if (lockedEl && bloqueadoData[tipo]) lockedEl.innerText = bloqueadoData[tipo];
-        document.getElementById('email-eneatipo-hint').innerText = tipo;
-
+        // Pantalla A: solo el adelanto (centro dominante y puntajes sin nombres)
+        mostrarCentro(tipo);
         mostrarPuntajes(resultado);
 
         gaEvent("quiz_complete", { eneatipo: tipo });
@@ -1246,6 +1325,12 @@
     // ─── MOSTRAR PANTALLA DE PAGO ─────────────────────────────────────────────
     function showPaymentGate() {
       nav('view-result');
+      try {
+        const b = JSON.parse(localStorage.getItem('eneagrama_basic') || '{}');
+        const centro = centroDeTipo(b.type);
+        const chip = document.getElementById('pago-centro');
+        if (chip && centro) { chip.innerText = "Centro dominante: " + centro.nombre; chip.hidden = false; }
+      } catch (e) {}
       document.getElementById('payment-gate').classList.remove('hidden');
       document.getElementById('actual-report').classList.add('hidden');
       gaEvent("checkout_view");
@@ -1364,7 +1449,7 @@
 
         // Pago verificado por el servidor: recién ahora contamos la conversión
         if (once("ga4_purchase_" + paymentId)) {
-          gaEvent("purchase", { transaction_id:paymentId, value:price, currency, items:[{item_id:"reporte_premium",item_name:"Reporte Premium + Guía",price,quantity:1}] });
+          gaEvent("purchase", { transaction_id:paymentId, value:price, currency, items:[{item_id:"reporte_premium",item_name:"Resultado completo + Reporte",price,quantity:1}] });
           gaEvent("test_completed");
         }
         if (once("ads_conv_" + paymentId)) {
@@ -1384,6 +1469,7 @@
         if (document.getElementById("r-wing")) document.getElementById("r-wing").innerText = perfil.ala || basic.wing || "-";
         if (document.getElementById("r-instinct")) document.getElementById("r-instinct").innerText = perfil.instinto || basic.instinct || "-";
         elAI.innerHTML = j.reporte;
+        mostrarPuntajesReporte(perfil.eneatipo || basic.type);
         // Aviso de la copia enviada por email (se recuerda por si recarga la página)
         if (j.email_copia) localStorage.setItem("reporte_email_" + paymentId, j.email_copia);
         const copia = j.email_copia || localStorage.getItem("reporte_email_" + paymentId);
