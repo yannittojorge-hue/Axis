@@ -39,7 +39,8 @@ REGLAS ESTRICTAS:
 3. Si respondió las preguntas abiertas, retomá con naturalidad una o dos de sus respuestas (parafraseadas) para que sienta que el análisis habla de su vida.
 4. Dos párrafos, entre 90 y 130 palabras en total. Segunda persona, tono cálido, preciso y sin frases de horóscopo.
 5. Terminá con una oración que genere curiosidad por lo que todavía no sabe (de dónde viene ese patrón, qué lo activa o hacia dónde puede crecer), sin mencionar precios ni pagos.
-6. Solo texto plano: sin títulos, sin listas, sin markdown. Separá los párrafos con una línea en blanco.`;
+6. Solo texto plano: sin títulos, sin listas, sin markdown. Separá los párrafos con una línea en blanco.
+7. Usá voseo argentino en TODOS los verbos (sentís, tenés, experimentás, podés, ¿te preguntaste...?). Nunca uses tuteo ("experimentas", "tienes", "te has preguntado") ni "usted".`;
 
   // Por si el modelo igual se filtra: frases con el tipo, el ala o el instinto
   const prohibido = /\b(eneatipo|tipo|ala)\s*(n[uú]mero\s*)?[1-9]\b|\b[1-9]\s*w\s*[1-9]\b|reformador|ayudador|triunfador|individualista|investigador|\bleal(es)?\b|entusiasta|desafiador|pacificador|autoconservaci|instinto (social|sexual)|subtipo/i;
