@@ -78,6 +78,12 @@ REGLAS ESTRICTAS:
       texto = texto.split(/(?<=[.!?])\s+/).filter(o => !prohibido.test(o)).join(" ");
     }
     texto = texto.replace(/[#*_`>]/g, "").trim();
+    // Por si se le escapa el tuteo: pasarlo a voseo
+    const voseo = { "te has preguntado": "te preguntaste", "has sentido": "sentiste", "tienes": "tenés", "puedes": "podés", "sientes": "sentís", "eres": "sos", "quieres": "querés", "necesitas": "necesitás", "sabes": "sabés", "buscas": "buscás", "piensas": "pensás", "prefieres": "preferís" };
+    texto = texto.replace(new RegExp("\\b(" + Object.keys(voseo).join("|") + ")\\b", "gi"), m => {
+      const r = voseo[m.toLowerCase()];
+      return m[0] === m[0].toUpperCase() ? r[0].toUpperCase() + r.slice(1) : r;
+    });
     if (texto.length < 80) throw new Error("Análisis demasiado corto");
     return res.status(200).json({ analisis: texto });
   } catch (e) {
