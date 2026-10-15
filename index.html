@@ -615,8 +615,8 @@
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px;">
             <div style="text-align:center; padding: 10px;">
               <div style="width:42px;height:42px;border-radius:50%;background:#fff3ef;color:#E06550;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">1</div>
-              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Respondé 64 preguntas</div>
-              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Toma 5 minutos desde el celular.</div>
+              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Respondé las preguntas</div>
+              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Toma entre 5 y 7 minutos desde el celular.</div>
             </div>
             <div style="text-align:center; padding: 10px;">
               <div style="width:42px;height:42px;border-radius:50%;background:#e6f4ea;color:var(--green);font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</div>
@@ -625,8 +625,8 @@
             </div>
             <div style="text-align:center; padding: 10px;">
               <div style="width:42px;height:42px;border-radius:50%;background:#eef2ff;color:var(--blue);font-weight:800;display:inline-flex;align-items:center;justify-content:center;">3</div>
-              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Desbloqueás tu resultado</div>
-              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Recibís un análisis breve de tu perfil y podés desbloquear tu eneatipo, ala, instinto y reporte completo.</div>
+              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Recibís tu resultado</div>
+              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Al terminar ves un análisis breve de tu perfil. Luego de pagar, recibís tu eneatipo, ala, instinto y el reporte completo.</div>
             </div>
           </div>
         </div>
@@ -799,7 +799,7 @@
           <p class="pago-centro" id="pago-centro" hidden></p>
           <h2 class="oferta-titulo">Desbloqueá tu resultado completo</h2>
           <p class="oferta-sub">Tu eneatipo, tu ala, tu instinto y tu reporte personalizado.</p>
-          <div class="oferta-precio"><s>$9.000</s><strong>$4.500</strong><span>ARS</span></div>
+          <div class="oferta-precio"><s>$6.000</s><strong>$3.000</strong><span>ARS</span></div>
 
           <div class="input-group" id="checkout-name-group" style="max-width:420px; margin: 0 auto 15px auto;" hidden>
             <label for="checkout-name" style="text-align:left;">¿Cómo te gustaría que aparezca tu nombre en el reporte?</label>
@@ -807,11 +807,11 @@
           </div>
           <div id="checkout-err" style="display:none; color:red; font-weight:600; margin-bottom:10px;"></div>
 
-          <button id="mp-pay-btn" class="btn btn-pagar">DESBLOQUEAR — $4.500</button>
+          <button id="mp-pay-btn" class="btn btn-pagar">DESBLOQUEAR — $3.000</button>
           <div class="oferta-confianza">
             <span>🔒 Pago con Mercado Pago</span><span>Pago único</span><span>🛡️ Garantía de 7 días</span>
           </div>
-          <p class="oferta-letra">Desde el 1 de noviembre el precio regular es $9.000.</p>
+          <p class="oferta-letra">Desde el 1 de noviembre el precio regular es $6.000.</p>
         </div>
 
         <!-- Qué incluye el reporte -->
@@ -865,8 +865,8 @@
 
         <div class="oferta-final">
           <p class="oferta-final-titulo">¿Listo para conocerte de verdad?</p>
-          <button class="btn btn-pagar" onclick="document.getElementById('mp-pay-btn').click()">DESBLOQUEAR — $4.500</button>
-          <p class="oferta-letra">Precio de lanzamiento hasta el 31 de octubre. Desde el 1 de noviembre: $9.000.</p>
+          <button class="btn btn-pagar" onclick="document.getElementById('mp-pay-btn').click()">DESBLOQUEAR — $3.000</button>
+          <p class="oferta-letra">Precio de lanzamiento hasta el 31 de octubre. Desde el 1 de noviembre: $6.000.</p>
         </div>
 
         <div class="slider-container">
@@ -1486,7 +1486,7 @@
       document.getElementById('payment-gate').classList.remove('hidden');
       document.getElementById('actual-report').classList.add('hidden');
       gaEvent("checkout_view");
-      if (once("fb_viewcontent_" + new Date().toDateString())) fbEvent("ViewContent", { content_name: "Pantalla de pago", value: 4500, currency: "ARS" });
+      if (once("fb_viewcontent_" + new Date().toDateString())) fbEvent("ViewContent", { content_name: "Pantalla de pago", value: 3000, currency: "ARS" });
       setupPayButton();
     }
 
@@ -1518,7 +1518,7 @@
           btn.innerText = "Redirigiendo...";
           btn.style.pointerEvents = "none";
           gaEvent("checkout_click_mp");
-          fbEvent("InitiateCheckout", { value: 4500, currency: "ARS", num_items: 1 }); // Meta: inició el pago
+          fbEvent("InitiateCheckout", { value: 3000, currency: "ARS", num_items: 1 }); // Meta: inició el pago
           const basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
           basic.name = nm;
           localStorage.setItem("eneagrama_basic", JSON.stringify(basic));
@@ -1541,7 +1541,7 @@
           window.location.href = j.init_point;
         } catch(e) {
           console.error(e);
-          btn.innerText = "DESBLOQUEAR — $4.500";
+          btn.innerText = "DESBLOQUEAR — $3.000";
           btn.style.pointerEvents = "auto";
           const err = document.getElementById("checkout-err");
           if (err) { err.style.display="block"; err.innerText="Error iniciando el pago. Probá de nuevo."; }
@@ -1587,7 +1587,7 @@
         const token = p.get("token") || p.get("state") || p.get("external_reference") || localStorage.getItem("eneagrama_token") || "";
         const paymentId = p.get("payment_id") || p.get("collection_id") || "";
         if (!approved || !token || !paymentId) { console.log("[RETURN] No es un regreso de pago aprobado."); return; }
-        const price = 4500; const currency = "ARS";
+        const price = 3000; const currency = "ARS";
         localStorage.setItem("last_payment_id", paymentId);
         nav("view-loading");
         let basic = {};
