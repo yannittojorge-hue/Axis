@@ -36,10 +36,10 @@ ${bloqueRespuestas}
 REGLAS ESTRICTAS:
 1. NUNCA nombres ni insinúes el número del eneatipo, el nombre del tipo (Reformador, Ayudador, Triunfador, Individualista, Investigador, Leal, Entusiasta, Desafiador, Pacificador), el ala ni el instinto. No uses la palabra "eneatipo" seguida de un número ni la palabra "tipo" con un número.
 2. Describí su motivación de fondo, cómo procesa lo que le pasa y un patrón que probablemente reconozca, usando lo que caracteriza a ese eneatipo, pero con palabras propias.
-3. Si respondió las preguntas abiertas, retomá con naturalidad una o dos de sus respuestas (parafraseadas) para que sienta que el análisis habla de su vida.
-4. Dos párrafos, entre 90 y 130 palabras en total. Segunda persona, tono cálido, preciso y sin frases de horóscopo.
+3. Si respondió las preguntas abiertas, retomá con naturalidad una de sus respuestas (parafraseada) para que sienta que el análisis habla de su vida.
+4. Es un ADELANTO corto: un solo párrafo de 2 o 3 oraciones, entre 35 y 55 palabras. Segunda persona, tono cálido, preciso y sin frases de horóscopo.
 5. Terminá con una oración que genere curiosidad por lo que todavía no sabe (de dónde viene ese patrón, qué lo activa o hacia dónde puede crecer), sin mencionar precios ni pagos.
-6. Solo texto plano: sin títulos, sin listas, sin markdown. Separá los párrafos con una línea en blanco.
+6. Solo texto plano: sin títulos, sin listas, sin markdown.
 7. Usá voseo argentino en TODOS los verbos (sentís, tenés, experimentás, podés, ¿te preguntaste...?). Nunca uses tuteo ("experimentas", "tienes", "te has preguntado") ni "usted".`;
 
   // Por si el modelo igual se filtra: frases con el tipo, el ala o el instinto
@@ -55,7 +55,7 @@ REGLAS ESTRICTAS:
         body: JSON.stringify({
           model: "gpt-4o-mini",
           temperature: 0.8,
-          max_tokens: 400,
+          max_tokens: 220,
           messages: [{ role: "user", content: prompt + (extra || "") }],
         }),
         signal: ctrl.signal,
@@ -84,7 +84,7 @@ REGLAS ESTRICTAS:
       const r = voseo[m.toLowerCase()];
       return m[0] === m[0].toUpperCase() ? r[0].toUpperCase() + r.slice(1) : r;
     });
-    if (texto.length < 80) throw new Error("Análisis demasiado corto");
+    if (texto.length < 60) throw new Error("Análisis demasiado corto");
     return res.status(200).json({ analisis: texto });
   } catch (e) {
     console.error("Error generando análisis gratis:", e && e.message);

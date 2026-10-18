@@ -530,10 +530,137 @@
     #pdf-area .ai-text h1, #pdf-area .ai-text h2, #pdf-area .ai-text h3,
     #pdf-area .ai-text p, #pdf-area .ai-text ul, #pdf-area .ai-text ol,
     #pdf-area .ai-text li, #pdf-area .pdf-block { page-break-inside: avoid; break-inside: avoid; }
+
+    /* ═════════ LANDING (modelo 2) ═════════ */
+    body.en-home .container > header { display: none; }
+    .lp-bleed { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+    .lp-wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+    #view-home .lp-hero { background: #1F4249; color: #F4EFE9; position: relative; overflow: hidden; text-align: left; }
+    #view-home .lp-hero::after { content: ""; position: absolute; right: -140px; top: -60px; width: 420px; height: 420px; opacity: .08; pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23F4EFE9' stroke-width='1.2'%3E%3Ccircle cx='50' cy='50' r='46'/%3E%3Cpath d='M50 4 L89.8 73 H10.2 Z'/%3E%3Cpath d='M79.6 14.8 L65.7 96 L93.2 43.6 L20.4 14.8 L34.3 96 L6.8 43.6 Z'/%3E%3C/svg%3E") no-repeat center / contain; }
+    #view-home .lp-hero .lp-wrap { position: relative; z-index: 1; padding-top: 18px; padding-bottom: 34px; }
+    .lp-brand { display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.15rem; color: #F4EFE9; }
+    .lp-brand svg { width: 30px; height: 30px; }
+    .lp-hero-grid { display: grid; gap: 22px; margin-top: 26px; }
+    #view-home .lp-hero h1 { color: #F4EFE9; font-size: 2.1rem; font-weight: 700; letter-spacing: -.5px; line-height: 1.15; margin: 0; }
+    #view-home .lp-hero h1 span { color: var(--coral); }
+    .lp-lead { font-size: 1.02rem; color: rgba(244,239,233,.82); max-width: 34ch; line-height: 1.55; }
+    .lp-frases { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
+    .lp-frase { font-family: 'Lora', serif; font-style: italic; font-size: 1rem; color: #1F4249; padding: 10px 16px; border-radius: 16px 16px 16px 4px; box-shadow: 0 8px 18px rgba(0,0,0,.18); }
+    .lp-frase:nth-child(1) { background: #F4EFE9; transform: rotate(-1.5deg); }
+    .lp-frase:nth-child(2) { background: var(--coral); color: #fff; transform: rotate(1.2deg) translateX(18px); }
+    .lp-frase:nth-child(3) { background: #DCEBE2; transform: rotate(-1deg) translateX(6px); }
+    .lp-cta { display: block; width: 100%; background: var(--coral); color: #fff; border: 0; border-radius: 14px; padding: 17px 22px; font: 600 1.05rem 'Poppins', sans-serif; text-align: center; box-shadow: 0 10px 24px rgba(255,127,102,.35); cursor: pointer; transition: background .2s; }
+    .lp-cta:hover { background: #E06550; }
+    .lp-cta:focus-visible { outline: 3px solid #F4EFE9; outline-offset: 3px; }
+    .lp-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85rem; color: rgba(244,239,233,.75); margin-top: 12px; }
+    .lp-meta b { color: #F4EFE9; font-weight: 600; }
+    .lp-block { padding: 52px 0; text-align: left; }
+    .lp-block + .lp-block { padding-top: 0; }
+    .lp-kicker { font-size: .9rem; color: #66706E; margin-bottom: 6px; }
+    #view-home .lp-block h2 { font-size: 1.6rem; line-height: 1.2; margin-bottom: 10px; }
+    .lp-sub { color: #66706E; max-width: 52ch; }
+    .lp-muestra { display: grid; gap: 26px; margin-top: 26px; align-items: start; }
+    .lp-card { background: #fff; border-radius: 20px; padding: 22px; box-shadow: 0 18px 40px rgba(31,66,73,.10); }
+    .lp-card-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+    .lp-card-top b { font-family: 'Poppins', sans-serif; color: var(--blue); }
+    .lp-tag { font-size: .75rem; color: #66706E; background: #F4EFE9; border-radius: 999px; padding: 3px 10px; }
+    .lp-tipo { display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 14px; background: #FAF8F3; margin-bottom: 16px; }
+    .lp-tipo .n { font: 700 2rem 'Poppins', sans-serif; color: var(--coral); width: 52px; height: 52px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: inset 0 0 0 2px #FFDCD2; flex-shrink: 0; }
+    .lp-tipo strong { font-family: 'Poppins', sans-serif; color: var(--blue); display: block; }
+    .lp-tipo small { color: #66706E; }
+    .lp-bar { display: grid; grid-template-columns: 118px 1fr 34px; gap: 10px; align-items: center; font-size: .82rem; margin: 7px 0; color: #555; }
+    .lp-bar i { display: block; height: 9px; border-radius: 9px; background: #E9E3DA; overflow: hidden; }
+    .lp-bar i::before { content: ""; display: block; height: 100%; width: var(--v); background: #A9BDBF; border-radius: 9px; }
+    .lp-bar.top i::before { background: var(--coral); }
+    .lp-bar.top { font-weight: 600; color: var(--blue); }
+    .lp-bar span:last-child { text-align: right; }
+    .lp-nota { font-size: .82rem; color: #66706E; margin-top: 12px; }
+    .lp-incluye-tit { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--blue); margin: 0 0 10px; }
+    .lp-incluye-tit + .lp-incluye { margin-bottom: 22px; }
+    .lp-incluye { list-style: none; display: grid; gap: 12px; padding: 0; }
+    .lp-incluye li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; }
+    .lp-incluye li::before { content: ""; width: 22px; height: 22px; margin-top: 2px; border-radius: 50%; background: #DCEBE2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232E5941' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") no-repeat center / 14px; }
+    .lp-incluye.pago li::before { background: #FFDCD2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9553F' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='11' width='12' height='9' rx='2'/%3E%3Cpath d='M9 11V8a3 3 0 0 1 6 0v3'/%3E%3C/svg%3E") no-repeat center / 14px; }
+    .lp-incluye strong { color: var(--blue); font-family: 'Poppins', sans-serif; font-weight: 600; }
+    .lp-pasos { display: grid; gap: 14px; margin-top: 22px; counter-reset: p; }
+    .lp-paso { background: #fff; border-radius: 16px; padding: 18px 18px 18px 64px; position: relative; }
+    .lp-paso::before { counter-increment: p; content: counter(p); position: absolute; left: 18px; top: 18px; width: 32px; height: 32px; border-radius: 50%; background: #1F4249; color: #F4EFE9; font: 600 .95rem 'Poppins', sans-serif; display: grid; place-items: center; }
+    .lp-paso strong { font-family: 'Poppins', sans-serif; color: var(--blue); display: block; margin-bottom: 2px; }
+    .lp-paso p { color: #66706E; font-size: .95rem; }
+    .lp-faq { margin-top: 20px; display: grid; gap: 10px; }
+    .lp-faq details { background: #fff; border-radius: 14px; padding: 16px 18px; }
+    .lp-faq summary { cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--blue); list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+    .lp-faq summary::-webkit-details-marker { display: none; }
+    .lp-faq summary::after { content: "+"; color: var(--coral); font-size: 1.3rem; line-height: 1; }
+    .lp-faq details[open] summary::after { content: "–"; }
+    .lp-faq details p { margin-top: 8px; color: #66706E; font-size: .95rem; }
+    #view-home .lp-cierre { background: #1F4249; color: #F4EFE9; text-align: center; padding: 52px 0; }
+    #view-home .lp-cierre h2 { color: #F4EFE9; margin-bottom: 8px; font-size: 1.6rem; }
+    .lp-cierre p { color: rgba(244,239,233,.8); margin-bottom: 22px; }
+    .lp-cierre .lp-cta { max-width: 380px; margin: 0 auto; }
+    #view-home .site-footer { margin-top: 0; }
+    @media (min-width: 860px) {
+      #view-home .lp-hero .lp-wrap { padding-top: 26px; padding-bottom: 64px; }
+      .lp-hero-grid { grid-template-columns: 1.15fr .85fr; align-items: center; margin-top: 40px; gap: 40px; }
+      #view-home .lp-hero h1 { font-size: 3.1rem; }
+      .lp-lead { font-size: 1.15rem; }
+      .lp-frases { grid-row: 1 / span 2; grid-column: 2; gap: 14px; }
+      .lp-frase { font-size: 1.15rem; padding: 14px 20px; }
+      .lp-hero-cta { grid-column: 1; }
+      .lp-cta { width: auto; display: inline-block; padding: 18px 40px; }
+      .lp-muestra { grid-template-columns: 1fr 1fr; gap: 48px; }
+      .lp-pasos { grid-template-columns: repeat(3, 1fr); }
+      #view-home .lp-block h2, #view-home .lp-cierre h2 { font-size: 2rem; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .lp-frase { animation: lpIn .5s ease-out both; }
+      .lp-frase:nth-child(2) { animation-delay: .12s; } .lp-frase:nth-child(3) { animation-delay: .24s; }
+      @keyframes lpIn { from { opacity: 0; translate: 0 8px; } }
+    }
+
+
+    /* ═════════ RESULTADO + PAGO EN UNA PANTALLA ═════════ */
+    .rp { max-width: 520px; margin: 0 auto; padding: 4px 0 230px 0; text-align: left; }
+    .rp-etiqueta { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.35rem; color: var(--blue); margin: 4px 0 14px 0; }
+    .rp-card { background: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 10px 30px rgba(31,66,73,.08); margin-bottom: 16px; }
+    .rp-ia-tit { font-size: .85rem; font-weight: 600; color: var(--coral); margin-bottom: 8px; }
+    #analisis-ia-texto p { font-size: 1.08rem; line-height: 1.6; color: #2F3A39; margin-bottom: 10px; }
+    .rp-ia-pie { font-size: .85rem; font-style: italic; color: #888; margin-top: 4px; }
+    .rp-lock { cursor: pointer; }
+    .rp-lock-fila { display: grid; grid-template-columns: 48px 1fr 22px; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid #F0EBE4; }
+    .rp-lock-fila:last-of-type { border-bottom: 0; }
+    .rp-num { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font: 700 1.3rem 'Poppins', sans-serif; color: var(--coral); background: #FFF1EC; }
+    .rp-lock-fila small { display: block; font-size: .8rem; color: #888; }
+    .rp-lock-fila b { font-family: 'Poppins', sans-serif; color: var(--blue); font-size: 1rem; }
+    .rp-tapa { display: inline-block; background: #E9E3DA; color: transparent; border-radius: 6px; filter: blur(1.5px); user-select: none; }
+    .rp-lock-pie { text-align: center; font-weight: 600; color: var(--blue); margin-top: 12px; }
+    .rp-lock-pie small { display: block; font-weight: 400; color: #888; font-size: .85rem; }
+    .rp .puntajes { max-width: none; margin: 0 0 16px 0; background: #fff; box-shadow: 0 10px 30px rgba(31,66,73,.08); }
+    .rp .incluye, .rp .muestra-reporte, .rp .pago-seguro { max-width: none; }
+    .rp-barra { display: none; }
+    body.en-pago .rp-barra { display: block; }
+    .rp-barra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; background: #fff; box-shadow: 0 -10px 30px rgba(31,66,73,.14); border-radius: 18px 18px 0 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)) 16px; }
+    .rp-barra-in { max-width: 520px; margin: 0 auto; }
+    .rp-barra-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .rp-mp { width: 38px; height: 38px; border-radius: 10px; background: #009EE3; color: #fff; font: 700 .8rem 'Poppins', sans-serif; display: grid; place-items: center; flex-shrink: 0; }
+    .rp-barra-top div { line-height: 1.2; }
+    .rp-barra-top b { display: block; font-family: 'Poppins', sans-serif; color: var(--blue); font-size: .95rem; }
+    .rp-barra-top small { color: #888; font-size: .78rem; }
+    .rp-precio { margin-left: auto; text-align: right; }
+    .rp-precio s { color: #999; font-size: .85rem; margin-right: 4px; }
+    .rp-precio strong { font: 700 1.35rem 'Poppins', sans-serif; color: var(--blue); }
+    .rp-precio small { display: block; color: #C9553F; font-weight: 600; }
+    .rp-btn { width: 100%; border: 0; border-radius: 14px; padding: 15px; background: #009EE3; color: #fff; font: 600 1.05rem 'Poppins', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .rp-btn:hover { background: #0088c4; }
+    .rp-btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+    .rp-btn[disabled] { opacity: .7; }
+    .rp-barra-pie { text-align: center; font-size: .75rem; color: #777; margin-top: 8px; }
+    .rp-barra #checkout-name { margin-bottom: 8px; }
   </style>
 </head>
 
-<body>
+<body class="en-home">
   <div class="container">
     <header>
       <div class="logo" onclick="location.reload()">
@@ -542,95 +669,70 @@
       </div>
     </header>
 
-    <div style="text-align: center; margin-bottom: 20px;">
-      <div class="badge-verified" style="margin-bottom: 0;">
-        <span>✓</span> Basado en metodología Riso-Hudson & Psicología Transpersonal
-      </div>
-    </div>
-
-    <div style="text-align:center; margin: 10px 0 25px 0;">
-      <div class="social-proof" style="background:#fff3ef; color:#E06550;">
-        🔥 +<span id="contador-personas">10.000</span> personas en Argentina ya hicieron el test
-      </div>
-    </div>
-
     <!-- ==================== VISTA HOME ==================== -->
     <div id="view-home" class="fade-in">
-      <section class="hero hero-landing">
-        <h1 style="margin-bottom: 15px;">Descubrí tu verdadera<br><span class="highlight">Arquitectura interna.</span></h1>
-        <p style="font-size:1.2rem; max-width:700px; margin:0 auto 30px auto; opacity:0.8; line-height: 1.6;">
-          El test de personalidad más preciso para identificar tu Eneatipo, entender tus motivaciones inconscientes y potenciar tu crecimiento personal.
-        </p>
-        <button class="btn" onclick="beginTest()" style="padding: 20px 50px; font-size: 1.1rem; margin-bottom: 20px;">
-          EMPEZAR TEST
-        </button>
-        <div style="font-size: 0.8rem; color: #888; margin-bottom: 8px;">
-          ⏱ Toma entre 5 y 7 minutos • 🔒 Tus datos están seguros y sin crear cuenta
-        </div>
-        <p class="aviso-precio" style="margin-bottom: 60px;">Al terminar recibís un análisis breve de tu perfil, escrito a partir de tus respuestas.</p>
-
-        <div class="benefits-grid" style="margin-bottom: 60px;">
-          <div class="benefit-card">
-            <div class="benefit-icon">🧠</div>
-            <div class="benefit-title">Tu Perfil Nuclear</div>
-            <div class="benefit-desc">Identificá la estructura que organiza tus decisiones, miedos y prioridades - incluso cuando no sos consciente de ello.</div>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">🛡️</div>
-            <div class="benefit-title">Mecanismos de Defensa</div>
-            <div class="benefit-desc">Detectá los automatismos que se activan bajo estrés y aprendé cómo interrumpirlos antes de que tomen el control.</div>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">🚀</div>
-            <div class="benefit-title">Ruta de Crecimiento Personalizada</div>
-            <div class="benefit-desc">Estrategias concretas para desarrollar lo que tu eneatipo necesita integrar y dejar de reforzar lo que te limita.</div>
-          </div>
-        </div>
-
-        <div style="background:white; padding:40px 30px; border-radius:20px; text-align:left; border: 1px solid rgba(0,0,0,0.05); max-width: 600px; margin: 0 auto 60px auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
-          <h3 style="font-size:1.4rem; margin-bottom:25px; color:var(--blue); font-weight: 700; text-align: center;">
-            Qué vas a entender sobre vos (y qué vas a poder cambiar)</h3>
-          <div class="feature-list" style="margin:0 auto;">
-            <div class="feature-item">
-              <div class="icon-check">✓</div>
-              <div><strong>Tu Eneatipo dominante, Ala e Instinto:</strong> Cómo se combina tu estructura central y por qué reaccionás como reaccionás.</div>
+      <section class="lp-hero lp-bleed">
+        <div class="lp-wrap">
+          <div class="lp-brand"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" aria-hidden="true"><circle cx="50" cy="50" r="45"/><path d="M50 5 L89 72 H11 Z"/><path d="M79 15 L66 95 L93 44 L21 15 L34 95 L7 44 Z"/></svg>Mi Eneatipo</div>
+          <div class="lp-hero-grid">
+            <h1>¿Por qué reaccionás <span>como reaccionás?</span></h1>
+            <div class="lp-frases" aria-label="Ejemplos de frases del test">
+              <div class="lp-frase">“Si no lo hago yo, no sale bien.”</div>
+              <div class="lp-frase">“Siempre imagino lo peor, por las dudas.”</div>
+              <div class="lp-frase">“Prefiero ceder antes que discutir.”</div>
             </div>
-            <div class="feature-item">
-              <div class="icon-check">✓</div>
-              <div>Análisis de tu <strong>Herida de Origen y Deseo Básico:</strong> El motor inconsciente que dirige tus decisiones, vínculos y formas de protegerte.</div>
-            </div>
-            <div class="feature-item">
-              <div class="icon-check">✓</div>
-              <div><strong>Estrategias y prácticas personalizadas:</strong> Acciones concretas adaptadas a tu eneatipo para salir del piloto automático.</div>
-            </div>
-            <div class="feature-item">
-              <div class="icon-check">✓</div>
-              <div><strong>Informe digital completo:</strong> Un mapa claro de tu estructura interna y tu ruta de crecimiento personal.</div>
+            <div class="lp-hero-cta">
+              <p class="lp-lead">El Eneagrama describe 9 formas de ver el mundo. Este test descubre cuál es la tuya a partir de lo que te motiva, no solo de cómo te comportás.</p>
+              <div style="margin-top:20px">
+                <button class="lp-cta" onclick="beginTest()">HACER EL TEST</button>
+                <div class="lp-meta"><span><b>5 a 7 minutos</b></span><span>Desde el celular</span><span>Sin crear cuenta</span></div>
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div style="background:white; padding:40px 30px; border-radius:20px; margin: 0 auto 40px auto; max-width: 800px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
-          <h3 style="text-align:center; font-size:1.4rem; margin-bottom: 25px;">¿Cómo funciona?</h3>
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px;">
-            <div style="text-align:center; padding: 10px;">
-              <div style="width:42px;height:42px;border-radius:50%;background:#fff3ef;color:#E06550;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">1</div>
-              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Respondé las preguntas</div>
-              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Toma entre 5 y 7 minutos desde el celular.</div>
-            </div>
-            <div style="text-align:center; padding: 10px;">
-              <div style="width:42px;height:42px;border-radius:50%;background:#e6f4ea;color:var(--green);font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</div>
-              <div style="font-weight:800; margin-top:10px; color:var(--blue);">La IA analiza</div>
-              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Basada en el método Riso-Hudson, mide motivaciones (no solo conductas).</div>
-            </div>
-            <div style="text-align:center; padding: 10px;">
-              <div style="width:42px;height:42px;border-radius:50%;background:#eef2ff;color:var(--blue);font-weight:800;display:inline-flex;align-items:center;justify-content:center;">3</div>
-              <div style="font-weight:800; margin-top:10px; color:var(--blue);">Recibís tu resultado</div>
-              <div style="font-size:0.95rem; color:#666; margin-top:6px;">Al terminar ves un análisis breve de tu perfil. Luego de pagar, recibís tu eneatipo, ala, instinto y el reporte completo.</div>
-            </div>
+      <section class="lp-block">
+        <p class="lp-kicker">Lo que vas a recibir</p>
+        <h2>Tu perfil, explicado con tus propias respuestas</h2>
+        <p class="lp-sub">Al terminar ves un análisis breve de tu perfil. Luego de pagar, recibís tu resultado completo y el reporte.</p>
+        <div class="lp-muestra">
+          <div class="lp-card" aria-label="Ejemplo de resultado">
+            <div class="lp-card-top"><b>Tu resultado completo</b><span class="lp-tag">Ejemplo</span></div>
+            <div class="lp-tipo"><div class="n">6</div><div><strong>El Leal</strong><small>Ala 5 · Instinto de autoconservación</small></div></div>
+            <div class="lp-bar top"><span>6 · Leal</span><i style="--v:86%"></i><span>86</span></div>
+            <div class="lp-bar"><span>5 · Investigador</span><i style="--v:71%"></i><span>71</span></div>
+            <div class="lp-bar"><span>9 · Pacificador</span><i style="--v:64%"></i><span>64</span></div>
+            <div class="lp-bar"><span>1 · Reformador</span><i style="--v:52%"></i><span>52</span></div>
+            <div class="lp-bar"><span>2 · Ayudador</span><i style="--v:41%"></i><span>41</span></div>
+            <p class="lp-nota">Ejemplo ilustrativo. Tu resultado se calcula con tus respuestas.</p>
+          </div>
+          <div>
+            <p class="lp-incluye-tit">Al terminar el test</p>
+            <ul class="lp-incluye">
+              <li><div><strong>Un análisis breve de tu perfil</strong><br>Escrito a partir de lo que respondiste.</div></li>
+            </ul>
+            <p class="lp-incluye-tit">En tu resultado completo</p>
+            <ul class="lp-incluye pago">
+              <li><div><strong>Tu eneatipo, tu ala y tu instinto</strong><br>Con tu puntaje en los 9 tipos.</div></li>
+              <li><div><strong>Tu tipo más compatible</strong><br>Y cómo te relacionás con cada uno de los 9.</div></li>
+              <li><div><strong>Tu herida de origen y cómo reaccionás bajo estrés</strong><br>El motor que explica por qué decidís como decidís.</div></li>
+              <li><div><strong>Tu camino de crecimiento</strong><br>Prácticas concretas, en un PDF que también te llega por email.</div></li>
+            </ul>
           </div>
         </div>
+      </section>
 
+      <section class="lp-block">
+        <h2>Cómo funciona</h2>
+        <div class="lp-pasos">
+          <div class="lp-paso"><strong>Respondé las preguntas</strong><p>Afirmaciones sobre cómo pensás y sentís. Toma entre 5 y 7 minutos.</p></div>
+          <div class="lp-paso"><strong>La IA analiza tus respuestas</strong><p>Con el método Riso-Hudson, que mide motivaciones y no solo conductas.</p></div>
+          <div class="lp-paso"><strong>Recibís tu resultado</strong><p>Al terminar ves un análisis breve de tu perfil. Luego de pagar, recibís tu eneatipo, ala, instinto y el reporte completo.</p></div>
+        </div>
+      </section>
+
+      <section class="lp-block">
         <div class="slider-container">
           <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
           <div class="slider-wrapper">
@@ -648,12 +750,27 @@
             <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
           </div>
         </div>
-
-        <button class="btn" onclick="beginTest()" style="padding: 20px 50px; font-size: 1.1rem; margin-top: 20px;">
-          EMPEZAR TEST
-        </button>
       </section>
-      <footer class="site-footer">© 2026 Mi Eneatipo Argentina. Todos los derechos reservados.</footer>
+
+      <section class="lp-block">
+        <h2>Preguntas frecuentes</h2>
+        <div class="lp-faq">
+          <details open><summary>¿Hacer el test cuesta algo?</summary><p>Hacer el test y ver el análisis breve de tu perfil no tiene costo. El resultado completo, con tu eneatipo y el reporte, es pago: lo decidís después de ver tu análisis.</p></details>
+          <details><summary>¿Cuánto tarda?</summary><p>Entre 5 y 7 minutos. Podés hacerlo desde el celular.</p></details>
+          <details><summary>¿Para qué me piden el email?</summary><p>Para guardarte el resultado y mandártelo, así no tenés que repetir el test.</p></details>
+          <details><summary>¿En qué se basa?</summary><p>En el modelo de Eneagrama de Riso y Hudson: 9 tipos de personalidad definidos por la motivación de fondo de cada persona.</p></details>
+          <details><summary>¿Cómo se paga el reporte?</summary><p>Con Mercado Pago, en un solo pago y sin suscripciones. Si el reporte no te aporta valor, en los primeros 7 días te devolvemos el dinero.</p></details>
+        </div>
+      </section>
+
+      <section class="lp-cierre lp-bleed">
+        <div class="lp-wrap">
+          <h2>¿Cuál de las 9 sos vos?</h2>
+          <p>5 a 7 minutos. Sin crear cuenta.</p>
+          <button class="lp-cta" onclick="beginTest()">HACER EL TEST</button>
+        </div>
+      </section>
+      <footer class="site-footer">© 2026 Mi Eneatipo · Pagos procesados por Mercado Pago</footer>
     </div>
 
     <!-- ==================== VISTA QUIZ ==================== -->
@@ -717,29 +834,23 @@
       <p>Esto puede tardar unos segundos.</p>
     </div>
 
-    <!-- ==================== PANTALLA A: ADELANTO DEL RESULTADO ==================== -->
-    <!-- No revela el eneatipo, el ala ni el instinto: eso se desbloquea con el pago. -->
+    <!-- ==================== RESULTADO + PAGO (una sola pantalla) ==================== -->
+    <!-- Adelanto corto gratis. El eneatipo, el ala, el instinto y la compatibilidad se desbloquean con el pago. -->
     <div id="view-reveal" class="hidden fade-in">
-      <div class="reveal-box">
-        <p class="adelanto-etiqueta">Tu resultado está listo</p>
-        <h2 class="adelanto-titulo" id="adelanto-titulo">Tu perfil ya está calculado</h2>
+      <div class="rp">
+        <p class="rp-etiqueta">Tu resultado</p>
 
-        <div class="analisis-ia" id="analisis-ia" hidden>
-          <p class="analisis-ia-titulo">Tu análisis de perfil</p>
+        <div class="rp-card" id="analisis-ia" hidden>
+          <p class="rp-ia-tit">✨ Análisis de IA</p>
           <div id="analisis-ia-texto"></div>
+          <p class="rp-ia-pie">Este es solo un adelanto de lo que descubrimos sobre vos…</p>
         </div>
 
-        <div class="centro-card">
-          <svg class="centro-rueda" id="centro-rueda" viewBox="0 0 120 120" aria-hidden="true"></svg>
-          <p class="centro-nombre" id="centro-nombre">Tu centro dominante es el emocional</p>
-          <p class="centro-texto" id="centro-texto"></p>
-          <p class="centro-pie">Dentro de este centro hay tres eneatipos con motivaciones muy distintas. Cuál es el tuyo ya está calculado.</p>
-        </div>
-
-        <div class="bloqueados" onclick="showPaymentGate()" role="button" tabindex="0" aria-label="Desbloquear eneatipo, ala e instinto">
-          <div><span>Eneatipo</span><b>🔒</b></div>
-          <div><span>Ala</span><b>🔒</b></div>
-          <div><span>Instinto</span><b>🔒</b></div>
+        <div class="rp-card rp-lock" onclick="document.getElementById('mp-pay-btn').click()" role="button" tabindex="0" aria-label="Desbloquear mi resultado">
+          <div class="rp-lock-fila"><span class="rp-num">?</span><div><small>Tu eneatipo</small><b>Tipo ? · El <span class="rp-tapa">Individualista</span></b></div><span>🔒</span></div>
+          <div class="rp-lock-fila"><span class="rp-num">✦</span><div><small>Tu ala y tu instinto</small><b><span class="rp-tapa">Ala 5 · Social</span></b></div><span>🔒</span></div>
+          <div class="rp-lock-fila"><span class="rp-num">♥</span><div><small>Tu tipo más compatible</small><b>Tipo ? · El <span class="rp-tapa">Pacificador</span></b></div><span>🔒</span></div>
+          <p class="rp-lock-pie">Tu tipo está listo<small>Desbloqueá tu análisis completo</small></p>
         </div>
 
         <div class="puntajes" id="puntajes" hidden>
@@ -749,20 +860,73 @@
           <p class="puntajes-nota">Los nombres de cada tipo se desbloquean con tu resultado completo.</p>
         </div>
 
-        <div class="blur-preview">
-          <div class="blur-preview-text">
-            Tu herida de origen está ligada a una experiencia temprana que todavía hoy organiza tus decisiones. Tu deseo fundamental explica por qué ciertas situaciones te movilizan tanto, y tu mecanismo de defensa se activa justo cuando más necesitás claridad. Tu camino de integración empieza cuando...
+      <!-- Qué incluye el reporte -->
+      <div class="incluye">
+        <h3 class="incluye-titulo">Tu análisis completo incluye</h3>
+        <ol class="incluye-lista">
+          <li><strong>Tu resultado exacto</strong><span>Tu eneatipo, tu ala y tu instinto, con tu puntaje en los 9 tipos.</span></li>
+          <li><strong>Tus vínculos</strong><span>Tu tipo más compatible y cómo te relacionás con cada uno de los 9.</span></li>
+          <li><strong>Tu perfil nuclear</strong><span>Tu eneatipo con su ala, tu herida de origen, tu deseo fundamental y tu miedo básico.</span></li>
+          <li><strong>Tu subtipo instintivo</strong><span>Cómo tu instinto dominante cambia la forma en que se expresa tu tipo.</span></li>
+          <li><strong>Tu sombra</strong><span>Tu mecanismo de defensa y cómo reaccionás bajo estrés.</span></li>
+          <li><strong>Tu camino de integración</strong><span>Hacia dónde crecés cuando estás en tu mejor versión.</span></li>
+          <li><strong>Prácticas concretas</strong><span>Ejercicios para salir del piloto automático en tu día a día.</span></li>
+          <li><strong>Personajes de tu tipo</strong><span>Personajes y figuras conocidas que suelen asociarse a tu eneatipo.</span></li>
+        </ol>
+        <ul class="incluye-formato"><li>Escrito con tu nombre</li><li>Armado con tus respuestas</li><li>Descargable en PDF</li></ul>
+      </div>
+
+      <!-- Muestra del reporte -->
+      <div class="muestra-reporte">
+        <p class="muestra-titulo">Así es el reporte por dentro</p>
+        <div class="muestra-hoja">
+          <div class="hoja-cabecera">
+            <svg class="hoja-simbolo" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><polygon points="20,4 33.9,28 6.1,28" fill="none" stroke="currentColor" stroke-width="1.2"/><polyline points="30.3,7.7 8.3,30.3 35.8,15.9 4.2,15.9 31.7,30.3 9.7,7.7" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/></svg>
+            <div>
+              <p class="hoja-nombre">Tu mapa interno</p>
+              <div class="hoja-chips"><span>Eneatipo 4</span><span>Ala 5</span><span>Instinto Social</span></div>
+            </div>
           </div>
-          <div class="blur-overlay">
-            <span class="blur-label">🔒 En tu reporte completo</span>
+          <div class="ai-text hoja-cuerpo">
+            <h3>Tu perfil nuclear</h3>
+            <p class="lead">Tu estructura se organiza alrededor de una pregunta que te acompaña desde siempre: <strong>¿quién soy realmente?</strong> Tu atención se dirige de forma automática hacia lo que falta, hacia aquello que hace que tu experiencia sea distinta a la de los demás.</p>
+            <div class="clave">
+              <p><strong>Deseo fundamental</strong>Encontrar tu identidad y tu significado personal.</p>
+              <p><strong>Miedo básico</strong>No tener una identidad ni una importancia propias.</p>
+            </div>
+            <p>El <strong>Ala 5</strong> le suma una cualidad más introspectiva: procesás lo que sentís en soledad antes de compartirlo, y eso te da originalidad, aunque también puede llevarte a retirarte cuando te sentís incomprendido.</p>
+            <blockquote>Lo que vivís como una carencia es, muchas veces, la puerta a tu mayor profundidad.</blockquote>
+            <h3>Tu subtipo instintivo</h3>
+            <p>En el subtipo Social, la búsqueda de identidad se juega frente al grupo: comparás tu lugar con el de los demás y registrás con mucha precisión dónde no encajás. Esa comparación constante puede convertirse en</p>
+          </div>
+          <div class="hoja-corte"><span>🔒 Sigue en tu reporte completo</span></div>
+        </div>
+        <p class="muestra-pie">Ejemplo para un perfil Tipo 4 con Ala 5 e instinto Social. El tuyo se arma con tu propio resultado y suma más secciones: tu sombra, tus vínculos, tu camino de integración y prácticas concretas.</p>
+      </div>
+
+      <div class="slider-container">
+          <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
+          <div class="slider-wrapper">
+            <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
+            <div class="slider-window">
+              <div class="slider-track" id="track-result">
+                <div class="slide"><img class="slide-avatar" src="/fotos/martina.jpg" alt="Martina Sánchez" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad."</span><span class="author-name">Martina Sánchez</span><span class="author-type">34 años, Córdoba</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/julian.jpg" alt="Julián Mendez" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona."</span><span class="author-name">Julián Mendez</span><span class="author-type">31 años, Buenos Aires</span></div></div>
+                <div class="slide"><img class="slide-avatar" src="/fotos/clara.jpg" alt="Clara Fernández" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">29 años, Buenos Aires</span></div></div>
+              </div>
+            </div>
+            <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
           </div>
         </div>
 
-        <button class="btn" onclick="showPaymentGate()" style="width:100%; max-width:400px; padding:18px;">
-          DESBLOQUEAR MI RESULTADO
-        </button>
+      <div class="pago-seguro">
+        <h3>Pago 100% seguro</h3>
+        <p>El pago se procesa en Mercado Pago: tus datos de tarjeta nunca pasan por nuestro sitio.</p>
+        <ul class="pago-chips"><li>Tarjeta de crédito</li><li>Tarjeta de débito</li><li>Dinero en Mercado Pago</li></ul>
+        <p>Pago único, sin suscripciones ni débitos automáticos. Si el reporte no te aporta valor, en los primeros 7 días te devolvemos el 100%.</p>
       </div>
-      <footer class="site-footer">© 2026 Mi Eneatipo Argentina. Todos los derechos reservados.</footer>
+
+      </div>
     </div>
 
     <!-- ==================== PANTALLA B: CAPTURA DE EMAIL ==================== -->
@@ -792,98 +956,7 @@
     <div id="view-result" class="hidden fade-in">
       <div id="error-msg" style="display:none; background:#fff3ef; color:#E06550; padding:12px 14px; border-radius:12px; font-weight:700; margin: 20px auto; max-width: 700px;"></div>
 
-      <div id="payment-gate" class="pay-gate">
-        <!-- Arriba de todo: precio y botón, sin campos para completar -->
-        <div class="oferta-top">
-          <p class="oferta-badge">🔥 Precio de lanzamiento: 50% OFF hasta el 31 de octubre</p>
-          <p class="pago-centro" id="pago-centro" hidden></p>
-          <h2 class="oferta-titulo">Desbloqueá tu resultado completo</h2>
-          <p class="oferta-sub">Tu eneatipo, tu ala, tu instinto y tu reporte personalizado.</p>
-          <div class="oferta-precio"><s>$6.000</s><strong>$3.000</strong><span>ARS</span></div>
-
-          <div class="input-group" id="checkout-name-group" style="max-width:420px; margin: 0 auto 15px auto;" hidden>
-            <label for="checkout-name" style="text-align:left;">¿Cómo te gustaría que aparezca tu nombre en el reporte?</label>
-            <input type="text" id="checkout-name" placeholder="Tu nombre" />
-          </div>
-          <div id="checkout-err" style="display:none; color:red; font-weight:600; margin-bottom:10px;"></div>
-
-          <button id="mp-pay-btn" class="btn btn-pagar">DESBLOQUEAR — $3.000</button>
-          <div class="oferta-confianza">
-            <span>🔒 Pago con Mercado Pago</span><span>Pago único</span><span>🛡️ Garantía de 7 días</span>
-          </div>
-          <p class="oferta-letra">Desde el 1 de noviembre el precio regular es $6.000.</p>
-        </div>
-
-        <!-- Qué incluye el reporte -->
-        <div class="incluye">
-          <h3 class="incluye-titulo">Qué incluye tu reporte</h3>
-          <ol class="incluye-lista">
-            <li><strong>Tu resultado exacto</strong><span>Tu eneatipo, tu ala y tu instinto, calculados con tus respuestas.</span></li>
-            <li><strong>Tu perfil nuclear</strong><span>Tu eneatipo con su ala, tu herida de origen, tu deseo fundamental y tu miedo básico.</span></li>
-            <li><strong>Tu subtipo instintivo</strong><span>Cómo tu instinto dominante cambia la forma en que se expresa tu tipo.</span></li>
-            <li><strong>Tu sombra</strong><span>Tu mecanismo de defensa y cómo reaccionás bajo estrés.</span></li>
-            <li><strong>Tu camino de integración</strong><span>Hacia dónde crecés cuando estás en tu mejor versión.</span></li>
-            <li><strong>Prácticas concretas</strong><span>Ejercicios para salir del piloto automático en tu día a día.</span></li>
-          </ol>
-          <ul class="incluye-formato"><li>Escrito con tu nombre</li><li>Armado con tus respuestas</li><li>Descargable en PDF</li></ul>
-        </div>
-
-        <!-- Muestra del reporte -->
-        <div class="muestra-reporte">
-          <p class="muestra-titulo">Así es el reporte por dentro</p>
-          <div class="muestra-hoja">
-            <div class="hoja-cabecera">
-              <svg class="hoja-simbolo" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><polygon points="20,4 33.9,28 6.1,28" fill="none" stroke="currentColor" stroke-width="1.2"/><polyline points="30.3,7.7 8.3,30.3 35.8,15.9 4.2,15.9 31.7,30.3 9.7,7.7" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/></svg>
-              <div>
-                <p class="hoja-nombre">Tu mapa interno</p>
-                <div class="hoja-chips"><span>Eneatipo 4</span><span>Ala 5</span><span>Instinto Social</span></div>
-              </div>
-            </div>
-            <div class="ai-text hoja-cuerpo">
-              <h3>Tu perfil nuclear</h3>
-              <p class="lead">Tu estructura se organiza alrededor de una pregunta que te acompaña desde siempre: <strong>¿quién soy realmente?</strong> Tu atención se dirige de forma automática hacia lo que falta, hacia aquello que hace que tu experiencia sea distinta a la de los demás.</p>
-              <div class="clave">
-                <p><strong>Deseo fundamental</strong>Encontrar tu identidad y tu significado personal.</p>
-                <p><strong>Miedo básico</strong>No tener una identidad ni una importancia propias.</p>
-              </div>
-              <p>El <strong>Ala 5</strong> le suma una cualidad más introspectiva: procesás lo que sentís en soledad antes de compartirlo, y eso te da originalidad, aunque también puede llevarte a retirarte cuando te sentís incomprendido.</p>
-              <blockquote>Lo que vivís como una carencia es, muchas veces, la puerta a tu mayor profundidad.</blockquote>
-              <h3>Tu subtipo instintivo</h3>
-              <p>En el subtipo Social, la búsqueda de identidad se juega frente al grupo: comparás tu lugar con el de los demás y registrás con mucha precisión dónde no encajás. Esa comparación constante puede convertirse en</p>
-            </div>
-            <div class="hoja-corte"><span>🔒 Sigue en tu reporte completo</span></div>
-          </div>
-          <p class="muestra-pie">Ejemplo para un perfil Tipo 4 con Ala 5 e instinto Social. El tuyo se arma con tu propio resultado y suma tres secciones más: tu sombra, tu camino de integración y prácticas concretas.</p>
-        </div>
-
-        <div class="pago-seguro">
-          <h3>Pago 100% seguro</h3>
-          <p>El pago se procesa en Mercado Pago: tus datos de tarjeta nunca pasan por nuestro sitio.</p>
-          <ul class="pago-chips"><li>Tarjeta de crédito</li><li>Tarjeta de débito</li><li>Dinero en Mercado Pago</li></ul>
-          <p>Pago único, sin suscripciones ni débitos automáticos. Si el reporte no te aporta valor, en los primeros 7 días te devolvemos el 100%.</p>
-        </div>
-
-        <div class="oferta-final">
-          <p class="oferta-final-titulo">¿Listo para conocerte de verdad?</p>
-          <button class="btn btn-pagar" onclick="document.getElementById('mp-pay-btn').click()">DESBLOQUEAR — $3.000</button>
-          <p class="oferta-letra">Precio de lanzamiento hasta el 31 de octubre. Desde el 1 de noviembre: $6.000.</p>
-        </div>
-
-        <div class="slider-container">
-          <h3 class="slider-title">💬 La opinión de nuestros usuarios</h3>
-          <div class="slider-wrapper">
-            <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
-            <div class="slider-window">
-              <div class="slider-track" id="track-result">
-                <div class="slide"><img class="slide-avatar" src="/fotos/martina.jpg" alt="Martina Sánchez" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Hice otros tests antes pero eran muy genéricos. Este fue distinto: me hizo reflexionar de verdad."</span><span class="author-name">Martina Sánchez</span><span class="author-type">34 años, Córdoba</span></div></div>
-                <div class="slide"><img class="slide-avatar" src="/fotos/julian.jpg" alt="Julián Mendez" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Entender mi 'miedo a perderme algo' fue clave para enfocarme. De verdad funciona."</span><span class="author-name">Julián Mendez</span><span class="author-type">31 años, Buenos Aires</span></div></div>
-                <div class="slide"><img class="slide-avatar" src="/fotos/clara.jpg" alt="Clara Fernández" width="90" height="90" loading="lazy"><div class="slide-content"><div class="stars">★★★★★</div><span class="quote-text">"Me describió tal cual. La guía de crecimiento me ayuda un montón."</span><span class="author-name">Clara Fernández</span><span class="author-type">29 años, Buenos Aires</span></div></div>
-              </div>
-            </div>
-            <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
-          </div>
-        </div>
-      </div>
+      <div id="payment-gate" class="hidden"></div>
 
       <!-- Reporte desbloqueado -->
       <div id="actual-report" class="hidden">
@@ -926,6 +999,23 @@
 
   </div><!-- /container -->
 
+  <!-- Barra de pago fija de la pantalla de resultado (fuera del contenedor animado) -->
+  <div class="rp-barra">
+    <div class="rp-barra-in">
+      <div class="rp-barra-top">
+        <span class="rp-mp" aria-hidden="true">MP</span>
+        <div><b>Pago seguro</b><small>Mercado Pago</small></div>
+        <div class="rp-precio"><s>$6.000</s><strong>$3.000</strong><small>50% OFF hasta el 31/10</small></div>
+      </div>
+      <div id="checkout-name-group" hidden>
+        <input type="text" id="checkout-name" placeholder="Tu nombre (para tu reporte)" autocomplete="given-name" />
+      </div>
+      <div id="checkout-err" style="display:none; color:#C9553F; font-weight:600; font-size:.85rem; margin-bottom:8px; text-align:center;"></div>
+      <button id="mp-pay-btn" class="rp-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span id="mp-pay-txt">Desbloquear mi resultado</span></button>
+      <p class="rp-barra-pie">Pago único · Acceso inmediato · Resultado por email · Garantía de 7 días</p>
+    </div>
+  </div>
+
   <script>
 
     const eneatipoData = {
@@ -956,6 +1046,8 @@
     function nav(id) {
       document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
       document.getElementById(id).classList.remove('hidden');
+      document.body.classList.toggle('en-home', id === 'view-home');
+      document.body.classList.toggle('en-pago', id === 'view-reveal');
       window.scrollTo(0, 0);
     }
 
@@ -1310,7 +1402,7 @@
       try {
         const r = await fetch('/api/contador', { cache: 'no-store' });
         if (r.ok) mostrarContador((await r.json()).total);
-        else if (r.status === 503) clearInterval(contadorInterval); // todavía sin base de datos
+        
       } catch (e) {}
     }
     async function sumarAlContador() {
@@ -1321,9 +1413,6 @@
         if (r.ok) mostrarContador((await r.json()).total);
       } catch (e) {}
     }
-    leerContador();
-    // Se actualiza cada 20 segundos mientras la página está a la vista
-    const contadorInterval = setInterval(() => { if (!document.hidden) leerContador(); }, 20000);
 
     // ─── FINISH: muestra la pantalla A (reveal) ──────────────────────────────
     async function finish() {
@@ -1339,8 +1428,7 @@
         }));
         try { localStorage.setItem('eneagrama_abiertas', JSON.stringify(abiertasParaEnviar())); } catch (e) {}
 
-        // Pantalla A: solo el adelanto (centro dominante y puntajes sin nombres)
-        mostrarCentro(tipo);
+        // Pantalla de resultado: adelanto y puntajes sin nombres
         mostrarPuntajes(resultado);
 
         gaEvent("quiz_complete", { eneatipo: tipo });
@@ -1460,8 +1548,7 @@
       } else {
         gaEvent("analisis_fallo");
       }
-      nav('view-reveal');
-      animarPuntajes();
+      entrarPantallaPago();
     }
 
     // ─── SKIP: salta la captura de email y va directo al pago ────────────────
@@ -1471,24 +1558,21 @@
     }
 
     // ─── MOSTRAR PANTALLA DE PAGO ─────────────────────────────────────────────
-    function showPaymentGate() {
-      nav('view-result');
+    function entrarPantallaPago() {
+      nav('view-reveal');
+      animarPuntajes();
       try {
         const b = JSON.parse(localStorage.getItem('eneagrama_basic') || '{}');
-        const centro = centroDeTipo(b.type);
-        const chip = document.getElementById('pago-centro');
-        if (chip && centro) { chip.innerText = "Tu centro dominante: " + centro.nombre; chip.hidden = false; }
         const nameIn = document.getElementById('checkout-name');
         if (nameIn && b.name && !nameIn.value) nameIn.value = b.name;
-        const grupo = document.getElementById('checkout-name-group');
-        if (grupo) grupo.hidden = !!(nameIn && nameIn.value.trim());
+        document.getElementById('checkout-name-group').hidden = !!(nameIn && nameIn.value.trim());
       } catch (e) {}
-      document.getElementById('payment-gate').classList.remove('hidden');
-      document.getElementById('actual-report').classList.add('hidden');
       gaEvent("checkout_view");
       if (once("fb_viewcontent_" + new Date().toDateString())) fbEvent("ViewContent", { content_name: "Pantalla de pago", value: 3000, currency: "ARS" });
       setupPayButton();
     }
+    // Se mantiene el nombre por los links de los emails y los botones viejos
+    function showPaymentGate() { entrarPantallaPago(); }
 
     // ─── COUNTDOWN 15 MINUTOS ─────────────────────────────────────────────────
     function startCountdown() {
@@ -1515,8 +1599,8 @@
         if (!nm) { const g=document.getElementById("checkout-name-group"); if(g) g.hidden=false; if(err){err.style.display="block"; err.innerText="Por favor ingresá tu nombre.";} document.getElementById("checkout-name")?.focus(); return; }
         if (err) err.style.display = "none";
         try {
-          btn.innerText = "Redirigiendo...";
-          btn.style.pointerEvents = "none";
+          document.getElementById("mp-pay-txt").innerText = "Abriendo Mercado Pago...";
+          btn.disabled = true;
           gaEvent("checkout_click_mp");
           fbEvent("InitiateCheckout", { value: 3000, currency: "ARS", num_items: 1 }); // Meta: inició el pago
           const basic = JSON.parse(localStorage.getItem("eneagrama_basic") || "{}");
@@ -1541,8 +1625,8 @@
           window.location.href = j.init_point;
         } catch(e) {
           console.error(e);
-          btn.innerText = "DESBLOQUEAR — $3.000";
-          btn.style.pointerEvents = "auto";
+          document.getElementById("mp-pay-txt").innerText = "Desbloquear mi resultado";
+          btn.disabled = false;
           const err = document.getElementById("checkout-err");
           if (err) { err.style.display="block"; err.innerText="Error iniciando el pago. Probá de nuevo."; }
         }

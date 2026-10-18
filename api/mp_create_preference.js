@@ -30,6 +30,8 @@ const preferenceBody = {
     },
   ],
   external_reference: token,
+  // Aviso de Mercado Pago: manda el reporte por email aunque la persona no vuelva al sitio
+  notification_url: `${baseUrl}/api/mp_webhook`,
 
   back_urls: {
     success: `${baseUrl}/?mp_return=1`,
