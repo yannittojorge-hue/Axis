@@ -18,8 +18,8 @@ export default async function handler(req, res) {
     .filter(x => x.r.length >= 2);
 
   const bloqueRespuestas = respuestas.length
-    ? respuestas.map(x => `- Pregunta: "${x.p}"\n  Respuesta: "${x.r}"`).join("\n")
-    : "(No respondió las preguntas abiertas.)";
+    ? respuestas.map(x => `- Situación: "${x.p}"\n  Su reacción: "${x.r}"`).join("\n")
+    : "(No hay situaciones para retomar.)";
 
   const prompt = `Sos un psicoterapeuta experto en Eneagrama (escuela Riso-Hudson) y escribís en español rioplatense, con voseo.
 
@@ -30,13 +30,13 @@ DATOS INTERNOS (solo para que tu análisis sea preciso; NO los menciones):
 - ${limpiar(ala, 30)}
 - Instinto dominante: ${limpiar(instinto, 30)}
 
-LO QUE LA PERSONA ESCRIBIÓ:
+CÓMO DIJO QUE REACCIONA EN ALGUNAS SITUACIONES DEL TEST (eligió estas reacciones entre varias opciones):
 ${bloqueRespuestas}
 
 REGLAS ESTRICTAS:
 1. NUNCA nombres ni insinúes el número del eneatipo, el nombre del tipo (Reformador, Ayudador, Triunfador, Individualista, Investigador, Leal, Entusiasta, Desafiador, Pacificador), el ala ni el instinto. No uses la palabra "eneatipo" seguida de un número ni la palabra "tipo" con un número.
 2. Describí su motivación de fondo, cómo procesa lo que le pasa y un patrón que probablemente reconozca, usando lo que caracteriza a ese eneatipo, pero con palabras propias.
-3. Si respondió las preguntas abiertas, retomá con naturalidad una de sus respuestas (parafraseada) para que sienta que el análisis habla de su vida.
+3. Si hay situaciones, retomá con naturalidad una de ellas (parafraseada, sin citarla) para que sienta que el análisis habla de su vida.
 4. Es un ADELANTO corto: un solo párrafo de 2 o 3 oraciones, entre 35 y 55 palabras. Segunda persona, tono cálido, preciso y sin frases de horóscopo.
 5. Terminá con una oración que genere curiosidad por lo que todavía no sabe (de dónde viene ese patrón, qué lo activa o hacia dónde puede crecer), sin mencionar precios ni pagos.
 6. Solo texto plano: sin títulos, sin listas, sin markdown.

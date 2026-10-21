@@ -456,10 +456,13 @@
     /* Test: mensajes de avance y preguntas abiertas */
     .progress-msg { font-size: 0.9rem; color: var(--green); font-weight: 600; margin: 10px 0 14px 0; min-height: 1.2em; }
     .q-seccion { font-size: 0.85rem; color: var(--green); font-weight: 600; margin-bottom: 10px; }
-    .abierta-wrap { display: flex; flex-direction: column; gap: 12px; max-width: 520px; width: 100%; margin: 0 auto; }
-    .abierta-wrap textarea { width: 100%; font-family: inherit; font-size: 1rem; line-height: 1.5; padding: 14px 16px; border-radius: 12px; border: 2px solid #e0e0e0; resize: vertical; box-sizing: border-box; }
-    .abierta-wrap textarea:focus { outline: none; border-color: var(--green); }
-    .abierta-wrap .skip-link { margin-top: 2px; }
+    .q-ayuda { font-size: 0.85rem; color: #7A7A7A; margin: 0 0 12px 0; }
+    #q-text { margin-bottom: 22px; }
+    .opciones { display: flex; flex-direction: column; gap: 10px; max-width: 560px; width: 100%; margin: 0 auto; }
+    .opcion { display: block; width: 100%; font-family: inherit; font-size: 1rem; line-height: 1.45; color: #333; text-align: left; background: #fff; border: 2px solid #E4DDD3; border-radius: 14px; padding: 14px 16px; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: border-color .15s ease, background-color .15s ease; }
+    .opcion:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
+    .opcion.elegida { border-color: var(--green); background: #E8F1EC; color: var(--green); }
+    @media (hover: hover) { .opcion:hover { border-color: var(--green); } }
     .test-ok { display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--green); background: #E8F1EC; padding: 6px 14px; border-radius: 20px; margin-bottom: 14px; }
 
     /* Análisis gratis escrito por la IA */
@@ -516,7 +519,13 @@
       .prev-btn { left: 30%; transform: translateX(-50%); }
       .next-btn { right: 30%; transform: translateX(50%); }
       .question-card { padding: 30px 15px !important; }
-      .q-text { font-size: 1.3rem !important; }
+      .q-text { font-size: 1.2rem !important; }
+      .opcion { font-size: 0.97rem; padding: 12px 14px; }
+      #view-quiz .quiz-container { padding: 14px 0 24px 0; }
+      #view-quiz .progress-msg { margin: 8px 0 10px 0; }
+      #view-quiz .question-card { padding: 20px 14px !important; min-height: 0; }
+      #view-quiz .q-ayuda { margin-bottom: 8px; }
+      #q-text { margin-bottom: 16px; }
       .scale-circle { width: 40px !important; height: 40px !important; font-size: 1rem !important; border-width: 1px !important; }
       .scale-container { gap: 4px !important; }
       .scale-label { font-size: 0.6rem !important; margin-top: 4px !important; }
@@ -685,7 +694,7 @@
               <p class="lp-lead">El Eneagrama describe 9 formas de ver el mundo. Este test descubre cuál es la tuya a partir de lo que te motiva, no solo de cómo te comportás.</p>
               <div style="margin-top:20px">
                 <button class="lp-cta" onclick="beginTest()">HACER EL TEST</button>
-                <div class="lp-meta"><span><b>5 a 7 minutos</b></span><span>Desde el celular</span><span>Sin crear cuenta</span></div>
+                <div class="lp-meta"><span><b>Unos 5 minutos</b></span><span>Desde el celular</span><span>Sin crear cuenta</span></div>
               </div>
             </div>
           </div>
@@ -726,7 +735,7 @@
       <section class="lp-block">
         <h2>Cómo funciona</h2>
         <div class="lp-pasos">
-          <div class="lp-paso"><strong>Respondé las preguntas</strong><p>Afirmaciones sobre cómo pensás y sentís. Toma entre 5 y 7 minutos.</p></div>
+          <div class="lp-paso"><strong>Respondé las preguntas</strong><p>Situaciones de todos los días: elegís cómo reaccionarías. Toma unos 5 minutos.</p></div>
           <div class="lp-paso"><strong>La IA analiza tus respuestas</strong><p>Con el método Riso-Hudson, que mide motivaciones y no solo conductas.</p></div>
           <div class="lp-paso"><strong>Recibís tu resultado</strong><p>Al terminar ves un análisis breve de tu perfil. Luego de pagar, recibís tu eneatipo, ala, instinto y el reporte completo.</p></div>
         </div>
@@ -756,7 +765,7 @@
         <h2>Preguntas frecuentes</h2>
         <div class="lp-faq">
           <details open><summary>¿Hacer el test cuesta algo?</summary><p>Hacer el test y ver el análisis breve de tu perfil no tiene costo. El resultado completo, con tu eneatipo y el reporte, es pago: lo decidís después de ver tu análisis.</p></details>
-          <details><summary>¿Cuánto tarda?</summary><p>Entre 5 y 7 minutos. Podés hacerlo desde el celular.</p></details>
+          <details><summary>¿Cuánto tarda?</summary><p>Unos 5 minutos. Podés hacerlo desde el celular.</p></details>
           <details><summary>¿Para qué me piden el email?</summary><p>Para guardarte el resultado y mandártelo, así no tenés que repetir el test.</p></details>
           <details><summary>¿En qué se basa?</summary><p>En el modelo de Eneagrama de Riso y Hudson: 9 tipos de personalidad definidos por la motivación de fondo de cada persona.</p></details>
           <details><summary>¿Cómo se paga el reporte?</summary><p>Con Mercado Pago, en un solo pago y sin suscripciones. Si el reporte no te aporta valor, en los primeros 7 días te devolvemos el dinero.</p></details>
@@ -766,7 +775,7 @@
       <section class="lp-cierre lp-bleed">
         <div class="lp-wrap">
           <h2>¿Cuál de las 9 sos vos?</h2>
-          <p>5 a 7 minutos. Sin crear cuenta.</p>
+          <p>Unos 5 minutos. Sin crear cuenta.</p>
           <button class="lp-cta" onclick="beginTest()">HACER EL TEST</button>
         </div>
       </section>
@@ -783,20 +792,9 @@
         <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
         <p class="progress-msg" id="progress-msg">¡Buen comienzo! 🚀</p>
         <div class="question-card">
-          <p class="q-seccion" id="q-seccion" hidden>Para terminar, contanos un poco de vos</p>
+          <p class="q-ayuda">Elegí la reacción que más se parece a vos, aunque no sea exacta.</p>
           <div id="q-text" class="q-text">Cargando pregunta...</div>
-          <div class="abierta-wrap" id="abierta-wrap" hidden>
-            <textarea id="abierta-input" rows="4" maxlength="400" placeholder="Escribí lo primero que te salga. Una o dos frases alcanzan."></textarea>
-            <button class="btn" id="abierta-btn" onclick="responderAbierta(false)" style="width:100%; padding:16px;">Siguiente</button>
-            <span class="skip-link" onclick="responderAbierta(true)">Prefiero no responder esta</span>
-          </div>
-          <div class="scale-container" id="scale-container">
-            <div class="scale-option" onclick="vote(1)"><div class="scale-circle">1</div><div class="scale-label">Nunca</div></div>
-            <div class="scale-option" onclick="vote(2)"><div class="scale-circle">2</div><div class="scale-label">Casi nunca</div></div>
-            <div class="scale-option" onclick="vote(3)"><div class="scale-circle">3</div><div class="scale-label">A veces</div></div>
-            <div class="scale-option" onclick="vote(4)"><div class="scale-circle">4</div><div class="scale-label">Frecuente</div></div>
-            <div class="scale-option" onclick="vote(5)"><div class="scale-circle">5</div><div class="scale-label">Siempre</div></div>
-          </div>
+          <div class="opciones" id="opciones"></div>
         </div>
         <div style="margin-top:30px; display:flex; justify-content:center;">
           <button id="btn-back" onclick="goBack()" style="background:none; border:none; color:#888; font-weight:600; cursor:pointer; font-size:0.9rem;">
@@ -1072,73 +1070,52 @@
     }
 
     // ─── QUIZ ────────────────────────────────────────────────────────────────
+    // Situaciones de la vida diaria con 5 reacciones; cada reacción es de un
+    // eneatipo distinto. El diseño está balanceado: cada eneatipo aparece en 15
+    // situaciones y cada par de eneatipos se cruza entre 6 y 9 veces, así ninguno
+    // sale favorecido por cuántas veces aparece.
     let user = { name: "" };
-    let userResponses = { types: { 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}, 9:{} }, instincts: { sp:{}, sx:{}, so:{} } };
     let qIdx = 0;
-    let historyStack = [];
     let calculatedResult = null;
 
-    const questions = [
-      { kind:"type", t:1, q:"Siento que tengo una voz interna que me juzga constantemente y me exige hacerlo todo como corresponde." },
-      { kind:"type", t:1, q:"Me doy cuenta de que el esfuerzo por ser perfecto me genera mucha tensión interna." },
-      { kind:"type", t:1, q:"Me molesta ver que otras personas sean flexibles con lo que para mí son principios básicos." },
-      { kind:"type", t:1, q:"Los errores me inquietan mucho y por eso soy muy exigente con los detalles." },
-      { kind:"type", t:1, q:"Me cuesta aceptar que algo esté lo suficientemente bien; siento que debería estar mejor." },
-      { kind:"type", t:2, q:"Me involucro mucho con los demás porque necesito sentir que soy importante para ellos." },
-      { kind:"type", t:2, q:"Suelo dar más de lo que debería y dejar mis propias necesidades en segundo plano." },
-      { kind:"type", t:2, q:"Cuando alguien se muestra distante, me esfuerzo especialmente por ganarme su afecto." },
-      { kind:"type", t:2, q:"Estoy muy atento a lo que les pasa emocionalmente a las personas que quiero." },
-      { kind:"type", t:2, q:"Me realizo haciendo que otros se sientan queridos, cuidados y valorados." },
-      { kind:"type", t:3, q:"Me esfuerzo por ser eficiente porque siento que mi valor depende de lo que logro." },
-      { kind:"type", t:3, q:"Me preocupo mucho por la imagen que proyecto y por cómo me perciben los demás." },
-      { kind:"type", t:3, q:"Necesito destacar; si no puedo hacerlo, pierdo interés." },
-      { kind:"type", t:3, q:"Me afecta cuando mi trabajo no es reconocido o valorado." },
-      { kind:"type", t:3, q:"Vivo orientado a metas y objetivos, y me cuesta parar si no estoy produciendo." },
-      { kind:"type", t:4, q:"Siento que soy diferente a los demás y necesito expresar una identidad única." },
-      { kind:"type", t:4, q:"Aun estando con otros, a veces experimento una sensación interna de vacío o soledad." },
-      { kind:"type", t:4, q:"Necesito poner mi sello personal en lo que hago, aunque vaya contra lo esperado." },
-      { kind:"type", t:4, q:"Vivo mis emociones con mucha intensidad y profundidad." },
-      { kind:"type", t:4, q:"Busco comprender quién soy realmente y ser fiel a mi mundo emocional." },
-      { kind:"type", t:5, q:"Necesito entender a fondo las cosas antes de sentirme tranquilo o preparado." },
-      { kind:"type", t:5, q:"Protejo mucho mi espacio interno y no dejo entrar fácilmente a las personas." },
-      { kind:"type", t:5, q:"Prefiero observar y analizar antes que involucrarme emocionalmente." },
-      { kind:"type", t:5, q:"Me siento más seguro resolviendo los problemas por mi cuenta." },
-      { kind:"type", t:5, q:"El conocimiento es una de mis principales fuentes de identidad y seguridad." },
-      { kind:"type", t:6, q:"Siento una mezcla constante entre confiar en figuras de autoridad y desconfiar de ellas." },
-      { kind:"type", t:6, q:"Suelo anticipar críticas o problemas incluso antes de que ocurran." },
-      { kind:"type", t:6, q:"Necesito referentes fuertes en quienes apoyarme para sentirme seguro." },
-      { kind:"type", t:6, q:"Mi mente tiende a dudar y evaluar intenciones ocultas para protegerse." },
-      { kind:"type", t:6, q:"La ansiedad y la alerta forman parte de mi estado interno habitual." },
-      { kind:"type", t:7, q:"Busco experiencias nuevas y estimulantes porque necesito sentirme vivo y en movimiento." },
-      { kind:"type", t:7, q:"Prefiero la emoción y la variedad antes que la rutina o la seguridad." },
-      { kind:"type", t:7, q:"Mi mente va muy rápido, salta de una idea a otra y siempre imagina nuevas posibilidades." },
-      { kind:"type", t:7, q:"Evito el aburrimiento y el malestar llenándome de planes, estímulos y proyectos." },
-      { kind:"type", t:7, q:"Me cuesta sostener una sola cosa mucho tiempo porque me disperso con facilidad." },
-      { kind:"type", t:8, q:"Soy muy independiente y me cuesta depender de otros; necesito sentir que tengo el control de mi vida." },
-      { kind:"type", t:8, q:"Cuando alguien es de los míos, siento un fuerte impulso de protegerlo y defenderlo." },
-      { kind:"type", t:8, q:"Me molesta la debilidad o la indecisión porque siento que vuelven vulnerables a las personas." },
-      { kind:"type", t:8, q:"Tengo una voluntad intensa y enfrento los obstáculos sin echarme atrás fácilmente." },
-      { kind:"type", t:8, q:"Suelo desafiar a los demás para que saquen su fuerza y den más de lo que creen posible." },
-      { kind:"type", t:9, q:"Las personas suelen sentirse tranquilas y seguras a mi lado." },
-      { kind:"type", t:9, q:"Prefiero evitar el conflicto y ceder antes que generar tensión." },
-      { kind:"type", t:9, q:"Me adapto con facilidad y suelo conformarme con lo que hay." },
-      { kind:"type", t:9, q:"Me mantengo más sereno que la mayoría, incluso cuando otros se alteran." },
-      { kind:"type", t:9, q:"Entiendo muchos puntos de vista y me cuesta posicionarme en contra." },
-      { kind:"instinct", inst:"sp", q:"Pienso en mi estabilidad económica y en tener recursos suficientes para sentirme tranquilo." },
-      { kind:"instinct", inst:"sp", q:"Priorizo descansar y cuidar mi nivel de energía para poder rendir bien." },
-      { kind:"instinct", inst:"sp", q:"Busco comodidad física y evito situaciones que puedan desgastarme demasiado." },
-      { kind:"instinct", inst:"sp", q:"Presto atención a mi salud y trato de prevenir problemas antes de que aparezcan." },
-      { kind:"instinct", inst:"sp", q:"Planifico para asegurarme de que no falte lo necesario en mi vida cotidiana." },
-      { kind:"instinct", inst:"sx", q:"Busco relaciones intensas y una conexión especial con una persona en particular." },
-      { kind:"instinct", inst:"sx", q:"La química y la intensidad emocional influyen mucho en mis decisiones." },
-      { kind:"instinct", inst:"sx", q:"Prefiero vínculos profundos e intensos antes que muchas relaciones superficiales." },
-      { kind:"instinct", inst:"sx", q:"Necesito sentirme especialmente importante o elegido por alguien." },
-      { kind:"instinct", inst:"sx", q:"Me atraen situaciones, personas o experiencias que me hagan sentir muy vivo y apasionado." },
-      { kind:"instinct", inst:"so", q:"Pienso en mi lugar dentro de los grupos y en cómo encajo socialmente." },
-      { kind:"instinct", inst:"so", q:"Busco pertenecer a grupos y sentir que formo parte de una comunidad." },
-      { kind:"instinct", inst:"so", q:"Presto atención a las normas sociales, la reputación y cómo soy visto por los demás." },
-      { kind:"instinct", inst:"so", q:"Me interesa crear y mantener redes de contacto y vínculos sociales." },
-      { kind:"instinct", inst:"so", q:"Me motiva participar en proyectos, causas o grupos que van más allá de lo personal." }
+    const situaciones = [
+      { q:"Te piden que presentes tu trabajo frente a un grupo.", o:{ 1:"Lo reviso varias veces; me preocupa que se me haya pasado algún error.", 3:"Pienso cómo impactar y lo ajusto a lo que el público quiere escuchar.", 4:"Quiero que se note mi estilo; me incomoda presentar algo que no siento mío.", 6:"Me imagino las preguntas difíciles que me pueden hacer y preparo respuestas.", 9:"Lo voy postergando y lo armo cerca de la fecha, tratando de no hacerme problema." } },
+      { q:"Tenés un fin de semana libre y sin planes.", o:{ 1:"Aprovecho para ordenar pendientes; me cuesta descansar si hay cosas sin hacer.", 4:"Me dejo llevar por lo que siento: música, escribir, algo que me conecte conmigo.", 5:"Me quedo en casa, a mi ritmo, metido en algún tema que me interesa.", 7:"Enseguida armo varios planes; la idea de no hacer nada me aburre.", 8:"Hago lo que se me da la gana, sin darle explicaciones a nadie." } },
+      { q:"Un amigo te cancela un plan a último momento.", o:{ 1:"Me molesta la falta de compromiso, aunque trato de no mostrarlo.", 2:"Le escribo para ver si le pasa algo o si hice algo que le molestó.", 4:"Me baja el ánimo; siento que yo no soy tan importante para él como él para mí.", 6:"Me quedo pensando cuál será el verdadero motivo de la cancelación.", 7:"No me hago drama; enseguida busco otra cosa para hacer." } },
+      { q:"En el trabajo te hacen un elogio delante de todos.", o:{ 2:"Me alegra, sobre todo si lo que hice le sirvió de verdad a alguien.", 3:"Lo disfruto: siento que el esfuerzo se vio y me dan ganas de ir por más.", 4:"Me pregunto si realmente entienden lo que puse de mí en ese trabajo.", 6:"Me pongo un poco en guardia: ¿qué van a esperar de mí ahora?", 7:"Me pongo contento y ya estoy pensando en la próxima idea." } },
+      { q:"Llegás a una reunión donde casi no conocés a nadie.", o:{ 2:"Me acerco a alguien que esté solo para que se sienta cómodo.", 3:"Me presento con soltura y trato de dejar una buena primera impresión.", 5:"Me quedo en un costado observando cómo funciona el grupo antes de hablar.", 7:"Charlo con varios a la vez; me divierte conocer gente nueva.", 8:"Voy directo a hablar con quien parece manejar las cosas ahí." } },
+      { q:"Un compañero hace mal una tarea que también te afecta a vos.", o:{ 1:"Me cuesta dejarlo pasar: le marco qué está mal y cómo tendría que hacerse.", 2:"Me ofrezco a ayudarlo a corregirla, aunque eso me sume trabajo.", 3:"Pienso en cómo va a quedar el resultado y lo resuelvo yo para que salga bien.", 5:"Antes de decir nada, analizo bien dónde estuvo el error.", 7:"Le saco dramatismo, lo arreglamos rápido y seguimos con otra cosa." } },
+      { q:"Tenés que tomar una decisión importante, como un cambio de trabajo o una mudanza.", o:{ 1:"Busco cuál es la opción correcta, la que debería elegir.", 3:"Elijo la que más me acerca a mis objetivos y me hace avanzar.", 5:"Junto toda la información posible antes de decidir, aunque tarde.", 6:"Consulto con gente de confianza y aun así me quedan dudas.", 9:"Lo dejo madurar; a veces espero a que las cosas se acomoden solas." } },
+      { q:"Te enterás de que no te eligieron para algo que querías.", o:{ 3:"Me pongo enseguida a buscar otra oportunidad para demostrar lo que valgo.", 4:"Me duele mucho; siento que confirma algo que me falta.", 5:"Me retiro a pensar qué me faltaba saber o preparar.", 6:"Me pregunto si alguien jugó en contra o si hubo algo que no me dijeron.", 7:"Me digo que seguro viene algo mejor y me enfoco en otro plan." } },
+      { q:"Alguien cercano te pide un consejo sobre un problema personal.", o:{ 1:"Le digo con claridad qué creo que es lo correcto hacer.", 2:"Lo escucho, lo contengo y me ofrezco a ayudarlo en lo que haga falta.", 4:"Trato de entender lo que siente de verdad, más allá del problema.", 8:"Le digo que no se deje pasar por encima y que actúe ya.", 9:"Lo escucho con calma y lo ayudo a ver los distintos puntos de vista." } },
+      { q:"En una discusión familiar, alguien dice algo injusto sobre vos.", o:{ 1:"Me lo guardo un rato, pero por dentro me hierve que no sea justo.", 2:"Me duele que no valoren todo lo que hago por ellos.", 6:"Busco el apoyo de alguien de la familia que sepa que tengo razón.", 7:"Le busco el lado gracioso o cambio de tema para que no se ponga pesado.", 8:"Lo enfrento en el momento; no dejo que me pasen por encima." } },
+      { q:"Te asignan un proyecto nuevo con mucha libertad.", o:{ 1:"Lo primero es definir cómo hacerlo bien, con orden y criterio.", 3:"Me fijo cómo lograr resultados que se vean rápido.", 5:"Investigo a fondo el tema antes de arrancar.", 6:"Quiero saber bien qué se espera y quién me respalda si algo sale mal.", 8:"Tomo el control y avanzo a mi manera." } },
+      { q:"Estás pasando por un momento triste.", o:{ 2:"Me cuesta pedir ayuda; sigo pendiente de los demás.", 3:"Me pongo a hacer cosas y sigo funcionando como si nada.", 4:"Me sumerjo en lo que siento; necesito vivirlo en profundidad.", 6:"Me preocupa que las cosas empeoren y busco a alguien en quien apoyarme.", 7:"Me lleno de planes y gente para no quedarme en el bajón." } },
+      { q:"Tu jefe te da una indicación que te parece equivocada.", o:{ 1:"Le explico por qué esa no es la forma correcta de hacerlo.", 2:"La hago igual para no complicarlo, aunque no esté de acuerdo.", 3:"Busco que el resultado salga bien igual, sin quedar mal con él.", 5:"Me lo quedo pensando, busco datos y recién después lo planteo.", 8:"Se lo discuto de frente; si no tiene sentido, no lo hago." } },
+      { q:"Te mudás a otra ciudad.", o:{ 1:"Me ocupo de que todo quede organizado y en su lugar.", 4:"Siento nostalgia por lo que dejo atrás, aunque quiera el cambio.", 7:"Me entusiasma todo lo nuevo que voy a conocer.", 8:"Me pongo al frente y resuelvo todo rápido para hacerme mi lugar.", 9:"Me adapto de a poco; trato de que el cambio no me altere demasiado." } },
+      { q:"Tus amigos discuten a dónde ir a comer.", o:{ 1:"Me impacienta que no se pongan de acuerdo; propongo la opción más razonable.", 2:"Me fijo qué le gusta a cada uno y propongo un lugar para que todos estén contentos.", 5:"Me mantengo afuera de la discusión; no quiero gastar energía en eso.", 6:"Espero a ver qué piensa la mayoría antes de opinar.", 9:"Digo que me da igual y voy con lo que se decida." } },
+      { q:"Alguien te critica delante de otros.", o:{ 1:"Me pega fuerte porque ya soy muy exigente conmigo; me quedo repasándolo.", 2:"Me siento herido y me pregunto si esa persona me dejó de querer.", 3:"Me preocupa cómo quedé frente a los demás y trato de recuperar mi imagen.", 4:"Me afecta en lo profundo; siento que no me entienden.", 9:"Trato de no darle importancia y sigo como si nada." } },
+      { q:"Te toca organizar un viaje en grupo.", o:{ 1:"Armo un plan detallado y me cuesta que otros lo cambien.", 5:"Prefiero que lo organice otro; yo aporto información si me la piden.", 6:"Pienso en todo lo que puede salir mal y preparo un plan B.", 8:"Tomo las decisiones; si no, no se hace nada.", 9:"Me acomodo a lo que quiera el grupo, sin complicarme." } },
+      { q:"Un amigo está pasando por una crisis.", o:{ 2:"Dejo lo que estoy haciendo y me ocupo de él; siento que me necesita.", 6:"Me quedo a su lado; los amigos se sostienen en las malas.", 7:"Trato de levantarle el ánimo con planes y algo de humor.", 8:"Me meto a resolver el problema y lo defiendo si hace falta.", 9:"Le doy compañía tranquila, sin presionarlo." } },
+      { q:"Alguien cercano te dice que quiere hablar de algo serio.", o:{ 2:"Me pongo atento a lo que necesita y trato de dárselo.", 5:"Necesito un tiempo para procesarlo solo antes de responder.", 6:"Me pongo nervioso y me imagino lo peor antes de escucharlo.", 7:"Intento que la charla no se ponga tan pesada.", 9:"Escucho y trato de que no termine en pelea." } },
+      { q:"Aparece un gasto imprevisto grande.", o:{ 5:"Recorto gastos y me arreglo con lo mínimo, sin pedir ayuda.", 6:"Me angustio y repaso todos los escenarios posibles.", 7:"Pienso que algo va a salir y no me quedo amargado.", 8:"Lo enfrento de una; muevo lo que haga falta para resolverlo.", 9:"Lo voy pateando hasta que no queda otra que ocuparme." } },
+      { q:"En tu grupo de trabajo nadie toma la iniciativa.", o:{ 3:"Propongo un plan y lo encabezo; es una oportunidad para mostrar lo que sé.", 4:"Me frustra; siento que nadie se involucra de verdad.", 5:"Observo y espero; no me meto si no me lo piden.", 8:"Tomo el mando y reparto tareas; no soporto que las cosas se estanquen.", 9:"Sigo con mi parte y espero que alguien se ocupe." } },
+      { q:"Pensás en cómo te gustaría estar dentro de cinco años.", o:{ 3:"Habiendo alcanzado metas concretas y reconocidas.", 4:"Haciendo algo que tenga un sentido profundo para mí.", 5:"Sabiendo mucho más y siendo más independiente.", 7:"Con muchas experiencias nuevas y libertad para moverme.", 9:"Tranquilo, en paz, sin grandes sobresaltos." } },
+      { q:"Alguien que querés te pone un límite claro.", o:{ 2:"Me siento un poco rechazado y me cuesta no tomármelo personal.", 4:"Me quedo pensando qué dice eso sobre lo que siente por mí.", 7:"Lo acepto rápido y no me quedo dándole vueltas.", 8:"Me cuesta aceptarlo sin discutir; quiero entender por qué y negociarlo.", 9:"Lo acepto sin discutir para no generar un conflicto." } },
+      { q:"Te piden un favor que no tenés ganas de hacer.", o:{ 1:"Lo hago si es lo correcto, aunque me moleste.", 3:"Me fijo si me suma algo; si no, lo rechazo con buenas formas.", 7:"Busco la forma de zafar o de hacerlo más divertido.", 8:"Digo que no, de forma directa y sin vueltas.", 9:"Digo que sí para no generar un mal momento, aunque después me pese." } },
+      { q:"Sentís que un grupo te deja afuera.", o:{ 3:"Busco destacarme en algo para que me tengan en cuenta.", 4:"Me duele, y a la vez confirma que soy distinto a ellos.", 6:"Me pregunto qué hice o qué estarán pensando de mí.", 8:"Si no me quieren ahí, me voy; no voy a rogar.", 9:"Me hago a un lado sin hacer ruido." } },
+      { q:"En una entrevista te dicen: «Contanos sobre vos».", o:{ 2:"Hablo de cómo ayudo a los demás y de lo que aporto al equipo.", 3:"Destaco mis logros y muestro mi mejor versión.", 4:"Cuento lo que me hace distinto, mi historia personal.", 5:"Me cuesta; doy la información justa sin exponerme demasiado.", 8:"Hablo con seguridad y sin vueltas de lo que puedo hacer." } },
+      { q:"Te equivocás en algo importante en el trabajo.", o:{ 1:"Me castigo por dentro; me cuesta perdonarme el error.", 2:"Me preocupa haber perjudicado a otros y busco compensarlos.", 4:"Siento que el error dice algo de quién soy.", 5:"Analizo qué parte no entendí bien para que no vuelva a pasar.", 6:"Temo las consecuencias y busco a alguien que me respalde." } }
+    ];
+    // Instinto dominante: 3 opciones (autoconservación, social, sexual)
+    const preguntasInstinto = [
+      { q:"Llegás a una fiesta. ¿En qué te fijás primero?", o:{ sp:"Si hay dónde sentarme, qué hay para comer y cuánto me voy a quedar.", so:"Quién está, quién conoce a quién y cómo es el clima del grupo.", sx:"Si hay alguien con quien tener una charla que valga la pena." } },
+      { q:"¿Qué te preocuparía más perder?", o:{ sp:"Mi estabilidad: mi casa, mi trabajo, mi salud.", so:"Mi lugar en mis grupos y la confianza de la gente.", sx:"Una relación muy especial con alguien." } },
+      { q:"¿Qué te carga más las pilas?", o:{ sp:"Tener mis cosas resueltas y haber descansado bien.", so:"Ser parte de un proyecto o de un grupo que me importa.", sx:"Una charla intensa o una conexión fuerte con alguien." } },
+      { q:"Tenés un día libre. ¿Qué preferís?", o:{ sp:"Ordenar la casa, cocinar algo rico y descansar.", so:"Juntarme con amigos o sumarme a alguna actividad en grupo.", sx:"Pasarlo con una persona especial, haciendo algo que nos apasione." } },
+      { q:"¿Qué te molesta más?", o:{ sp:"Que se me desarme la rutina o que me falte algo que necesito.", so:"Quedar mal frente a un grupo o que no me tengan en cuenta.", sx:"Que alguien importante para mí me preste poca atención." } },
+      { q:"Cuando conocés a alguien, ¿qué te interesa más?", o:{ sp:"Si es una persona confiable y con los pies en la tierra.", so:"A qué se dedica, de qué grupos forma parte, a quién conoce.", sx:"Si hay química, si la conexión se siente especial." } },
+      { q:"Si te llegara una buena suma de plata, ¿qué harías primero?", o:{ sp:"La guardo o la invierto para tener más seguridad.", so:"Hago algo que beneficie a mi familia o a la gente que me rodea.", sx:"Me doy una experiencia intensa con alguien que quiero." } }
     ];
 
     function shuffleArray(array) {
@@ -1147,24 +1124,23 @@
         [array[i], array[j]] = [array[j], array[i]];
       }
     }
-    shuffleArray(questions);
 
-    // Preguntas abiertas al final: alimentan el análisis gratis y el reporte pago
-    const preguntasAbiertas = [
-      "¿Qué situación te genera más estrés o malestar últimamente?",
-      "¿Qué es lo que más te cuesta en tus vínculos (pareja, familia, amigos o trabajo)?",
-      "¿Qué te gustaría cambiar de vos?",
-      "¿Qué te hace sentir realmente bien, en paz o en tu mejor versión?",
-    ];
-    preguntasAbiertas.forEach((q, i) => questions.push({ kind: "open", key: i, q }));
-    let respuestasAbiertas = {};
+    let questions = [];
+    let respuestas = []; // por pregunta: índice de la opción elegida
+    function armarPreguntas() {
+      const aOpciones = (o, num) => Object.keys(o).map(k => ({ k: num ? Number(k) : k, txt: o[k] }));
+      questions = situaciones.map(x => ({ kind: "type", q: x.q, opts: aOpciones(x.o, true) }))
+        .concat(preguntasInstinto.map(x => ({ kind: "instinct", q: x.q, opts: aOpciones(x.o, false) })));
+      questions.forEach(q => shuffleArray(q.opts));
+      shuffleArray(questions);
+      respuestas = [];
+    }
+    armarPreguntas();
 
     function beginTest() {
       gaEvent("begin_test");
       qIdx = 0;
-      historyStack = [];
-      respuestasAbiertas = {};
-      userResponses = { types:{1:{},2:{},3:{},4:{},5:{},6:{},7:{},8:{},9:{}}, instincts:{sp:{},sx:{},so:{}} };
+      armarPreguntas();
       nav("view-quiz");
       gaEvent("quiz_start");
       renderQ();
@@ -1177,16 +1153,18 @@
     function renderQ() {
       if (qIdx >= questions.length) { finish(); return; }
       const q = questions[qIdx];
+      if (window.scrollY > 40) window.scrollTo(0, 0);
       document.getElementById('q-text').innerText = q.q;
-      const abierta = q.kind === "open";
-      document.getElementById('scale-container').hidden = abierta;
-      document.getElementById('abierta-wrap').hidden = !abierta;
-      document.getElementById('q-seccion').hidden = !abierta;
-      if (abierta) {
-        const ta = document.getElementById('abierta-input');
-        ta.value = respuestasAbiertas[q.key] || "";
-        setTimeout(() => { try { ta.focus({ preventScroll: true }); } catch (e) {} }, 50);
-      }
+      const cont = document.getElementById('opciones');
+      cont.innerHTML = "";
+      q.opts.forEach((o, i) => {
+        const b = document.createElement('button');
+        b.type = "button";
+        b.className = "opcion" + (respuestas[qIdx] === i ? " elegida" : "");
+        b.textContent = o.txt;
+        b.onclick = () => vote(i);
+        cont.appendChild(b);
+      });
       let pct = Math.round((qIdx / questions.length) * 100);
       document.getElementById('progress-fill').style.width = pct + "%";
       document.getElementById('progress-text').innerText = pct + "%";
@@ -1197,92 +1175,66 @@
     }
 
     let isVoting = false;
-    function vote(pts) {
+    function vote(i) {
       if (isVoting) return;
       isVoting = true;
-      const buttons = document.querySelectorAll('.scale-option');
-      const selectedBtn = buttons[pts - 1];
-      if (selectedBtn) selectedBtn.classList.add('selected');
+      const btns = document.querySelectorAll('#opciones .opcion');
+      btns.forEach((b, j) => b.classList.toggle('elegida', j === i));
       setTimeout(() => {
-        const q = questions[qIdx];
-        const itemKey = qIdx;
-        if (q.kind === "type") {
-          if (!userResponses.types[q.t]) userResponses.types[q.t] = {};
-          userResponses.types[q.t][itemKey] = pts;
-          historyStack.push({ qIdx, kind:"type", key:itemKey, t:q.t });
-        } else if (q.kind === "instinct") {
-          if (!userResponses.instincts[q.inst]) userResponses.instincts[q.inst] = {};
-          userResponses.instincts[q.inst][itemKey] = pts;
-          historyStack.push({ qIdx, kind:"instinct", key:itemKey, inst:q.inst });
-        }
+        respuestas[qIdx] = i;
         qIdx++;
         renderQ();
-        if (selectedBtn) selectedBtn.classList.remove('selected');
         isVoting = false;
-      }, 200);
-    }
-
-    // Respuesta a una pregunta abierta (o saltearla)
-    function responderAbierta(saltar) {
-      const q = questions[qIdx];
-      if (!q || q.kind !== "open") return;
-      const txt = (document.getElementById('abierta-input').value || "").trim();
-      if (!saltar && txt.length < 2) { document.getElementById('abierta-input').focus(); return; }
-      if (saltar || !txt) delete respuestasAbiertas[q.key]; else respuestasAbiertas[q.key] = txt.slice(0, 400);
-      historyStack.push({ qIdx, kind: "open", key: q.key });
-      qIdx++;
-      renderQ();
-    }
-    function abiertasParaEnviar() {
-      return preguntasAbiertas.map((p, i) => ({ p, r: respuestasAbiertas[i] || "" })).filter(x => x.r);
+      }, 220);
     }
 
     function goBack() {
-      if (historyStack.length === 0) return;
-      let lastStep = historyStack.pop();
-      if (lastStep.kind === "open") {
-        qIdx = lastStep.qIdx;
-        renderQ();
-        return;
-      }
-      if (lastStep.kind === "type") {
-        if (userResponses.types[lastStep.t]) delete userResponses.types[lastStep.t][lastStep.key];
-      } else if (lastStep.kind === "instinct") {
-        if (userResponses.instincts[lastStep.inst]) delete userResponses.instincts[lastStep.inst][lastStep.key];
-      }
+      if (qIdx === 0 || isVoting) return;
       qIdx--;
-      renderQ();
+      renderQ(); // la respuesta anterior queda marcada y se puede cambiar
     }
 
-    function calcularResultadoEneagrama(responses) {
-      function sumItems(items) {
-        let s = 0;
-        if (!items) return 0;
-        for (const k in items) s += Number(items[k] || 0);
-        return s;
-      }
-      const scoresType = {};
-      for (let t = 1; t <= 9; t++) scoresType[t] = sumItems(responses.types[t]);
-      const sorted = Object.entries(scoresType).sort((a, b) => b[1] - a[1]);
-      const core = Number(sorted[0][0]);
+    // Reacciones elegidas que son del eneatipo resultante: personalizan el
+    // análisis gratis y el reporte (mismo formato que las viejas preguntas abiertas)
+    function abiertasParaEnviar(tipo) {
+      const out = [];
+      questions.forEach((q, i) => {
+        const r = respuestas[i];
+        if (q.kind === "type" && r != null && q.opts[r].k === Number(tipo)) out.push({ p: q.q, r: q.opts[r].txt });
+      });
+      return out.slice(0, 4);
+    }
+
+    function calcularResultadoEneagrama() {
+      const puntajes = {}, apariciones = {}, duelos = {};
+      for (let t = 1; t <= 9; t++) { puntajes[t] = 0; apariciones[t] = 0; }
+      const inst = { sp: 0, sx: 0, so: 0 };
+      questions.forEach((q, i) => {
+        const r = respuestas[i];
+        if (q.kind === "type") {
+          q.opts.forEach(o => apariciones[o.k]++);
+          if (r == null) return;
+          const elegido = q.opts[r].k;
+          puntajes[elegido]++;
+          // Cara a cara: a qué tipo prefirió cuando estaban los dos en la misma situación
+          q.opts.forEach(o => { if (o.k !== elegido) duelos[elegido + "-" + o.k] = (duelos[elegido + "-" + o.k] || 0) + 1; });
+        } else if (r != null) {
+          inst[q.opts[r].k]++;
+        }
+      });
+      const caraACara = (a, b) => (duelos[a + "-" + b] || 0) - (duelos[b + "-" + a] || 0);
+      const orden = [1, 2, 3, 4, 5, 6, 7, 8, 9].sort((a, b) => (puntajes[b] - puntajes[a]) || caraACara(b, a));
+      const core = orden[0];
       const prev = (core === 1) ? 9 : (core - 1);
       const next = (core === 9) ? 1 : (core + 1);
-      const prevScore = scoresType[prev] || 0;
-      const nextScore = scoresType[next] || 0;
-      let alaText = "Alas Balanceadas";
-      if (Math.abs(prevScore - nextScore) >= 2) {
-        alaText = (prevScore > nextScore) ? ("Ala " + prev) : ("Ala " + next);
+      const difAla = (puntajes[prev] - puntajes[next]) || caraACara(prev, next);
+      const alaText = difAla > 0 ? ("Ala " + prev) : difAla < 0 ? ("Ala " + next) : "Alas Balanceadas";
+      const sortedInst = [["sp", inst.sp], ["sx", inst.sx], ["so", inst.so]].sort((a, b) => b[1] - a[1]);
+      let instinto = "Balanceado";
+      if (sortedInst[0][1] > sortedInst[1][1]) {
+        instinto = { sp: "Autoconservación", sx: "Sexual", so: "Social" }[sortedInst[0][0]];
       }
-      const sSP = sumItems(responses.instincts.sp);
-      const sSX = sumItems(responses.instincts.sx);
-      const sSO = sumItems(responses.instincts.so);
-      const sortedInst = [["sp",sSP],["sx",sSX],["so",sSO]].sort((a,b)=>b[1]-a[1]);
-      const topI = sortedInst[0], secondI = sortedInst[1];
-      let inst = "Balanceado";
-      if (topI[1] > 0 && (topI[1] - secondI[1]) >= 2) {
-        inst = (topI[0]==="sp") ? "Autoconservación" : (topI[0]==="sx") ? "Sexual" : "Social";
-      }
-      return { eneatipo: core, ala: alaText, instinto: inst, puntajes: scoresType, respondidas: responses.types };
+      return { eneatipo: core, ala: alaText, instinto, puntajes, apariciones };
     }
 
     // ─── CENTROS DEL ENEAGRAMA (lo único que se muestra gratis) ────────────────
@@ -1322,13 +1274,13 @@
     }
 
     // ─── GRÁFICO: PUNTAJE EN LOS 9 ENEATIPOS ─────────────────────────────────
-    // Cada respuesta va de 1 a 5. Se pasa a 0–100 % según cuántas preguntas
-    // de ese tipo respondió la persona.
+    // Porcentaje de las situaciones donde aparecía ese tipo en las que la
+    // persona eligió su reacción.
     function calcularPorcentajes(resultado) {
       const lista = [];
       for (let tp = 1; tp <= 9; tp++) {
-        const n = Object.keys((resultado.respondidas || {})[tp] || {}).length || 5;
-        lista.push({ tipo: tp, pct: Math.max(0, Math.min(100, Math.round(((resultado.puntajes[tp] || 0) - n) / (4 * n) * 100))) });
+        const n = (resultado.apariciones || {})[tp] || 15;
+        lista.push({ tipo: tp, pct: Math.max(0, Math.min(100, Math.round((resultado.puntajes[tp] || 0) / n * 100))) });
       }
       return lista;
     }
@@ -1417,7 +1369,7 @@
     // ─── FINISH: muestra la pantalla A (reveal) ──────────────────────────────
     async function finish() {
       try {
-        const resultado = calcularResultadoEneagrama(userResponses);
+        const resultado = calcularResultadoEneagrama();
         calculatedResult = resultado;
 
         const tipo = resultado.eneatipo;
@@ -1426,7 +1378,7 @@
         localStorage.setItem('eneagrama_basic', JSON.stringify({
           name: "", type: tipo, wing: resultado.ala, instinct: resultado.instinto
         }));
-        try { localStorage.setItem('eneagrama_abiertas', JSON.stringify(abiertasParaEnviar())); } catch (e) {}
+        try { localStorage.setItem('eneagrama_abiertas', JSON.stringify(abiertasParaEnviar(tipo))); } catch (e) {}
 
         // Pantalla de resultado: adelanto y puntajes sin nombres
         mostrarPuntajes(resultado);

@@ -63,7 +63,7 @@ export async function generarReporte({ nombre, eneatipo, ala, instinto, respuest
   - Sección 8: una lista <ul> con 4 a 6 personajes de ficción o figuras públicas que la literatura del Eneagrama suele asociar a este tipo, cada uno con media oración de por qué. Aclará en un <p> breve que son asociaciones habituales, no diagnósticos.
   - No uses <h1>, <h2>, estilos en línea ni bloques de código.
   
-  ${respuestasAbiertas.length ? `LO QUE ${nombre} ESCRIBIÓ EN EL TEST (usalo para personalizar: retomá estas situaciones concretas en las secciones que correspondan, parafraseadas, sin citarlas textualmente ni de forma forzada):
+  ${respuestasAbiertas.length ? `CÓMO DIJO ${nombre} QUE REACCIONA EN SITUACIONES DEL TEST (eligió estas reacciones entre varias opciones; usalo para personalizar: retomá estas situaciones concretas en las secciones que correspondan, parafraseadas, sin citarlas textualmente ni de forma forzada):
   ${respuestasAbiertas.map(x => `- ${x.p} → "${x.r}"`).join("\n")}
   
   ` : ""}TONO: Profesional, clínico pero cercano, empoderador y muy preciso.
