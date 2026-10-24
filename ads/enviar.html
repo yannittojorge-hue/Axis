@@ -8,8 +8,9 @@
     const r = await fetch('/ads/' + f);
     out.push({ name: f, type: r.headers.get('content-type') || '', buf: await r.arrayBuffer() });
   }
-  if (window.opener) {
-    window.opener.postMessage({ piezasMiEneatipo: out }, 'https://adsmanager.facebook.com');
+  const destino = window.opener || (window.parent !== window ? window.parent : null);
+  if (destino) {
+    destino.postMessage({ piezasMiEneatipo: out }, 'https://adsmanager.facebook.com');
     document.getElementById('m').textContent = 'Listo, ya podés cerrar esta pestaña.';
   } else {
     document.getElementById('m').textContent = 'Abrí esta página desde el Administrador de anuncios.';
