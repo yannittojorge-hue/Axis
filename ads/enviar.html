@@ -1,0 +1,18 @@
+<!doctype html><meta charset="utf-8"><title>Enviar piezas</title><meta name="robots" content="noindex">
+<p id="m">Enviando…</p>
+<script>
+(async () => {
+  const files = ['anuncio-1.png','anuncio-2.png','anuncio-3.png','anuncio-video-historia.mp4'];
+  const out = [];
+  for (const f of files) {
+    const r = await fetch('/ads/' + f);
+    out.push({ name: f, type: r.headers.get('content-type') || '', buf: await r.arrayBuffer() });
+  }
+  if (window.opener) {
+    window.opener.postMessage({ piezasMiEneatipo: out }, 'https://adsmanager.facebook.com');
+    document.getElementById('m').textContent = 'Listo, ya podés cerrar esta pestaña.';
+  } else {
+    document.getElementById('m').textContent = 'Abrí esta página desde el Administrador de anuncios.';
+  }
+})();
+</script>
