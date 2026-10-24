@@ -1,1 +1,1 @@
-{"functions":{"api/mp_verify_and_report.js":{"maxDuration":60},"api/analisis.js":{"maxDuration":30},"api/mp_webhook.js":{"maxDuration":60}}}
+{"functions": {"api/mp_verify_and_report.js": {"maxDuration": 60}, "api/analisis.js": {"maxDuration": 30}, "api/mp_webhook.js": {"maxDuration": 60}}, "headers": [{"source": "/ads/(.*)", "headers": [{"key": "Access-Control-Allow-Origin", "value": "*"}]}]}
